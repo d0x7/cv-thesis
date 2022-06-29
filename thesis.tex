@@ -96,9 +96,12 @@
 % Chapters
 % =============================================================================
 \begin{onehalfspace}
-\chapter{Introduction}\label{sec:introduction}
-  \input{chapters/chapter1}
-  \cleardoublepage
+\ifthenelse{\boolean{english}}
+	{\chapter{Introduction}\label{sec:introduction}}
+	{\chapter{Einleitung}\label{sec:introduction}}
+\input{chapters/00_introduction}
+\cleardoublepage
+
 \chapter{Fundamentals}\label{sec:fundamentals}
   \input{chapters/chapter2}
   \cleardoublepage
