@@ -1,0 +1,9 @@
+pdf:
+    image: danteev/texlive
+    script:
+        - make
+    artifacts:
+        paths:
+            - output/thesis.pdf
+    tags:
+        - docker
