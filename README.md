@@ -1,6 +1,6 @@
 # LaTeX Thesis Template
 
-## Compile
+## Setup & Compile
 
 ### GitLab
 To use the CI/CD pipelines of GitLab do the following:
@@ -40,7 +40,7 @@ The compiled pdf file is under:
 * Install [GnuWin32 Make for Windows](http://gnuwin32.sourceforge.net/packages/make.htm)
 	* download the binaries unzip them and copy them to `C:\Program Files (x86)\GnuWin32` (`GnuWin32` folder has to be created first)
 	* Add to path to `bin` to `Path` environment variable manually
-	
+
 Compile from command line:
 ```
 cd thesis-template
@@ -58,3 +58,26 @@ make
 * Enter the path to the binaries that should be added to the `Path` Environment Variable
 * Close all windows/dialogs by pressing _OK_
 * Restart your terminal such that the changes are applied
+
+### macOS
+
+* Install [MikTeX](https://miktex.org/howto/install-miktex-mac)
+* Install `make`:
+```
+xcode-select --install
+```
+
+Compile from command line:
+```
+cd thesis-template
+make
+```
+
+### Overleaf
+* Login to Overleaf
+* Create a new _Blank Project_
+* Create the folders: `chapters`, `figures`, `includes`
+* Upload the files from the local folders into the overleaf folders
+* Delete the `main.tex`
+* Upload the `thesis.tex`
+* Press _Recompile_
