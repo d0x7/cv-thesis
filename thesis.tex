@@ -41,6 +41,7 @@
 	}
 \end{minipage}
 \cleardoublepage
+
 % =============================================================================
 % Abstract
 % =============================================================================
@@ -62,6 +63,15 @@
 	\cleardoublepage
 }
 
+% =============================================================================
+% Acknowledgements 
+% =============================================================================
+\ifthenelse{\boolean{english}}
+{\chapter*{Acknowledgements}}
+{\chapter*{Danksagung}}
+\thispagestyle{empty}
+\input{./includes/acknowledgements}
+\cleardoublepage
 
 % =============================================================================
 % Table of contents
