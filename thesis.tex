@@ -97,26 +97,47 @@
 % =============================================================================
 \begin{onehalfspace}
 \ifthenelse{\boolean{english}}
-	{\chapter{Introduction}\label{sec:introduction}}
-	{\chapter{Einleitung}\label{sec:introduction}}
+	{\chapter{Introduction}}
+	{\chapter{Einleitung}}
+\label{cha:introduction}
 \input{chapters/00_introduction}
 \cleardoublepage
 
-\chapter{Fundamentals}\label{sec:fundamentals}
-  \input{chapters/chapter2}
-  \cleardoublepage
-\chapter{Related Work}\label{sec:relatedwork}
-  \input{chapters/chapter3}
-  \cleardoublepage
-\chapter{Concept}\label{sec:concept}
-  \input{chapters/chapter4}
-  \cleardoublepage
-\chapter{Results and Discussion}\label{sec:resultsanddiscussion}
-  \input{chapters/chapter5}
-  \cleardoublepage
-\chapter{Conclusion and Future Work}\label{sec:conclusionandfuturework}
-  \input{chapters/chapter6}
-  \cleardoublepage
+\ifthenelse{\boolean{english}}
+	{\chapter{Fundamentals}}
+	{\chapter{Grundlagen}}
+\label{cha:fundamentals}
+\input{chapters/01_fundamentals}
+\cleardoublepage
+
+\ifthenelse{\boolean{english}}
+	{\chapter{Related Work}}
+	{\chapter{Stand der Technik}}
+\label{cha:related_work}
+\input{chapters/02_related_work}
+\cleardoublepage
+
+\ifthenelse{\boolean{english}}
+	{\chapter{Concept}}
+	{\chapter{Konzept}}
+\label{cha:concept}
+\input{chapters/03_concept}
+\cleardoublepage
+
+\ifthenelse{\boolean{english}}
+	{\chapter{Results and Discussion}}
+	{\chapter{Ereignisses und Diskussion}}
+\label{cha:results_and_discussion}
+\input{chapters/04_results_and_discussion}
+\cleardoublepage
+
+\ifthenelse{\boolean{english}}
+	{\chapter{Conclusion and Future Work}}
+	{\chapter{Zusammenfassung und Ausblick}}
+\label{cha:conclusion_and_future_work}
+\input{chapters/05_conclusion_and_future_work}
+\cleardoublepage
+
 \end{onehalfspace}
 % =============================================================================
 % Bibliography
