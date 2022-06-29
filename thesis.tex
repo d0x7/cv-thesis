@@ -44,18 +44,25 @@
 % =============================================================================
 % Abstract
 % =============================================================================
-% German
-\chapter*{Kurzfassung}
-\thispagestyle{empty}
-\begin{otherlanguage}{ngerman}
-	\input{./includes/abstractger}
-\end{otherlanguage}
-\cleardoublepage
-% English
-\chapter*{Abstract}
-\thispagestyle{empty}
-\input{./includes/abstract}
-\cleardoublepage
+\ifthenelse{\boolean{english}}{
+	\chapter*{Kurzfassung}
+	\thispagestyle{empty}
+	\begin{otherlanguage}{ngerman}
+		\input{./includes/abstractger}
+	\end{otherlanguage}
+	\cleardoublepage
+	\chapter*{Abstract}
+	\thispagestyle{empty}
+	\input{./includes/abstract}
+	\cleardoublepage
+}{
+	\chapter*{Kurzfassung}
+	\thispagestyle{empty}
+	\input{./includes/abstract}
+	\cleardoublepage
+}
+
+
 % =============================================================================
 % Table of contents
 % =============================================================================
