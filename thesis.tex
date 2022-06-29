@@ -27,12 +27,18 @@
 % =============================================================================
 \thispagestyle{empty}
 \vspace*{\fill}
+\noindent
 \begin{minipage}{.8\textwidth}
 	\textbf{\authorsurname, \authorfirstname:}\\
 	\emph{\title}\\
 	\thesiskind\\
-	University of Tübingen\\
-	Processing period: \thesisstart\ - \thesisend
+	\ifthenelse{\boolean{english}}{
+		University of Tübingen\\
+		Processing period: \thesisstart\ - \thesisend
+	}{
+		Eberhard Karls Universität Tübingen\\
+		Bearbeitungszeitraum: \thesisstart\ - \thesisend
+	}
 \end{minipage}
 \cleardoublepage
 % =============================================================================
