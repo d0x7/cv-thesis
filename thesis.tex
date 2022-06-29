@@ -67,8 +67,8 @@
 % Acknowledgements 
 % =============================================================================
 \ifthenelse{\boolean{english}}
-{\chapter*{Acknowledgements}}
-{\chapter*{Danksagung}}
+	{\chapter*{Acknowledgements}}
+	{\chapter*{Danksagung}}
 \thispagestyle{empty}
 \input{./includes/acknowledgements}
 \cleardoublepage
@@ -118,7 +118,9 @@
 % =============================================================================
 % Bibliography
 % =============================================================================
-\printbibliography[title={References},heading=bibintoc]
+\ifthenelse{\boolean{english}}
+	{\printbibliography[title={References},heading=bibintoc]}
+	{\printbibliography[title={Referenzen},heading=bibintoc]}
 \cleardoublepage
 % =============================================================================
 % List of figures
