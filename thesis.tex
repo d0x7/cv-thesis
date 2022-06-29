@@ -147,6 +147,27 @@
 	{\printbibliography[title={Referenzen},heading=bibintoc]}
 \cleardoublepage
 % =============================================================================
+% List of abbreviations
+% =============================================================================
+\ifthenelse{\boolean{english}}
+{
+\printglossary[
+	style=alttree,
+	type=\acronymtype,
+	title=List of Abbreviations,
+	toctitle=List of Abbreviations
+]
+}
+{
+\printglossary[
+	style=alttree,
+	type=\acronymtype,
+	title=Abkürzungsverzeichnis,
+	toctitle=Abkürzungsverzeichnis
+]
+}
+\cleardoublepage
+% =============================================================================
 % List of figures
 % =============================================================================
 \small\normalsize
@@ -161,24 +182,6 @@
 \addcontentsline{toc}{chapter}{\listtablename}
 \listoftables
 \small\normalsize
-\cleardoublepage
-% =============================================================================
-% List of algorithms
-% =============================================================================
-\small\normalsize
-\addcontentsline{toc}{chapter}{\listalgorithmname}
-\listofalgorithms
-\small\normalsize
-\cleardoublepage
-% =============================================================================
-% List of abbreviations
-% =============================================================================
-\printglossary[
-	style=alttree,
-	type=\acronymtype,
-	title=List of Abbreviations,
-	toctitle=List of Abbreviations
-]
 \cleardoublepage
 % =============================================================================
 % "I did this myself"
