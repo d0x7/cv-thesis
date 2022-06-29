@@ -88,6 +88,18 @@ make
 * Upload the `thesis.tex`
 * Press _Recompile_
 
+### VS Code
+* To use VS Code like other LaTeX dedicated editors (e.g. TeX Studio) you can use the extension [LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop). 
+* With the current settings in `.vscode/settings.json` the compile process will be initiated whenever a file is saved. 
+* The default recipe (also specified in `setting.json`) will make sure that all files generated during compilation will end up in the `output` directory.
+* Sometimes the compile process hangs in the "Build Stage" (e.g. if there is a syntax error in the document). This can be seen on the left side in the status bar at the bottom of VS code. If this happens you can manually stop compilation:
+  * Open the LaTeX Workshop extension menu
+  * In the commands section open the "Build LaTeX project" section
+  * Use "Terminate current compilation"
+* In the extension menu you will also find the compiler log messages indicating why the compilation didn't finish in the first place.
+
+Note: You can still use `make` in the terminal to compile your thesis document.
+
 ## Language Selection 🇬🇧 🇩🇪
 
 By default this thesis template is set to English. To switch to German do the following:
