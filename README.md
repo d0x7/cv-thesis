@@ -50,7 +50,7 @@ make
 View without pdf file lock
 ```
 cd thesis-template
-start .\output\thesis.pdf
+start texworks .\output\thesis.pdf
 ```
 
 #### Add to `Path` Environment Variable
