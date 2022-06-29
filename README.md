@@ -90,7 +90,7 @@ make
 
 ## Language Selection 🇬🇧 🇩🇪
 
-This thesis template is set to English per default to switch to German do the following:
+By default this thesis template is set to English. To switch to German do the following:
 * in [includes/packages.tex](./includes/packages.tex) remove `english` from the following line:
 ```
 \usepackage[ngerman,english]{babel}
