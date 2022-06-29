@@ -151,22 +151,19 @@
 % =============================================================================
 \ifthenelse{\boolean{english}}
 {
-\printglossary[
-	style=alttree,
-	type=\acronymtype,
-	title=List of Abbreviations,
-	toctitle=List of Abbreviations
-]
+	\addcontentsline{toc}{chapter}{List of Abbreviations}
+	\chapter*{List of Abbreviations}
 }
 {
-\printglossary[
-	style=alttree,
-	type=\acronymtype,
-	title=Abkürzungsverzeichnis,
-	toctitle=Abkürzungsverzeichnis
-]
+	\addcontentsline{toc}{chapter}{Abkürzungsverzeichnis}
+	\chapter*{Abkürzungsverzeichnis}
 }
+\begin{tabbing}
+\textbf{FACTOTUM}\hspace{1cm}\=Schrott\kill
+\textbf{CPU}\>Central Processing Unit
+\end{tabbing}
 \cleardoublepage
+
 % =============================================================================
 % List of figures
 % =============================================================================
@@ -175,6 +172,7 @@
 \listoffigures
 \small\normalsize
 \cleardoublepage
+
 % =============================================================================
 % List of tables
 % =============================================================================
@@ -183,6 +181,7 @@
 \listoftables
 \small\normalsize
 \cleardoublepage
+
 % =============================================================================
 % "I did this myself"
 % =============================================================================
