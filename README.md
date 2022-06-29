@@ -47,6 +47,12 @@ cd thesis-template
 make
 ```
 
+View without pdf file lock
+```
+cd thesis-template
+start .\output\thesis.pdf
+```
+
 #### Add to `Path` Environment Variable
 * Press [Win]+[R]
 * Enter `sysdm.cpl`
