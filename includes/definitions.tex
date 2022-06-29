@@ -2,8 +2,24 @@
 % Custom commands
 % =============================================================================
 % =============================================================================
-% Page margin and header setup
+% Variable declarations
 % =============================================================================
+
+% true = english
+% false = german
+\newboolean{english}
+\setboolean{english}{true}
+
+\def\authorsurname{TODO: SURNAME}
+\def\authorfirstname{TODO: FIRST NAME}
+\def\title{TODO: TITLE}
+\def\thesiskind{Master's Thesis}
+\def\thesisstart{TODO: START DATE}
+\def\thesisend{TODO: END DATE}
+% =============================================================================
+% Page margin, header setup, and typography
+% =============================================================================
+
 \textwidth 14cm
 \textheight 22cm
 \topmargin 0.0cm
@@ -14,6 +30,8 @@
 \widowpenalty10000
 \displaywidowpenalty=10000
 \parskip 0.5ex plus 0.1ex minus 0.1ex
+\ifthenelse{\boolean{english}}{\parindent 12pt}{\parindent 0.0cm}
+
 % =============================================================================
 % Package setup
 % =============================================================================
@@ -81,21 +99,6 @@
     moredelim=[s][\color{ForestGreen}\sffamily]{/**}{*/},
     moredelim=[l][\color{customblue}]{\#pragma}
 }
-% =============================================================================
-% Variable declarations
-% =============================================================================
-
-% true = english
-% false = german
-\newboolean{english}
-\setboolean{english}{false}
-
-\def\authorsurname{TODO: SURNAME}
-\def\authorfirstname{TODO: FIRST NAME}
-\def\title{TODO: TITLE}
-\def\thesiskind{Master's Thesis}
-\def\thesisstart{TODO: START DATE}
-\def\thesisend{TODO: END DATE}
 % =============================================================================
 % siunitx
 % =============================================================================
