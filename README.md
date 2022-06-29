@@ -87,3 +87,15 @@ make
 * Delete the `main.tex`
 * Upload the `thesis.tex`
 * Press _Recompile_
+
+## Language Selection 🇬🇧 🇩🇪
+
+This thesis template is set to English per default to switch to German do the following:
+* in [includes/packages.tex](./includes/packages.tex) remove `english` from the following line:
+```
+\usepackage[ngerman,english]{babel}
+```
+* in [includes/definitions.tex](./includes/definitions.tex) set the variable `english` under _Variable declarations_ to `false`:
+```
+\setboolean{english}{false}
+```
