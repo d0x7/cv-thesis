@@ -1,9 +1,12 @@
-pdf:
-    image: danteev/texlive
-    script:
-        - make
-    artifacts:
-        paths:
-            - output/thesis.pdf
-    tags:
-        - docker
+---
+variables:
+  LATEX_IMAGE: danteev/texlive:latest
+
+build:
+  image: $LATEX_IMAGE
+  script:
+    - make
+
+  artifacts:
+    paths:
+      - "output/thesis.pdf"
