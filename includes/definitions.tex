@@ -8,12 +8,14 @@
 % true = english
 % false = german
 \newboolean{english}
-\setboolean{english}{true}
+\setboolean{english}{false}
 
 \def\authorsurname{TODO: SURNAME}
 \def\authorfirstname{TODO: FIRST NAME}
 \def\title{TODO: TITLE}
-\def\thesiskind{Master's Thesis}
+\ifthenelse{\boolean{english}}
+    {\def\thesiskind{Master's Thesis Computer Science}}
+    {\def\thesiskind{Masterarbeit Informatik}}
 \def\thesisstart{TODO: START DATE}
 \def\thesisend{TODO: END DATE}
 % =============================================================================
@@ -30,7 +32,9 @@
 \widowpenalty10000
 \displaywidowpenalty=10000
 \parskip 0.5ex plus 0.1ex minus 0.1ex
-\ifthenelse{\boolean{english}}{\parindent 12pt}{\parindent 0.0cm}
+\ifthenelse{\boolean{english}}
+    {\parindent 12pt}
+    {\parindent 0.0cm}
 
 % =============================================================================
 % Package setup
