@@ -1,7 +1,7 @@
 \ifthenelse{\boolean{english}}{
-	\newgeometry{top=2.7cm}
+	\newgeometry{top=2.7cm,left=2.5cm,right=2.5cm}
 	\begin{titlepage}
-		\begin{adjustwidth}{-1cm}{-1cm}
+		\begin{adjustwidth}{0cm}{-1cm}
 		\begin{minipage}{0.5\textwidth}
 			\includegraphics[width=\linewidth]{figures/logo.pdf}
 		\end{minipage}
@@ -60,7 +60,7 @@
 		\end{minipage}
 	\end{titlepage}
 }{
-	\newgeometry{top=2.7cm}
+	\newgeometry{top=2.7cm,left=2.5cm,right=2.5cm}
 	\begin{titlepage}
 		\begin{adjustwidth}{-1cm}{-1cm}
 		\begin{minipage}{0.5\textwidth}
@@ -121,3 +121,4 @@
 		\end{minipage}
 	\end{titlepage}
 }
+\restoregeometry
