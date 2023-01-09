@@ -32,42 +32,115 @@ It is created to perform solve one problem faster and/or more efficiently than a
 Examples include, but are not limited to, GPUs or, in this case, AI accelerators.\\\\
 
 
-Bevor wir uns der Auswertung bzw. Bewertung der gewonnenen Primärdaten zuwenden, wollen wir zunächst einige grundlegende Begriffe der deskriptiven Statistik wiederholen.
-\section{Stichproben}
-
-Grundsätzlich haben wir es bei Microarrayexpressionsdaten mit einer {\textit Stichprobe} aus einer {\textit Population (Grundgesamtheit)} zu tun.   
-Wir bezeichnen nun im allgemeinen mit $X=\{x_1,x_2,\ldots,x_n\}$ die Beobachtungsdaten vom Umfang $n$. 
-Diese Daten sollen mit statistischen Kenngrößen beschrieben werden. Aus diesen will man möglichst zuverlässig auf die zugrundeliegende Verteilung in der Grundgesamtheit schließen. Hierzu verwenden wir die {\textbf Lage-} und {\textbf Streuparameter}. Zunächst wenden wir uns aber der Häufigkeits- und Summenhäufigkeitsverteilung zu, die sowohl graphisch als auch numerisch einen Eindruck über die Verteilung von $X$ bieten. Dafür betrachten wir diskrete Verteilungen.
-
-Gegeben sei eine Stichprobe $(X_1,X_2,\ldots,X_n)$. Eine Funktion $Z_n=Z(X_1,\ldots,X_n)$ wird als {\textit Stichprobenfunktion} bezeichnet. Sie ist selber eine Zufallsgröße.
-
-\subsection{Häufigkeiten und Histogramm}
-In der Stichprobe $X$ trete der Wert $x_i$ genau $n_i$ mal auf, $i=1,2,\ldots m$. Dann ist $\sum_i n_i = n$. Der Quotient $n_i/n$ ist die {\textit relative Häufigkeit} für das Eintreten des Ereignisses ``$X=x_i$''.
-Die Menge der relativen Häufigkeiten $\{n_1/n,n_2/n,\ldots, n_m/n\}$ heißt {\textit Häufigkeitsverteilung} von $X$. Ferner heißt die Menge $\{s_1,\ldots,s_m\}$ mit $s_i=\sum_{k=1}^{i}n_k/n$ die {\textit Summenhäufigkeitsverteilung} von $X$.
-
-Für die graphische Darstellung der Häufigkeitsverteilung wird das {\textit Histogramm} gewählt. für die Summenhäufigkeitsverteilung die {\textit Treppenfunktion}.
-
-Wenn wir natürlich Zahlen mit Komma haben, so sieht das in Deutsch irgendwie seltsam aus, z.B. $0,7$. Ich nehme dafür den SIstyle: $\SI{0,7}{}$ usf.  Oder nett ist auch: \SI{9.3e5}{km}
-
-\todo{Mit diesem Kommando kann man eigene Kommentare am Spaltenrand hinzufügen.}
-\note{Mit diesem Kommando kann man eigene Kommentare in der Textspalte hinzufügen.}
-
-%
-\subsection{Wichtige Verteilungen}
-
-\subsubsection{Die Normalverteilung}
-Die Dichte der Normalverteilung ist gegeben durch
-\begin{equation}\label{eqn:dichtenormal}
-g(x) = \frac{1}{2\pi\sigma}\cdot e^{-\frac{(x-\mu)^2}{2\sigma^2}}
-\end{equation}
-wobei $\mu$ (Lage) der Mittelwert und $\sigma$ (Breite) die Standardabweichung der Normalverteilung ist. 
-Durch die $z$-Transformation lässt sich die Normalverteilung auf die Standardnormalverteilung mit $\mu=0$ und $\sigma=1$ transformieren.
-
-Die Normalverteilung bildet die Basis fast der gesamten statistischen Theorie. \footnote{ 
-	\glqq Everyone believes in the normal law, the experimenters because they imagine it is a mathematical theorem, and the mathematicians because they think it is an experimental fact.\grqq{} (Gabriel Lippman, in Poincar's Calcul de probabilité, 1896)}. Auch bei der Analyse der Microarraydaten werden wir sehr oft von der Annahme der Normalverteilung Gebrauch machen. Allerdings sollten wir uns klarmachen, dass  rein experimentell zahlreiche Untersuchungen gezeigt haben, dass die echten Fehler selten, wenn überhaupt normal verteilt sind.
 
 
-\section{Schätzung von Parametern}
-Allgemein erhofft man sich beim Ziehen einer Stichprobe, einen unbekannten Parameter $\gamma$ der Grundgesamtheit, z.B. den Mittelwert, aus der Stichprobe zu schätzen.
-\subsection{Eigenschaften von Punktschätzungen}
+
+\section{Rust}
+
+Rust \cite{rustlang} has been the language of choice for the software running on the Pulpissimo \cite{pulpissimo} that I've written for this thesis.
+
+\subsection{Why Rust?}
+
+While C is the industry standard for writing software for embedded systems, and C++ also being fairly popular, Rust has a couple of
+advantages over those languages.\\\\
+The biggest downside of C is likely the lack of memory safety, which can not only cause software to be less reliable, but
+can also make a system vulnerable to different attacks, such as buffer overflows, reading uninitialized variables or use-after-free, which can compromise cybersecurity \cite{memory_safety}.\\
+C++ fixes some of those issues due to the availability of smart pointers, but those are fairly 'modern' C++, thus being only available if compilers support more modern
+versions of C++ (with C++ 11 starting to introduce many of concepts).
+There is also no guarantee that those features have been used in any given program.
+The opposite is more likely actually due to the incorporation of older software (library code written with older C++ versions in mind),
+compilers not supporting new versions (especially likely with small vendors that don't have the resources to continuously update compilers for their platform),
+or developers not keeping up to date with new language features and therefore not being aware of or able to use them.\\\\
+Rust on the other hand can (mostly) give compile time guarantees on the software's safety and reliability.
+
+\subsection{Memory safety and  performance}
+
+\subsubsection{Garbage collection}
+
+Most programming languages that try to achieve memory safety use a garbage collector to do that \cite{java_garbage_collector}.
+The downside of a garbage collector however is unpredictable latency (the running program has to be stopped while the garbage collector is running) and a hit in performance.
+A garbage collector first identifies pieces of memory that are no longer used \ref{fig:gc_mark}.
+Then the marked pieces of memory are periodically deleted \ref{fig:gc_delete}.
+After the deletion the garbage collector will 'compact' the memory to avoid memory fragmentation and improve the speed of future allocations.
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/fundamentals_garbage_collector_marking.PNG}
+    \caption[Illustration: Garbage Collector marking memory for deletion\\Source: https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/images/gcslides/Slide3.png]{Garbage Collector marking memory for deletion}
+    \label{fig:gc_mark}
+\end{figure}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/fundamentals_garbage_collector_deletion.PNG}
+    \caption[Illustration: Garbage Collector deleting marked memory\\Source: https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/images/gcslides/Slide1b.png]{Memory layout after deletion of unused pieces of memory}
+    \label{fig:gc_delete}
+\end{figure}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/fundamentals_garbage_collector_compacting.PNG}
+    \caption[Illustration: Garbage Collector compacting memory\\Source: https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/images/gcslides/Slide4.png]{Memory layout after compacting}
+    \label{fig:gc_compact}
+\end{figure}
+
+\subsubsection{Ownership in Rust}
+
+Rust uses an 'ownership' model \cite{rust_ownership} to make memory safety guarantees at compile time and without the need of a garbage collector,
+which is good for safety, and does not negatively impact performance or latency.
+
+% TODO explain ownership
+
+\section{Microphone technology}
+
+A microphone consists of a diaphragm and a transducer.
+Sound waves cause the diaphragm to vibrate, and
+the transducer turns those vibrations into an electrical signal.
+
+\subsection{I2S}
+
+The inter-IC sound ($I^2S$) \cite{i2s} bus is a serial link that has been developed especially for digital audio.
+It uses three lines, one serial data line (SD), one continuous serial clock line (SCK) and one word select line (WS).
+$I^2S$ can be used in different configurations, but the master always provides WS and SCK.
+
+\subsubsection{Serial Data}
+
+The data consists of signed integers (in two's complement).
+Due to possible differences between the word lengths of transmitter and receiver,
+the MSB is transmitted first.
+
+% So neither transmitter nor receiver need any knowledge about the capabilities of the other.
+% TODO finish explanation
+
+\subsubsection{Word Select}
+
+Word select determines the transmission channel, where 0 means the left channel and 1 means the right one.
+It can be changed on a trailing or leading edge of the clock signal and the WS line changes one clock period
+before the MSB is transmitted.
+For the purpose of what I do in this thesis, WS is not relevant an will be tied to ground unless mentioned otherwise.
+
+\subsection{Pulse Density Modulation}
+
+Pulse Density Modulation (PDM) is one way to represent an analog signal with a binary signal.
+The density of high/low signals at a given sampling rate encodes the state of the analog signal.
+So the analog signal is encoded using only 1 bit at a high sampling rate.\\
+Therefore a constant bitstream of 1s would represent that the amplitude of the analog signal is maxed out,
+while a constant bitstream of 0s would represent that the amplitude of the analog signal is at it's lowest value.
+Alternating 1s and 0s represent an amplitude of exactly 0.\\\\
+\
+\
+% TODO explain PDM
+\
+While many digital audio systems use Pule Code Modulation (PCM), which, in contrast to PDM, uses multiple bits to represent a signal,
+PDM is used a lot in mobile phones \cite{pdm_utexas} due to its simplicity and low cost.
+However 1bit PCM would be much too noisy to be useful.
+So to counteract the noise increase of only using 1 bit the signal is 'oversampled', thereby increasing the bandwidth of the system.
+However the new spectrum that is created by oversampling the signal has a frequency that is too high for the human ear.
+Now the only thing that is left to do is 'push' the noise into that new spectrum, thus removing it from the audible signal.
+This can be done using 'Noise Shaping'.
+
+\subsubsection{Noise Shaping}
+
+Noise Shaping...
+
 
