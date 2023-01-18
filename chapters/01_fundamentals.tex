@@ -10,7 +10,7 @@
 \section{RISC-V}
 
 RISC-V \cite{riscv} is an open standard Instruction Set Architecture (ISA).
-RISC-V International is the non profit that provides the open, royalty-free ISA that is RISC-V.
+'RISC-V International' is the non-profit that provides the open, royalty-free ISA that is RISC-V.
 \\\\
 RISC-V was originally developed to support computer architecture research and education, but the authors now
 aim for RISC-V to also be used in industry implementations \cite{riscv_spec}.
@@ -20,14 +20,14 @@ aim for RISC-V to also be used in industry implementations \cite{riscv_spec}.
 With artificial intelligence (AI) becoming more and more contemporary and wide-ranging it is only consequential that is has found its way into embedded devices.
 Especially with the \todo{needs proof/citation} rising trend of IoT devices and smart homes
 embedded AI has found its way into the hand of consumer homes.
-From voice assistants like Amazon's Alexa \cite{alexa} over autonomous robots like the Roomba \cite{roomba} from iRobot to self driving cars like Tesla's autopilot \cite{autopilot} .
+From voice assistants like Amazon's Alexa \cite{alexa} over autonomous robots like the Roomba \cite{roomba} from iRobot to self-driving cars like Tesla's autopilot \cite{autopilot}.
 However size and power requirements of those devices severely limit their capabilities, which is why the development of specialized hardware to improve performance
 and power usage becomes a necessity.\\
 % https://ieeexplore.ieee.org/abstract/document/8318006
 
 In my thesis I'm working with the UltraTrail TC-ResNet AI Accelerator \cite{ultratrail}.
 An AI Accelerator is a type of hardware accelerator specialized for artificial intelligence (AI) and machine learning (ML) applications, such as neural networks (NN).
-A hardware accelerator is a set of custom made hardware that specializes in carrying out one task only, but doing it really well.
+A hardware accelerator is a set of custom-made hardware that specializes in carrying out one task only, but doing it really well.
 It is created to perform solve one problem faster and/or more efficiently than a generic CPU could with the trade-off that it may not be able to do other things at all.
 Examples include, but are not limited to, GPUs or, in this case, AI accelerators.\\\\
 
@@ -113,7 +113,7 @@ To avoid those things '\lstinline{value}' is considered to be 'moved' to its new
 and the original owner ('\lstinline{owner}') is no longer valid.\\
 This works similarly for functions, and these 3 rules allow the compiler to check for any mistakes that would lead to
 memory issues.
-However there is one more thing that needs to be talked about; the borrow operator.
+However, there is one more thing that needs to be talked about; the borrow operator.
 The borrow operator ('\lstinline{\&}') \cite{rust_borrow} allows other variables access to a value without changing the owner.
 There follow two more rules for references and borrowing:
 \begin{enumerate}
@@ -200,30 +200,32 @@ the MSB is transmitted first.
 Word select determines the transmission channel, where 0 means the left channel and 1 means the right one.
 It can be changed on a trailing or leading edge of the clock signal and the WS line changes one clock period
 before the MSB is transmitted.
-For the purpose of what I do in this thesis, WS is not relevant an will be tied to ground unless mentioned otherwise.
+For the purpose of what I do in this thesis, WS is not relevant and will be tied to ground unless mentioned otherwise.
 
 \subsection{Pulse Density Modulation}
 
 Pulse Density Modulation (PDM) is one way to represent an analog signal with a binary signal.
 The density of high/low signals at a given sampling rate encodes the state of the analog signal.
 So the analog signal is encoded using only 1 bit at a high sampling rate.\\
-Therefore a constant bitstream of 1s would represent that the amplitude of the analog signal is maxed out,
-while a constant bitstream of 0s would represent that the amplitude of the analog signal is at it's lowest value.
+Therefore, a constant bit stream of 1s would represent that the amplitude of the analog signal is maxed out,
+while a constant bit stream of 0s would represent that the amplitude of the analog signal is at its lowest value.
 Alternating 1s and 0s represent an amplitude of exactly 0.\\\\
 \
 \
 % TODO explain PDM
+% NOTE we done?
 \
 While many digital audio systems use Pule Code Modulation (PCM), which, in contrast to PDM, uses multiple bits to represent a signal,
 PDM is used a lot in mobile phones \cite{pdm_utexas} due to its simplicity and low cost.
-However 1bit PCM would be much too noisy to be useful.
+However, 1bit PCM would be much too noisy to be useful.
 So to counteract the noise increase of only using 1 bit the signal is 'oversampled', thereby increasing the bandwidth of the system.
-However the new spectrum that is created by oversampling the signal has a frequency that is too high for the human ear.
+However, the new spectrum that is created by oversampling the signal has a frequency that is too high for the human ear.
 Now the only thing that is left to do is 'push' the noise into that new spectrum, thus removing it from the audible signal.
 This can be done using 'Noise Shaping'.
 
 \subsubsection{Noise Shaping}
 
+% TODO
 Noise Shaping...
 
 
