@@ -189,11 +189,26 @@ $I^2S$ can be used in different configurations, but the master always provides W
 \subsubsection{Serial Data}
 
 The data consists of signed integers (in two's complement).
-Due to possible differences between the word lengths of transmitter and receiver,
-the MSB is transmitted first.
+Due to possible differences between the word lengths and neither the transmitter nor the
+receiver having any knowledge about the capabilities of the other, the MSB is transmitted first.
+In the transmission, the MSB has a fixed position, which means that the position of the LSB
+is variable due to possible size differences between the word lengths of transmitter and receiver,
+and it being dependent on the word length.\\
+So when the word length of the system exceeds that of the transmitter, the LSBs are truncated
+for the transmission as demonstrated in \ref{fig:truncation}.
+If the receiver receives more bits than its word length, everything after the LSB
+of the receiver is ignored, and if the receiver gets fewer bits than its,
+the missing bits are set to 0.\\
+Furthermore, data sent by the transmitter can either be synchronized with a trailing or leading edge
+of the clock signal, however received data must be latched onto the leading edge.
 
-% So neither transmitter nor receiver need any knowledge about the capabilities of the other.
-% TODO finish explanation
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/fundamentals_truncation.png}
+    \caption[Illustration: Truncation of words]{Example of a longer word being split into two with the lower bits being set to zero}
+    \label{fig:truncation}
+\end{figure}
 
 \subsubsection{Word Select}
 
