@@ -171,8 +171,117 @@ of what is valid and invalid under rule 2.
 \end{lstlisting}
 
 
+\subsection{Embedded Rust}
 
-% TODO explain ownership
+Developing software that runs directly on hardware is a bit different due to the lack of an operating system (OS).
+When developing for a microcontroller (MCU) there is no OS that supervises and manages programs or facilitates communication with peripherals.
+Therefore, embedded Rust programs look a little different from those that would run on a Windows, Linux or Mac computer.
+\\
+First, since there is no operating system to allocate memory, put the code into the right memory space and start the program.
+So the developer has to take care of that when creating the executable, which is why 'special' instructions for the linker are necessary.
+For Rust programs these instructions are written into a \lstinline{memory.x} file.
+This file contains information about the memory layout of the hardware that the program will be running on.
+An example of such a \lstinline{memory.x} file can be found in \ref{code:memory_x}.
+
+\begin{lstlisting}[style=colorEX,caption={Example memory.x file},label={code:memory_x}]
+MEMORY
+{
+  /* NOTE K = KiBi = 1024 bytes */
+  /* RAM : ORIGIN = 0x1C000000, LENGTH = 0x0007fffc */
+  RAM : ORIGIN = 0x1C000000, LENGTH = 0x00010000
+  LTWO : ORIGIN = 0x1C010000, LENGTH = 0x00072000
+  /* FLASH : ORIGIN = 0x1A000000, LENGTH = 8K */
+
+
+}
+
+SECTIONS
+{
+    .l2_data ORIGIN(LTWO) :
+    {
+        LONG(0x00072000);
+        *(.l2_data);
+    } > LTWO
+}
+
+REGION_ALIAS("FLASH", RAM);
+
+REGION_ALIAS("REGION_TEXT", FLASH);
+REGION_ALIAS("REGION_RODATA", FLASH);
+REGION_ALIAS("REGION_DATA", RAM);
+REGION_ALIAS("REGION_BSS", RAM);
+REGION_ALIAS("REGION_HEAP", RAM);
+REGION_ALIAS("REGION_STACK", RAM);
+
+\end{lstlisting}
+
+
+However, there are also quite a few differences in the actual program code. Usually Rust programs contain a main function that looks like the example in \ref{code:os_main}.
+This serves as an entry for the program, and it returns nothing. After the function returns, the OS initiates its cleanup routine for the ending process like usual.
+
+\begin{lstlisting}[style=colorEX,language=Rust,caption={Standard main function in Rust},label={code:os_main}]
+fn main() {
+    // contents of main function
+}
+\end{lstlisting}
+
+But due to the lack of an OS, starting the program looks quite a bit differently, and is no cleanup after the program ended either.
+As a matter of fact, since the program will be the only thing running on the hardware, the main function will never return, and the program
+only really stops when the device is turned off.
+
+\begin{lstlisting}[style=colorEX,language=Rust,caption={Example main function for the pulp-platform},label={code:embedded_main}]
+#![no_main]
+
+use riscv_rt::entry;
+
+#[entry]
+fn main() -> ! {
+    // code
+    loop {}
+}
+\end{lstlisting}
+
+\ref{code:embedded_main} displays a main function alike to the ones I've used in my programs.
+The '\lstinline{#![no_main]}' directive tells the compiler that I will not use the standard main function.
+Since this function will never return, the return type not specify exactly that.
+In Rust, return types are specified using the '\lstinline{->}', followed by the type \cite{rust_return}.
+The '\lstinline{!}' indicates that the function doesn't return \cite{rust_never_type}.
+\\
+The '\lstinline{#[entry]}' attribute, imported by the '\lstinline{use riscv_rt::entry}' statement, is used to declare the entry point of the program \cite{riscv_rt_entry}
+The requirement for this attribute is that the function never returns, which also why the loop at the end is necessary.
+\\\\
+This is close to a working program, but not quite there yet.
+Without the OS, the device is also not able to load the standard library.
+Which is why the '\lstinline{#![no_std]}' is used, as it prevents Rust from loading the standard library \cite{rust_no_std}.
+However, the standard library provides a lot of useful features, like a dynamic memory allocator or a panic handler.
+So these features need to be replaced by their own crates, if available.
+The crates that provide those features in this case are called the '\lstinline{pulpissimo_hal}' and '\lstinline{pulpissimo_pac}'.
+They act as an abstraction layer over and provide an interface to interact with the hardware.
+\\
+A minimal example of a running program can be found in \ref{code:min_example}.
+This minimal example doesn't use any features from the '\lstinline{pulpissimo_pac}' directly, which is why it is not 'included'.
+Also, the endless loop at the end is replaced by the '\lstinline{exit}' function from the '\lstinline{pulpissimo_hal}'.
+This example also uses the '\lstinline{println}' macro from the '\lstinline{pulpissimo_hal}' to print messages that then can be viewed over minicom.
+
+\begin{lstlisting}[style=colorEX,language=Rust,caption={Minimal example of a program running on the pulpissimo hardware},label={code:min_example}]
+#![no_main]
+#![no_std]
+
+use riscv_rt::entry;
+
+use panic_halt as _;
+use pulpissimo_hal as hal;
+
+use hal::{exit, println};
+
+#[entry]
+fn main() -> ! {
+    println!("Hello, world!");
+
+    exit(0)
+}
+\end{lstlisting}
+
 
 \section{Microphone technology}
 
