@@ -334,22 +334,9 @@ So the analog signal is encoded using only 1 bit at a high sampling rate.\\
 Therefore, a constant bit stream of 1s would represent that the amplitude of the analog signal is maxed out,
 while a constant bit stream of 0s would represent that the amplitude of the analog signal is at its lowest value.
 Alternating 1s and 0s represent an amplitude of exactly 0.\\\\
-\
-\
-% TODO explain PDM
-% NOTE we done?
-\
 While many digital audio systems use Pule Code Modulation (PCM), which, in contrast to PDM, uses multiple bits to represent a signal,
 PDM is used a lot in mobile phones \cite{pdm_utexas} due to its simplicity and low cost.
 However, 1bit PCM would be much too noisy to be useful.
 So to counteract the noise increase of only using 1 bit the signal is 'oversampled', thereby increasing the bandwidth of the system.
-However, the new spectrum that is created by oversampling the signal has a frequency that is too high for the human ear.
-Now the only thing that is left to do is 'push' the noise into that new spectrum, thus removing it from the audible signal.
-This can be done using 'Noise Shaping'.
-
-\subsubsection{Noise Shaping}
-
-% TODO
-Noise Shaping...
-
-
+The new spectrum that is created by oversampling the signal has a frequency that is too high for the human ear.
+'Noise Shaping' can then be used to 'push' noise into that new spectrum, thus removing it from the audible signal \cite{pdm_texas}.
