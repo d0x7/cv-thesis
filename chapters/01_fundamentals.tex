@@ -10,10 +10,35 @@
 \section{RISC-V}
 
 RISC-V \cite{riscv} is an open standard Instruction Set Architecture (ISA).
-'RISC-V International' is the non-profit that provides the open, royalty-free ISA that is RISC-V.
-\\\\
 RISC-V was originally developed to support computer architecture research and education, but the authors now
 aim for RISC-V to also be used in industry implementations \cite{riscv_spec}.
+
+\subsection{ISA}
+
+A computer program consists of several instructions.
+These instructions are 'commands' that a computer understands and react to by performing certain tasks in response.
+A compiler, in case of compiled languages like C, C++, Rust or Go, transforms code written by a human into instructions.
+In case of interpreted languages like Python, Java or JavaScript, the code is converted into ByteCode which is then converted into
+these instructions (also sometimes referred to as 'machine code') by the interpreter.
+An Instruction Set is, as the name suggests, the set of instructions that a specific computer, or to be more precise,
+its Central Processing Unit (CPU) can understand.
+Which instructions are available depends on the hardware of a particular system.
+Instruction Set Architectures abstractly describe the architecture of a computer,
+like supported data types, available registers, how main memory is managed by the hardware and
+which instructions  a microprocessor can execute \cite{isa}, which can then be implemented by a CPU.
+ISAs are often classified by their complexity, belonging either to the set of 'complex instruction set computers' (CISC), like x86,
+or 'reduced instruction set computers' (RISC) like ARM \cite{arm_architecture} or RISC-V \cite{riscv_spec}.
+
+\subsection{RISC-V vs. ARM}
+
+While RISC-V \cite{riscv} is an open standard ISA provided, royalty-free, by 'RISC-V International', a non-profit,
+ARM \cite{arm} is developed by a company that sells licenses to other businesses that develop CPUs based on the ARM architecture.
+ARM generally has a much higher market share than RISC-V due to it being used in pretty much every mobile device (phones, tablets, smartwatches)
+these days, as well as many IoT devices and even laptops like the new Apple MacBooks containing the M1 system-on-a-chip (SOC).
+However, NVIDIA announced its acquisition of ARM in 2020 \cite{arm_sale}, which was met with disapproval by some people.
+This caused speculations, that some companies might turn to RISC-V in the future as an alternative \cite{arm_sale_speculation}.
+However, the acquisition was called off in 2022 \cite{arm_sale_called_off}.
+
 
 \section{Embedded AI}
 
