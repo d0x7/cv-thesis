@@ -210,12 +210,8 @@ An example of such a \lstinline{memory.x} file can be found in \ref{code:memory_
 MEMORY
 {
   /* NOTE K = KiBi = 1024 bytes */
-  /* RAM : ORIGIN = 0x1C000000, LENGTH = 0x0007fffc */
   RAM : ORIGIN = 0x1C000000, LENGTH = 0x00010000
   LTWO : ORIGIN = 0x1C010000, LENGTH = 0x00072000
-  /* FLASH : ORIGIN = 0x1A000000, LENGTH = 8K */
-
-
 }
 
 SECTIONS
@@ -291,11 +287,8 @@ This example also uses the '\lstinline{println}' macro from the '\lstinline{pulp
 #![no_std]
 
 use riscv_rt::entry;
-
 use panic_halt as _;
-use pulpissimo_hal as hal;
-
-use hal::{exit, println};
+use pulpissimo_hal::{exit, println};
 
 #[entry]
 fn main() -> ! {
