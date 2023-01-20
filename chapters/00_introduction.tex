@@ -5,90 +5,21 @@
 % =============================================================================
 % CONTENT   : Include for chapter "Introduction"
 % =============================================================================
-Beginnen sollte die Arbeit mit einer kurzen Einführung und Motivation in das Themengebiet. Aus der Motivation lassen sich ggf. bestehende Probleme ableiten bzw. Probleme aufzeigen, die man in dieser Arbeit lösen möchte. Danach erfolgt die Beschreibung der Aufgabenstellung.
-
-Die Arbeit gliedert sich dazu wie folgt: Die Grundlagen von BlaBlaBla 
-werden in Kapitel \ref{cha:fundamentals} erarbeitet. 
-
-\section{Einige LaTeX-Hinweise}
-
-Im folgenden wird das Einbinden einer Abbildung als `pdf-Datei' in ein
-\LaTeX-Dokument gezeigt.
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\linewidth]{figures/example_fig.pdf}
-	\caption[Schematic view of a simple MLP.]{Schematic view of a simple MLP.}
-  \label{fig:mlp}
-\end{figure}
-
-Abbildung \ref{fig:mlp} zeigt ...
-
-Tabelle \ref{tab:tabelle_1}
-
-\begin{table}[htb]
-  \centering
-  \begin{tabular}{p{2.7cm}lcr}
-    \toprule
-    \textbf{Spalte 1} 
-    & \textbf{Spalte 2} 
-    & \textbf{Spalte 3} 
-    & \textbf{Spalte 4} \\
-    \midrule
-    xxx1111
-    & xxxxxxx2222222
-    & xxxxxx333333 
-    & xxxxxxxxxx444444 \\
-
-    yyy1111
-    & yyyyyyy2222222
-    & yyyyyy333333 
-    & yyyyyyyyy444444 \\
-    \addlinespace 
-
-    zzz1111
-    & zzzzzzz2222222
-    & zzzzzz333333 
-    & zzzzzzzzz444444 \\
-
-    ...
-    & ...
-    & ...
-    & ...\\
-    ...
-    & ...
-    & ...
-    & ...\\
-    \bottomrule
-  \end{tabular}
-  \caption[Beispieltabelle mit langer Legende]{Beispieltabelle mit einer langen Legende, damit man sieht, dass in der Legende der Zeilenabstand verringert wurde. Außerdem soll auch der Font etwas kleiner gewählt werden. So sieht die ganze Umgebung kompakter aus.}
-  \label{tab:tabelle_1}
-\end{table}
-
-Eine Aufzählung geht wie folgt:
-\begin{itemize}
-	\item ...
-	\item ...
-\end{itemize}
-Eine nummerierte Aufzählung:
-\begin{enumerate}
-	\item ...
-	\item ...
-\end{enumerate}
-
-Quellcodeauszug \ref{code:example}
-\begin{lstlisting}[style=colorEX,language=PythonPlus,caption={Beispielcode},label={code:example}]
-if __name__ == "__main__":
-    print("Hello World!")
-\end{lstlisting}
 
 
-Betonungen sollen \emph{kursiv} gedruckt werden. 
-\textbf{Fettdruck} ist auch möglich.
-
-Zitieren einer Webseite \cite{webpage}.
-
-% SI Einheiten \SI{32}{\bit}, \SI{64}{\kilo\byte}, \SI{3.14}{\milli\watt}.
+Rust \cite{rustlang} is a somewhat new language,
+with their very first release in early 2012 \cite{rust_releases}.
+But the 1.0 alpha release was only in early 2015 \cite{rust_releases}
+with the full 1.0 release following a few months later in Mai of the same year \cite{rust_releases}.
+C, as a comparison has been used as early as the 1970s.\\
+But Rust has been gaining in popularity \cite{rust_popularity} over the last few years, however
+due to its relatively 'young' age there still are huge gaps when it comes to software support and available libraries.
+So in my thesis I'll improve upon the Rust ecosystem by expanding upon the thesis of Raphael Vogelgsang \cite{rust_pulp}
+and implementing support for the UltraTrail \cite{ultratrail} AI accelerator.
+\\\\
+This thesis is structured as follows:
+The chapter \ref{cha:fundamentals} will provide a fundamental overview of RISC-V, 'Embedded AI', (embedded) Rust and microphone technology.
+\todo{rest der kapitel}
 
 
 \section{Umfang der Arbeit}
