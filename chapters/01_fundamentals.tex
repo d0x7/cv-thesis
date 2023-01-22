@@ -236,7 +236,15 @@ REGION_ALIAS("REGION_STACK", RAM);
 
 
 However, there are also quite a few differences in the actual program code. Usually Rust programs contain a main function that looks like the example in \ref{code:os_main}.
-This serves as an entry for the program, and it returns nothing. After the function returns, the OS initiates its cleanup routine for the ending process like usual.
+This works similar to normal C code where the main function either serves as entry point for the program or will be called by the \lstinline{_start} function provided by glibc \cite{before_main}.
+This \lstinline{_start} function initializes the program runtime by setting up things like the stack and writing arguments into memory to name a few.
+After initialization, the main function is then called.
+This is equal for programs that run with or without an OS.\\
+The difference in this startup process occurs before the \lstinline{_start} function.
+If the program runs on a device with an OS, it first does some preparation and initialization for the program to run.
+The program environment is configured by, among other things, checking permissions (is the user allowed to run this program),
+allocating space on the stack and heap, initializing the stack pointer, linking dynamically linked libraries and calling pre-initialization functions \cite{before_main}.
+Once the program environment is configured, the programs \lstinline{_start} is called by the OS.
 
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Standard main function in Rust},label={code:os_main}]
 fn main() {
@@ -244,9 +252,17 @@ fn main() {
 }
 \end{lstlisting}
 
-But due to the lack of an OS, starting the program looks quite a bit differently, and is no cleanup after the program ended either.
-As a matter of fact, since the program will be the only thing running on the hardware, the main function will never return, and the program
-only really stops when the device is turned off.
+When a program is running on 'bare-metal' (meaning without an OS or even a bootloader that launches the  application), this process is more crude.
+The \lstinline{_start} function still serves as the entry point for the program, but there are fewer steps involved in getting there.
+After the application is compiled by the programmer, it is 'flashed' onto the device, meaning written to flash memory.
+When the processor is powered on, it will copy the program into Random Access Memory (RAM) and jump to the reset interrupt vector address.
+The programs reset interrupt handler will then initialize the system and configure any necessary hardware components
+like registers, external RAM or the Memory Management Unit (MMU).
+After that the handler jumps to \lstinline{_start} (if present) \cite{before_main}.\\\\
+Due to the lack of an OS, there is no cleanup after the program ended either.
+As a matter of fact, since the program will be the only thing running on the hardware,
+the main function will never return, for our intents and purposes.
+The program also only really stops when the device is turned off or reset.
 
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Example main function for the pulp-platform},label={code:embedded_main}]
 #![no_main]
