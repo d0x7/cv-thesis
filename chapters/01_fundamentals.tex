@@ -295,7 +295,9 @@ They act as an abstraction layer over and provide an interface to interact with 
 \\
 A minimal example of a running program can be found in \ref{code:min_example}.
 This minimal example doesn't use any features from the '\lstinline{pulpissimo_pac}' directly, which is why it is not 'included'.
-Also, the endless loop at the end is replaced by the '\lstinline{exit}' function from the '\lstinline{pulpissimo_hal}'.
+Also, the endless loop at the end is replaced by the '\lstinline{exit}' function from the '\lstinline{pulpissimo_hal}' crate.
+This only matters when running the program on simulated hardware, when running the program on real hardware, the '\lstinline{exit}' function is
+for all intents and purposes equal to an endless loop \cite[Ch 4.3.10]{rust_pulp}.
 This example also uses the '\lstinline{println}' macro from the '\lstinline{pulpissimo_hal}' to print messages that then can be viewed over minicom.
 
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Minimal example of a program running on the pulpissimo hardware},label={code:min_example}]
