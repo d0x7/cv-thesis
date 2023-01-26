@@ -29,9 +29,16 @@ UltraTrail is a 'configurable ultra-low power TC-ResNet AI accelerator for effic
 It uses temporal convolutional networks (TCNs) combined with residual networks (TC-ResNet) for intelligent sensor signal processing.
 They show superior behavior compared to conventional convolutional neural networks (CNNs) and long short-term memory (LSTM) networks,
 which is a type of Recurrent Neural Network (RNN), and commonly used speech recognition applications like keyword spotting or text to speech engines.
-TCNs specifically not only appear to be more accurate, but also simpler and clearer compared to LSTMs and GRUs \cite[Ch I]{ultratrail}.\\\\
+TCNs specifically not only appear to be more accurate, but also simpler and clearer compared to LSTMs and GRUs \cite[Ch I]{ultratrail}.\\
+UltraTrail uses a variety of units, arrays and layers to provide efficient mapping of the TC-ResNet without sacrificing too much flexibility.
+An overview of the UltraTrail system architecture can be seen in figure \ref{fig:ultratrail_arch}.
 
-\todo{expand}
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/ultratrail.png}
+    \caption[Illustration: The UltraTrail system architecture \cite{ultratrail}]{The UltraTrail system architecture}
+    \label{fig:ultratrail_arch}
+\end{figure}
 
 \section{Keyword spotting in the Industry}
 
