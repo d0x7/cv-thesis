@@ -6,3 +6,83 @@
 % CONTENT   : Include for chapter "Concept"
 % =============================================================================
 
+
+Goal of this thesis is to add support for the UltraTrail architecture to the Rust ecosystem by expanding the
+\lstinline{pulissimo_hal} and \lstinline{pulissimo_pac} crates with drivers and test/example programs.
+To achieve this, the first step is to add the accelerator as a peripheral to the SVD file and port the C driver to Rust.
+I also ported a small test program from C to Rust, to make sure that the implementation of the driver works as expected.
+\\
+Additionally, to implementing the driver, I need an input source for the PULPissimo, so I will work on a variety on $I^2S$ microphones and one PDM microphone.
+The \lstinline{pulpissimo_hal} crate provides drivers for $I^2S$ and PDM, as well as some example programs, however neither have been tested nor run before.
+After the microphones work, their input will be used to test UltraTrail.
+The microphones exclusively use the $I^2S$ bus, and are mostly standard $I^2S$ microphones, except for one PDM microphone,
+which are introduced in further detail in the following section of this chapter.
+
+\section{Microphones}
+
+\subsection{Adafruit I2S MEMS Microphone}
+
+\subsubsection{Technical Specification}
+
+The $I^2S$ MEMS microphone from Adafruit \cite{i2s_mic} is a digital microphone.
+It requires a supply voltage between \SI{1.62}{\volt} and \SI{3.6}{\volt} while drawing a current of \SI{600}{\micro\ampere}.
+During sleep mode the current draw is reduced to \SI{10}{\micro\ampere}, and the clock frequency is lowered from anything between
+\SI{2048}{\kilo\hertz} and \SI{4096}{\kilo\hertz} to \SI{900}{\kilo\hertz}.
+A logical high is read for any voltage between 65\% of the supply voltage ($V_{DD}$) and $V_{DD}$ + \SI{0.3}{\volt},
+and a logical low is read for any voltage between \SI{-0.3}{\volt} and 35\% of $V_{DD}$ \cite{i2s_mic_datasheet}.
+
+\subsubsection{Pinout}
+
+The breakout board has 6 pins, $V_{DD}$ and Ground (GND), which are responsible for power, as well as 4 data pins.
+The output of the microphone can be read on 'Data Out' (DOUT), the channel (right/left mono audio) can be changed by
+changing the voltage of the 'Select' (SEL) pin, which is set to low (left) by default.
+The 'bit clock' (BCLK) is the main clock of the device that determines when data is transmitted, and the 'left/right clock' (LRCLK)
+controls whether data is transmitted on the left or right channel.
+The LRCLK will also be referred to as 'Word Select' (WS) in some instances \cite{i2s_mic_pinout}.
+
+\subsubsection{Timing}
+
+\todo{timing}
+
+\subsection{Adafruit PDM MEMS Microphone}
+
+\subsubsection{Technical Specification}
+
+The PDM MEMS microphone from Adafruit \cite{pdm_mic} is a digital microphone.
+It uses the $I^2S$ bus to communicate, but instead of the typical 24 bit encoding of $I^2S$ microphones, PDM microphones only use 1 bit.
+It requires a supply voltage between \SI{1.64}{\volt} and \SI{3.6}{\volt} while drawing a current of \SI{600}{\micro\ampere}, with a clock
+frequency from \SI{1}{\mega\hertz} to \SI{3.25}{\mega\hertz}.
+During power down mode the current draw is reduced to \SI{20}{\micro\ampere}.
+A logical high is read for any voltage between 65\% of ($V_{DD}$) and $V_{DD}$ + \SI{0.3}{\volt},
+and a logical low is read for any voltage between \SI{-0.3}{\volt} and 35\% of $V_{DD}$ \cite{pdm_mic_datasheet}.
+
+\subsubsection{Pinout}
+
+The breakout board of the PDM microphone, in contrast to the breakout board of the $I^2S$ microphone, only has has 5 pins.
+$V_{DD}$ and Ground (GND), serve the same purpose, but it only needs 3 data pins.
+The output of the PDM microphone can be read on 'PDM Data Out' (DAT), and the PDM microphone also has a SEL pin, which works the same way as
+it does in the $I^2S$ microphone.
+However it only has one clock line (CLK), and no WS \cite{pdm_mic_pinout}.
+
+\subsubsection{Timing}
+
+\todo{timing}
+
+\section{Tests}
+
+\subsection{Microphones}
+
+A variety of tests are used to determine the functionality of the microphones.
+The first test simply consists of playing some sort of noise and analyzing the output of the microphones to see if
+they respond in some predictable manner.
+After that finer testing is carried by playing a sound that represents a perfect sign wave,
+which should yield a perfect sign wave on the end of the microphones as well.\\
+An array of equipment is used to analyze the output of the microphones; namely a logic analyzer, an oscilloscope
+(for debugging purposes), as well as a few python tools to save and analyze the output data.
+
+\subsection{UltraTrail}
+
+The UltraTrail test makes sure that configuration changes have the desired effect (bits are correctly set in the correct registers),
+and the AI accelerator is tested using a predefined set of input data.
+After the input data is loaded correctly, the accelerator is started and will raise a \todo{hardware interrupt or event?} when it is done.
+After that the results are compared with the desired results, which finally determines the functionality of the drivers.
