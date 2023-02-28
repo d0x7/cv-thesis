@@ -18,8 +18,13 @@ However, the authors now aim for RISC-V to also be used in industry implementati
 A computer program consists of several instructions.
 These instructions are 'commands' that a computer understands and can react to by performing certain tasks in response.
 A compiler, in case of compiled languages like C, C++, Rust or Go, transforms code written by a human into instructions.
-In case of interpreted languages like Python, Java or JavaScript, the code is converted into bytecode which is then converted into
-these instructions (also sometimes referred to as 'machine code') by the interpreter.
+In case of interpreted languages like Python, Java or JavaScript, the source code is converted into these instructions
+(also sometimes referred to as 'machine code') by an interpreter or Just-In-Time (JIT) compiler during the programs' execution.
+Sometimes that code is first transformed into bytecode which serves as an intermediate representation of the source code
+that can be optimized.
+Java, for example is first compiled into bytecode that can be distributed and executed by the Java Virtual Machine (JVM),
+whereas the python source code is often interpreted immediately line by line.
+\\
 An Instruction Set is, as the name suggests, the set of instructions that a specific computer, or to be more precise,
 its Central Processing Unit (CPU) can understand.
 Which instructions are available depends on the hardware of a particular system.
