@@ -64,18 +64,18 @@ Examples include, but are not limited to, GPUs, sound cards, cryptographic accel
 
 \section{Rust}
 
-Rust \cite{rustlang} has been the language of choice for the software running on the PULPissimo \cite{pulpissimo} that I've written for this thesis.
+The software written for this thesis, that is running on the PULPissimo \cite{pulpissimo} has been implemented using the Rust programming language \cite{rustlang}.
 
 \subsection{Why Rust?}
 
-While C is the industry standard for writing software for embedded systems, and C++ also being fairly popular, Rust has a couple of
+While C is the industry standard for writing software for embedded systems, along with C++ being fairly popular as well, Rust has a couple of
 advantages over those languages.\\\\
 The biggest downside of C is likely the lack of memory safety, which can not only cause software to be less reliable, but
 can also make a system vulnerable to different attacks, such as buffer overflows, reading uninitialized variables or use-after-free, which can compromise cybersecurity \cite{memory_safety}.\\
-C++ fixes some of those issues due to the availability of smart pointers, but those are fairly 'modern' C++, thus being only available if compilers support more modern
-versions of C++ (with C++ 11 starting to introduce many of concepts).
+C++ fixes some of those issues due to the availability of smart pointers, but those are fairly 'modern' C++ features, thus being only available if compilers support more recent
+versions of C++ (with C++ 11 starting to introduce many new important concepts \cite{cpp11}).
 There is also no guarantee that those features have been used in any given program.
-The opposite is more likely actually due to the incorporation of older software (library code written with older C++ versions in mind),
+The opposite is actually more likely due to the incorporation of older software (library code written using older C++ versions),
 compilers not supporting new versions (especially likely with small vendors that don't have the resources to continuously update compilers for their platform),
 or developers not keeping up to date with new language features and therefore not being aware of or able to use them.\\\\
 Rust on the other hand can (mostly) give compile time guarantees on the software's safety and reliability.
