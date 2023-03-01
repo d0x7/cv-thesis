@@ -80,15 +80,16 @@ compilers not supporting new versions (especially likely with small vendors that
 or developers not keeping up to date with new language features and therefore not being aware of or able to use them.\\\\
 Rust on the other hand can (mostly) give compile time guarantees on the software's safety and reliability.
 
+\newpage
+
 \subsection{Memory safety and performance}
 
 \subsubsection{Garbage collection}
 
-Most programming languages that try to achieve memory safety use a garbage collector to do that \cite{java_garbage_collector}.
-The downside of a garbage collector however is unpredictable latency (the running program has to be stopped while the garbage collector is running) and a hit in performance.
-A garbage collector first identifies pieces of memory that are no longer used \ref{fig:gc_mark}.
-Then the marked pieces of memory are periodically deleted \ref{fig:gc_delete}.
-After the deletion the garbage collector will 'compact' the memory to avoid memory fragmentation and improve the speed of future allocations.
+Most programming languages that try to achieve memory safety use a garbage collector for that purpose \cite{java_garbage_collector}.
+A garbage collector first identifies pieces of memory that are no longer used, illustrated in figure \ref{fig:gc_mark}.
+Then the marked pieces of memory are periodically deleted. Figure \ref{fig:gc_delete} describes how that same chunk of memory would look like after marked sections are deleted.
+Finally, after the deletion, the garbage collector will 'compact' the memory to avoid memory fragmentation and improve the speed of future allocations as shown in figure \ref{fig:gc_compact}.
 
 \begin{figure}[htb]
     \centering
@@ -104,12 +105,18 @@ After the deletion the garbage collector will 'compact' the memory to avoid memo
     \label{fig:gc_delete}
 \end{figure}
 
-\begin{figure}[htb]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{figures/fundamentals_garbage_collector_compacting.PNG}
     \caption[Illustration: Garbage Collector compacting memory \cite{java_garbage_collector}]{Memory layout after compacting}
     \label{fig:gc_compact}
 \end{figure}
+
+Garbage collectors however have a few drawbacks, like unpredictable latency (the running program has to be stopped while the garbage collector is running) and a hit in performance.
+The runtime of the programming language, that contains the garbage collector, also needs to be installed on the target system and run alongside the program, using additional
+resources which can be problematic in a resource scarce environment like small embedded devices.
+Therefore, garbage collected languages are rarely used in embedded systems programming.
+Rust uses a different, and unique approach to guarantee memory safety without suffering from any of the aforementioned drawbacks.
 
 \subsubsection{Ownership in Rust}
 
