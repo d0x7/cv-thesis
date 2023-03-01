@@ -131,34 +131,6 @@ This model consists of 3 simple rules:
 
 These 'owners' are generally variables. \ref{code:owner} presents a simple example of a 'value' ('\lstinline{5}') and its
 'owner' ('\lstinline{owner}').\\
-It doesn't matter that another 'owner' might have the same value. In the code depicted in \ref{code:two_owners}
-'\lstinline{owner}' and '\lstinline{owner2}' have the same value, but they are different variables, just like in any
-other programming language and have nothing to do with each other. They are different 'owners'.\\
-If one variable is assigned to another, one of two things happens; if the value is saved on the stack like in
-example \ref{code:copy} the value is simply copied to the second variable, and now '\lstinline{owner}' and '\lstinline{owner2}'
-hold the same value, but other than that have nothing to do with each other. They are different 'owners'.\\
-If the value is stored on the heap like in example \ref{code:move}, the value is not copied, because that could
-be potentially very expensive.
-So only the pointer (memory address), size of the data, and the capacity of the memory block is copied.
-But now '\lstinline{value}' has two owners, which violates rule 2.
-This rule is important because due to rule 3:
-\begin{enumerate}
-    \item If both variables go out of scope at the same time, the memory would be freed twice.
-    \item If only one goes out of scope, the other holds the address of invalid (freed) memory.
-\end{enumerate}
-To avoid those things '\lstinline{value}' is considered to be 'moved' to its new owner, the variable '\lstinline{owner2}',
-and the original owner ('\lstinline{owner}') is no longer valid.\\
-This works similarly for functions, and these 3 rules allow the compiler to check for any mistakes that would lead to
-memory issues.
-However, there is one more thing that needs to be talked about; the borrow operator.
-The borrow operator ('\lstinline{\&}') \cite{rust_borrow} allows other variables access to a value without changing the owner.
-There follow two more rules for references and borrowing:
-\begin{enumerate}
-    \item There can be an infinite number of immutable references to a value.
-    \item There can only be one mutable reference to a value.
-\end{enumerate}
-The code snippet \ref{code:borrow} displays a valid use of rule 1 and code snippet \ref{code:mut_borrow} gives both examples
-of what is valid and invalid under rule 2.
 
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Simple example of a value and it's owner},label={code:owner}]
 {
@@ -166,18 +138,26 @@ of what is valid and invalid under rule 2.
 }
 \end{lstlisting}
 
-
-\begin{lstlisting}[style=colorEX,language=Rust,caption={Simple example of a copy},label={code:copy}]
-{
-    let owner = 5;
-    let owner2 = owner;
-}
-\end{lstlisting}
+It doesn't matter that another 'owner' might have the same value. In the code depicted in \ref{code:two_owners}
+'\lstinline{owner}' and '\lstinline{owner2}' have the same value, but they are different variables, just like in any
+other programming language and have nothing to do with each other. They are different 'owners'.\\
 
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Simple example of two owners},label={code:two_owners}]
 {
     let owner = 5;
     let owner2 = 5;
+}
+\end{lstlisting}
+
+
+If one variable is assigned to another, one of two things happens; if the value is saved on the stack like in
+example \ref{code:copy} the value is simply copied to the second variable, and now '\lstinline{owner}' and '\lstinline{owner2}'
+hold the same value, but other than that have nothing to do with each other. They are different 'owners'.\\
+
+\begin{lstlisting}[style=colorEX,language=Rust,caption={Simple example of a copy},label={code:copy}]
+{
+    let owner = 5;
+    let owner2 = owner;
 }
 \end{lstlisting}
 
@@ -188,7 +168,30 @@ of what is valid and invalid under rule 2.
 }
 \end{lstlisting}
 
-\begin{lstlisting}[style=colorEX,language=Rust,caption={Simple example of a immutable borrow},label={code:borrow}]
+If the value is stored on the heap like in example \ref{code:move}, the value is not copied, because that could
+be potentially very expensive.
+So only the pointer (memory address), size of the data, and the capacity of the memory block is copied.
+But now '\lstinline{value}' has two owners, which violates rule 2.
+This rule is important because due to rule 3:
+\begin{enumerate}
+    \item If both variables go out of scope at the same time, the memory would be freed twice.
+    \item If only one goes out of scope, the other holds the address of invalid (freed) memory.
+\end{enumerate}
+To avoid those things '\lstinline{value}' is considered to be 'moved' to its new owner, the variable '\lstinline{owner2}'.
+The original owner ('\lstinline{owner}') is no longer valid.\\
+This works similarly for functions, and these 3 rules allow the compiler to check for any mistakes that would lead to
+a double free, use-after-free or memory that has forgotten to be freed.
+However, there is one more important aspect of memory management in Rust; the borrow operator.
+The borrow operator ('\lstinline{&}') \cite{rust_borrow} allows other variables access to a value without changing the owner.
+There are two more rules for references and borrowing:
+\begin{enumerate}
+    \item There can be an any number of immutable references to a value.
+    \item There can never be more than one mutable reference to a value.
+\end{enumerate}
+The code snippet \ref{code:borrow} displays a valid use of rule 1 and code snippet \ref{code:mut_borrow} gives both examples
+of what is valid and invalid under rule 2.
+
+\begin{lstlisting}[style=colorEX,language=Rust,caption={Simple example of an immutable borrow},label={code:borrow}]
 {
     let owner = 5;
     let borrower1 = &owner;
@@ -206,7 +209,6 @@ of what is valid and invalid under rule 2.
     // let borrower2 = &mut owner;
 }
 \end{lstlisting}
-
 
 \subsection{Embedded Rust}
 
