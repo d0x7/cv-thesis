@@ -212,16 +212,17 @@ of what is valid and invalid under rule 2.
 
 \subsection{Embedded Rust}
 
-Developing software that runs directly on hardware is a bit different due to the lack of an operating system (OS).
+Developing software that runs directly on hardware differs slightly from 'normal' software due to the lack of an operating system (OS).
 When developing for a microcontroller (MCU) there is no OS that supervises and manages programs or facilitates communication with peripherals.
 Therefore, embedded Rust programs look a little different from those that would run on a Windows, Linux or Mac computer.
 \\
 First, since there is no operating system to allocate memory, put the code into the right memory space and start the program.
 So the developer has to take care of that when creating the executable, which is why 'special' instructions for the linker are necessary.
-For Rust programs these instructions are written into a \lstinline{memory.x} file.
+For Rust programs these instructions are written into a \emph{memory.x} file.
 This file contains information about the memory layout of the hardware that the program will be running on.
-An example of such a \lstinline{memory.x} file can be found in \ref{code:memory_x}.
+An example of such a \emph{memory.x} file is displayed in \ref{code:memory_x}.
 
+\newpage
 \begin{lstlisting}[style=colorEX,caption={Example memory.x file},label={code:memory_x}]
 MEMORY
 {
@@ -251,22 +252,23 @@ REGION_ALIAS("REGION_STACK", RAM);
 \end{lstlisting}
 
 
-However, there are also quite a few differences in the actual program code. Usually Rust programs contain a main function that looks like the example in \ref{code:os_main}.
-This works similar to normal C code where the main function either serves as entry point for the program or will be called by the '\lstinline{_start}' function provided by glibc \cite{before_main}.
-This '\lstinline{_start}' function initializes the program runtime by setting up things like the stack and writing arguments into memory to name a few.
-After initialization, the main function is then called.
-This is equal for programs that run with or without an OS.\\
-The difference in this startup process occurs before the '\lstinline{_start}' function.
-If the program runs on a device with an OS, it first does some preparation and initialization for the program to run.
-The program environment is configured by, among other things, checking permissions (is the user allowed to run this program),
-allocating space on the stack and heap, initializing the stack pointer, linking dynamically linked libraries and calling pre-initialization functions \cite{before_main}.
-Once the program environment is configured, the programs '\lstinline{_start}' is called by the OS.
-
+However, there are also quite a few differences in the actual program code.
+Usually Rust programs contain a main function that looks like the example in \ref{code:os_main}.
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Standard main function in Rust},label={code:os_main}]
 fn main() {
     // contents of main function
 }
 \end{lstlisting}
+This works similar to normal C code where the main function either serves as entry point for the program or will be called by the '\lstinline{_start}' function provided by \emph{glibc} \cite{before_main}.
+This '\lstinline{_start}' function initializes the program runtime by setting up things like the stack and writing arguments into memory to name a few.
+After initialization, the main function is then called.
+This is equal for programs that run with or without an OS.\\
+The difference in this startup process occurs before the '\lstinline{_start}' function.
+If the program runs on a device with an OS, the OS first does some preparation and initialization for the program to run.
+The program environment is configured by, among other things, checking permissions (is the user allowed to run this program),
+allocating space on the stack and heap, initializing the stack pointer, linking dynamically linked libraries and calling pre-initialization functions \cite{before_main}.
+Once the program environment is configured, the programs '\lstinline{_start}' is called by the OS.
+
 
 When a program is running on 'bare-metal' (meaning without an OS or even a bootloader that launches the  application), this process is more crude.
 The '\lstinline{_start}' function still serves as the entry point for the program, but there are fewer steps involved in getting there.
@@ -294,16 +296,16 @@ fn main() -> ! {
 
 \ref{code:embedded_main} displays a main function alike to the ones I've used in my programs.
 The '\lstinline{#![no_main]}' directive tells the compiler that I will not use the standard main function.
-Since this function will never return, the return type not specify exactly that.
+Since this function will never return, the return type needs to specify exactly that.
 In Rust, return types are specified using the '\lstinline{->}', followed by the type \cite{rust_return}.
-The '\lstinline{!}' indicates that the function doesn't return \cite{rust_never_type}.
+Replacing the type with a '\lstinline{!}' indicates that the function doesn't return \cite{rust_never_type}.
 \\
 The '\lstinline{#[entry]}' attribute, imported by the '\lstinline{use riscv_rt::entry}' statement, is used to declare the entry point of the program \cite{riscv_rt_entry}
 The requirement for this attribute is that the function never returns, which also why the loop at the end is necessary.
 \\\\
-This is close to a working program, but not quite there yet.
-Without the OS, the device is also not able to load the standard library.
-Which is why the '\lstinline{#![no_std]}' is used, as it prevents Rust from loading the standard library \cite{rust_no_std}.
+This is close to a working program, but not exactly.
+Without the OS, the device is also not able to use the standard library.
+Which is why the '\lstinline{#![no_std]}' directive is necessary, as it prevents Rust from loading the standard library \cite{rust_no_std}.
 However, the standard library provides a lot of useful features, like a dynamic memory allocator or a panic handler.
 So these features need to be replaced by their own crates, if available.
 The crates that provide those features in this case are called the '\lstinline{pulpissimo_hal}' and '\lstinline{pulpissimo_pac}'.
@@ -312,9 +314,11 @@ They act as an abstraction layer over and provide an interface to interact with 
 A minimal example of a running program can be found in \ref{code:min_example}.
 This minimal example doesn't use any features from the '\lstinline{pulpissimo_pac}' directly, which is why it is not 'included'.
 Also, the endless loop at the end is replaced by the '\lstinline{exit}' function from the '\lstinline{pulpissimo_hal}' crate.
-This only matters when running the program on simulated hardware, when running the program on real hardware, the '\lstinline{exit}' function is
+This only matters if the program is running on simulated hardware. When running the program on real hardware, the '\lstinline{exit}' function is
 for all intents and purposes equal to an endless loop \cite[Ch 4.3.10]{rust_pulp}.
-This example also uses the '\lstinline{println}' macro from the '\lstinline{pulpissimo_hal}' to print messages that then can be viewed over minicom.
+This example also uses the '\lstinline{println}' macro from the '\lstinline{pulpissimo_hal}' crate to write messages
+to standard-out (stdout), when running in a simulation, or send them using a universal asynchronous receiver-transmitter (UART)
+to be viewed in software like minicom, if the program is running on real hardware.
 
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Minimal example of a program running on the pulpissimo hardware},label={code:min_example}]
 #![no_main]
