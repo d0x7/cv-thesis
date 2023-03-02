@@ -42,7 +42,21 @@ The LRCLK will also be referred to as 'Word Select' (WS) in some instances \cite
 
 \subsubsection{Timing}
 
-\todo{timing}
+Figure \ref{fig:i2s_timing} shows the timing diagram of the $I^2S$ microphone.
+A clock period should take between \SI{244.14}{\nano\second} and \SI{488.28}{\nano\second}.
+A high or low pulse on the clock should be 35\% of the duration of a period.
+The maximum delay of the data from a rising edge of the clock should be \SI{65.92}{\nano\second}
+and the clock should take no longer than \SI{3.75}{\nano\second} to rise from low to high \cite{i2s_mic_datasheet}.
+\\
+WS has to change on a falling edge of the clock (BCLK in this case).
+Data is sent with the MSB first and delayed by one clock cycle after a change in WS.
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/i2s_timing.png}
+    \caption[Timing diagram of the SPH0645LM4H-B I2S mic \cite{i2s_mic_datasheet}]{Timing diagram of the I2S microphone}
+    \label{fig:i2s_timing}
+\end{figure}
 
 \subsection{Adafruit PDM MEMS Microphone}
 
@@ -52,6 +66,7 @@ The PDM MEMS microphone from Adafruit \cite{pdm_mic} is a digital microphone.
 It uses the $I^2S$ bus to communicate, but instead of the typical 24 bit encoding of $I^2S$ microphones, PDM microphones only use 1 bit.
 It requires a supply voltage between \SI{1.64}{\volt} and \SI{3.6}{\volt} while drawing a current of \SI{600}{\micro\ampere}, with a clock
 frequency from \SI{1}{\mega\hertz} to \SI{3.25}{\mega\hertz}.
+However the clock frequency should be reduced to a maximum of \SI{0.23}{\mega\hertz} while the microphone is in 'power-down' mode.
 During power down mode the current draw is reduced to \SI{20}{\micro\ampere}.
 A logical high is read for any voltage between 65\% of ($V_{DD}$) and $V_{DD}$ + \SI{0.3}{\volt},
 and a logical low is read for any voltage between \SI{-0.3}{\volt} and 35\% of $V_{DD}$ \cite{pdm_mic_datasheet}.
@@ -66,7 +81,17 @@ However, it only has one clock line (CLK), and no WS \cite{pdm_mic_pinout}.
 
 \subsubsection{Timing}
 
-\todo{timing}
+Figure \ref{fig:pdm_timing} shows the timing diagram of the PDM microphone.
+Based on the clock frequency, a period in normal mode should take between \SI{308}{\nano\second} and \SI{1000}{\nano\second}.
+
+\todo{PDM R, PDM L}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/pdm_timing.png}
+    \caption[Timing diagram of the MP34DT01-M PDM MEMS mic \cite{pdm_mic_datasheet}]{Timing diagram of the PDM MEMS microphone}
+    \label{fig:pdm_timing}
+\end{figure}
 
 \section{Tests}
 
