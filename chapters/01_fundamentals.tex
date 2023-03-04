@@ -342,25 +342,31 @@ fn main() -> ! {
 A microphone consists of a diaphragm and a transducer.
 Sound waves cause the diaphragm to vibrate, and
 the transducer turns those vibrations into an electrical signal.
+This section will introduce one common way to send audio data to different
+components of a system as well as methods to encode that analog electrical
+signal into a more easily processable, digital representation.
 
 \subsection{I2S}
 
 The inter-IC sound ($I^2S$) \cite{i2s} bus is a serial link that has been developed especially for digital audio.
-It uses three lines, one serial data line (SD), one continuous serial clock line (SCK) and one word select line (WS).
+It uses three lines, one serial data line (SD), which is used to transmit data, one continuous serial clock line (SCK),
+which is used as the clock, and one word select line (WS).
 $I^2S$ can be used in different configurations, but the master always provides WS and SCK.
 
 \subsubsection{Serial Data}
 
 The data consists of signed integers (in two's complement).
 Due to possible differences between the word lengths and neither the transmitter nor the
-receiver having any knowledge about the capabilities of the other, the MSB is transmitted first.
+receiver having any knowledge about the capabilities of the other, the 'most significant bit' (MSB) is transmitted first.
+This is the bit with the highest value in a binary number, usually it is the bit in the left-most position,
+while the 'least significant bit' (LSB) is located on the right end of the binary sequence.
 In the transmission, the MSB has a fixed position, which means that the position of the LSB
 is variable due to possible size differences between the word lengths of transmitter and receiver,
 and it being dependent on the word length.\\
 So when the word length of the system exceeds that of the transmitter, the LSBs are truncated
 for the transmission as demonstrated in \ref{fig:truncation}.
 If the receiver receives more bits than its word length, everything after the LSB
-of the receiver is ignored, and if the receiver gets fewer bits than its,
+of the receiver is ignored, and if the receiver gets fewer bits than its word length,
 the missing bits are set to 0.\\
 Furthermore, data sent by the transmitter can either be synchronized with a trailing or leading edge
 of the clock signal, however received data must be latched onto the leading edge.
@@ -390,7 +396,7 @@ while a constant bit stream of 0s would represent that the amplitude of the anal
 Alternating 1s and 0s represent an amplitude of exactly 0.\\\\
 While many digital audio systems use Pule Code Modulation (PCM), which, in contrast to PDM, uses multiple bits to represent a signal,
 PDM is used a lot in mobile phones \cite{pdm_utexas} due to its simplicity and low cost.
-However, 1bit PCM would be much too noisy to be useful.
-So to counteract the noise increase of only using 1 bit the signal is 'oversampled', thereby increasing the bandwidth of the system.
-The new spectrum that is created by oversampling the signal has a frequency that is too high for the human ear.
+PDM is similar to '1-bit-PCM', however a one bit wide PCM encoded signal would be much too noisy to be useful.
+So to counteract the noise increase of only using 1 bit the signal is 'over sampled', thereby increasing the bandwidth of the system.
+The new spectrum that is created by oversampling the signal has such a high frequency that it is out of audible range of the human ear.
 'Noise Shaping' can then be used to 'push' noise into that new spectrum, thus removing it from the audible signal \cite{pdm_texas}.
