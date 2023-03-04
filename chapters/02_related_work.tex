@@ -28,8 +28,8 @@ They serve as an orientation and comparison for the Rust libraries.
 UltraTrail is a 'configurable ultra-low power TC-ResNet AI accelerator for efficient keyword spotting' \cite{ultratrail}.
 It uses temporal convolutional networks (TCNs) combined with residual networks (TC-ResNet) for intelligent sensor signal processing.
 They show superior behavior compared to conventional convolutional neural networks (CNNs) and long short-term memory (LSTM) networks,
-which is a type of Recurrent Neural Network (RNN), and commonly used speech recognition applications like keyword spotting or text to speech engines.
-TCNs specifically not only appear to be more accurate, but also simpler and clearer compared to LSTMs and GRUs \cite[Ch I]{ultratrail}.\\
+which is a type of Recurrent Neural Network (RNN), and are commonly in used speech recognition applications like keyword spotting or text to speech engines.
+TCNs specifically not only appear to be more accurate, but also more simple and clear compared to LSTMs and GRUs \cite[Ch I]{ultratrail}.\\
 UltraTrail uses a variety of units, arrays and layers to provide efficient mapping of the TC-ResNet without sacrificing too much flexibility.
 It can execute networks with up to 16 convolutional layers that can be extended with batch normalization (also referred to as CONV-EXT layers),
 and uses 6 bit weights and 8 bit feature inputs.\\
@@ -37,7 +37,13 @@ The network model is saved in the weight memory (WMEM) and bias memory (BMEM), t
 have a capacity of 64 kB and 512 Bytes respectively.
 UltraTrail is also equipped with three feature map memories (FMEM) to store input and output
 feature maps. The inputs are stored in FMEM0 while any outputs are written to FMEM1 and FMEM2.
-These five memories, surround the 8 by 8 MAC array with local memory (LMEM) and the Output Processing Uni (OPU) as displayed in figure \ref{fig:ultratrail_arch}.
+These five memories surround the 8 by 8 MAC array with local memory (LMEM) and the Output Processing Unit (OPU) as displayed in figure \ref{fig:ultratrail_arch}.
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/ultratrail.png}
+    \caption[Illustration: The UltraTrail system architecture (Fig. 5)\cite{ultratrail}]{The UltraTrail system architecture}
+    \label{fig:ultratrail_arch}
+\end{figure}
 \\\\
 The MAC array is the primary processing unit and enables convolutional computation.
 It contains 64 MAC units that are arranged in an 8 by 8 grid that use the LMEM to store partial sums during computation.
@@ -58,30 +64,23 @@ UltraTrail additionally has a programmable control unit that contains a 672 bit
 configuration register, which is big enough so that the network structure
 can be described layer by layer \cite[Ch IV]{ultratrail}.
 
-
-\begin{figure}[htb]
-    \centering
-    \includegraphics[width=0.9\textwidth]{figures/ultratrail.png}
-    \caption[Illustration: The UltraTrail system architecture (Fig. 5)\cite{ultratrail}]{The UltraTrail system architecture}
-    \label{fig:ultratrail_arch}
-\end{figure}
-
+\newpage
 \section{Keyword spotting in the Industry}
 
 \subsection{Voice Assistants}
 
-Keyword spotting is mainly used in voice assistants (VAs), like Siri by Apple \cite{siri} or Amazon's Alexa \cite{alexa}.
-The devices they run on (like Amazon Echo Dot) use keyword spotting to 'activate', after which they start
+Keyword spotting is mainly used in voice assistants (VAs), like Siri, which is developed by Apple \cite{siri}, or Amazon's Alexa \cite{alexa}.
+The devices they run on (like the Amazon Echo Dot or the Apple iPhone) use keyword spotting to 'activate', after which they start
 to 'actively listen' to perform your command.
 There are also open source alternatives to the popular products by the aforementioned tech giants, like Mycroft by \lstinline{mycroft.ai} \cite{mycroft}.
 Snips.ai used to be another alternative VA to the products by Apple and Amazon, however, they have been acquired by Sonos in November 2019 \cite{sonos_snips}.
-Snips used also used a keyword spotting to 'activate' the VA that the user could then communicate with, however, they also advertise their focus
+Snips also used keyword spotting to 'activate' the VA that the user could then communicate with, however, they also advertised their focus
 on privacy and offline, on device speech processing.
 However, their product was not open source, so there is limited knowledge available about their system.
 They do advertise customizable 'wake words', and mentioned hardware requirement on a snapshot of their website \cite{snips_flow}.
 It was possible to run their system on devices like the Raspberry Pi 3 \cite{rpi3} or Jetson TX2 \cite{jetson_tx2},
 as well as the Snapdragon 410 \cite{snapdragon_410} by Qualcomm, which had been used in phones like the Samsung Galaxy J5 or Xiaomi Redmi 2.
-Since there is not a lot of public knowledge available for proprietary systems like Siri, Alexa or Snips, I will take a more in depth look at Mycroft only.
+Since there is not a lot of public knowledge available for proprietary systems like Siri, Alexa or Snips, I will only take a more in depth look at Mycroft.
 
 \subsubsection{Mycroft}
 
