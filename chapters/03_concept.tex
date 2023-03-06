@@ -75,16 +75,21 @@ and a logical low is read for any voltage between \SI{-0.3}{\volt} and 35\% of $
 
 The breakout board of the PDM microphone, in contrast to the breakout board of the $I^2S$ microphone, only has 5 pins.
 $V_{DD}$ and Ground (GND), serve the same purpose, but it only needs 3 data pins.
-The output of the PDM microphone can be read on 'PDM Data Out' (DAT), and the PDM microphone also has a SEL pin, which works the same way as
-it does in the $I^2S$ microphone.
+The output of the PDM microphone can be read on 'PDM Data Out' (DAT), and the PDM microphone also has a SEL pin (also referred to as L/R in the timing diagram),
+which works the same way as it does in the $I^2S$ microphone.
 However, it only has one clock line (CLK), and no WS \cite{pdm_mic_pinout}.
 
 \subsubsection{Timing}
 
-Figure \ref{fig:pdm_timing} shows the timing diagram of the PDM microphone.
+Figure \ref{fig:pdm_timing} shows the timing diagram for the PDM microphone.
 Based on the clock frequency, a period in normal mode should take between \SI{308}{\nano\second} and \SI{1000}{\nano\second}.
+The right channel (PDM R) is latched onto the rising edge of the clock and is enabled if the L/R pin is set accordingly.
+It is disabled on the falling edge of the clock.
+The left channel (PDM L) is latched onto and thus enabled on a falling edge of the clock (assuming L/R is set accordingly),
+and disabled on a rising edge.
+According to data acquired from design simulations by manufacturer,
+PDM L and PDM R takes at least \SI{18}{\nano\second}, while disabling PDM L and PDM R takes at most \SI{16}{\nano\second}.
 
-\todo{PDM R, PDM L}
 
 \begin{figure}[htb]
     \centering
