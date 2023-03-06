@@ -12,11 +12,14 @@ Goal of this thesis is to add support for the UltraTrail architecture to the Rus
 To achieve this, the first step is to add the accelerator as a peripheral to the SVD file and port the C driver to Rust.
 I also ported a small test program from C to Rust, to make sure that the implementation of the driver works as expected.
 \\
-Additionally, to implementing the driver, I need an input source for the PULPissimo, so I will work on a variety on $I^2S$ microphones and one PDM microphone.
-The \lstinline{pulpissimo_hal} crate provides drivers for $I^2S$ and PDM, as well as some example programs, however neither have been tested nor run before.
-After the microphones work, their input will be used to test UltraTrail.
-The microphones exclusively use the $I^2S$ bus, and are mostly standard $I^2S$ microphones, except for one PDM microphone,
-which are introduced in further detail in the following section of this chapter.
+I additionally worked on adding and testing support for two different microphones to test
+the speech recognition of UltraTrail in a real-world scenario.
+I chose $I^2S$ microphone and one PDM microphone.
+The microphones exclusively use the $I^2S$ bus, and are introduced in further detail in the following section of this chapter.
+The \lstinline{pulpissimo_hal} crate provides drivers for $I^2S$ and PDM, as well as some example programs,
+however neither have been tested nor run before.
+After the microphones work, their input will be used to \todo{still testing UltraTrail?} test UltraTrail.
+
 
 \section{Microphones}
 
@@ -54,7 +57,7 @@ Data is sent with the MSB first and delayed by one clock cycle after a change in
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.9\textwidth]{figures/i2s_timing.png}
-    \caption[Timing diagram of the SPH0645LM4H-B I2S mic \cite{i2s_mic_datasheet}]{Timing diagram of the I2S microphone}
+    \caption[Timing diagram of the SPH0645LM4H-B $I^2S$ mic \cite{i2s_mic_datasheet}]{Timing diagram of the $I^2S$ microphone}
     \label{fig:i2s_timing}
 \end{figure}
 
