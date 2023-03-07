@@ -44,13 +44,11 @@ pacc_stop();
 However, that function has not been implemented in the Rust drivers, so I had to slightly
 vary the implementation of the test code.\\
 First I had to define a Mutex \footnote{https://doc.rust-lang.org/std/sync/struct.Mutex.html}
-for the event state, to monitor whether an event interrupt has been triggered
-and another Mutex to access the event interrupt struct throughout the code as demonstrated
+for the event state, to monitor whether an event interrupt has been triggered as demonstrated
 in Listing~\ref{code:mutex}.
 
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Definition of the necessary Mutexes},label={code:mutex}]
 static EVENT_STATE: Mutex<Cell<bool>> = Mutex::new(Cell::new(false));
-static EVENT: Mutex<RefCell<Option<EventInterrupt>>> = Mutex::new(RefCell::new(None));
 \end{lstlisting}
 
 Subsequently, I defined an event handler as presented in Listing~\ref{code:event_handler}, which
