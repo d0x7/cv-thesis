@@ -6,19 +6,19 @@
 % CONTENT   : Include for chapter "Concept"
 % =============================================================================
 
-
-Goal of this thesis is to add support for the UltraTrail architecture to the Rust ecosystem by expanding the
-\lstinline{pulissimo_hal} and \lstinline{pulissimo_pac} crates with drivers and test/example programs.
-To achieve this, the first step is to add the accelerator as a peripheral to the SVD file and port the C driver to Rust.
-I also ported a small test program from C to Rust, to make sure that the implementation of the driver works as expected.
-\\
-I additionally worked on adding and testing support for two different microphones to test
-the speech recognition of UltraTrail in a real-world scenario.
-I chose $I^2S$ microphone and one PDM microphone.
-The microphones exclusively use the $I^2S$ bus, and are introduced in further detail in the following section of this chapter.
-The \lstinline{pulpissimo_hal} crate provides drivers for $I^2S$ and PDM, as well as some example programs,
+Goal of this thesis is to implement keyword spotting on the UltraTrail architecture in Rust,
+which relies on three components.
+A microphone input, Mel Frequency Cepstral Coefficients (MFCC) \cite[Cha 2.5]{rust_pulp} to transform the audio to
+a format that UltraTrail can work with and the UltraTrail drivers.\\\\
+One PDM and one $I^2S$ microphone have been selected, which exclusively use the $I^2S$ bus and are introduced
+in the following section of this chapter.
+In order to add support for the UltraTrail architecture and the microphones, the \lstinline{pulissimo_hal}
+and \lstinline{pulissimo_pac} crates have to be expanded with drivers and example/test programs.
+The PAC contains an SVD file that can be converted to Rust code to provide access to hardware registers
+while the HAL crate provides the drivers and example programs for both UltraTrail and the microphones.
+Drivers for $I^2S$ and PDM, as well as some example programs have already been implemented,
 however neither have been tested nor run before.
-After the microphones work, their input will be used to \todo{still testing UltraTrail?} test UltraTrail.
+Therefore, the implementations need to be tested and potentially modified.
 
 
 \section{Microphones}
@@ -108,7 +108,7 @@ PDM L and PDM R takes at least \SI{18}{\nano\second}, while disabling PDM L and 
 A variety of tests are used to determine the functionality of the microphones.
 The first test simply consists of playing some sort of noise and analyzing the output of the microphones to see if
 they respond in some predictable manner.
-After that finer testing is carried by playing a sound that represents a perfect sign wave,
+After that finer testing is carried out by playing a sound that represents a perfect sign wave,
 which should yield a perfect sign wave on the end of the microphones as well.\\
 An array of equipment is used to analyze the output of the microphones; namely a logic analyzer, an oscilloscope
 (for debugging purposes), as well as a few python tools to save and analyze the output data.
@@ -117,5 +117,5 @@ An array of equipment is used to analyze the output of the microphones; namely a
 
 The UltraTrail test makes sure that configuration changes have the desired effect (bits are correctly set in the correct registers),
 and the AI accelerator is tested using a predefined set of input data.
-After the input data is loaded correctly, the accelerator is started and will raise a hardware-peripheral event when it is done.
+After the input data is loaded correctly, the accelerator is started and will trigger a hardware-peripheral event when it is done.
 After that the results are compared with the desired results, which finally determines the functionality of the drivers.
