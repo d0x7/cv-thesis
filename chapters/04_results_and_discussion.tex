@@ -16,15 +16,123 @@
 
 \subsection{UltraTrail}
 
+\section{Implementation}
+
 To implement the driver for UltraTrail, it first has to be added to the SVD file in the PAC
 as a peripheral to generate the necessary Rust code to access hardware registers.
 Subsequently, the driver can be implemented in the HAL crate.
+Finally, I have ported a small program from C to Rust, that contains a set of pre-defined
+weights, bias and feature inputs, as well as expected results.
+This program can be used to test the implementation of the driver, as it also
+performs different configurations by reading and writing the different registers.
+\\\\
+However, there have been a few differences when it comes to the implementation details.
+Most importantly, the C drivers for the PULPissimo provide the \lstinline{__rt_periph_wait_event} function,
+which is basically a sophisticated busy wait.
+The test code uses that function to wait for UltraTrail to trigger an event interrupt, to announce that
+it is done processing as shown in Listing~\ref{code:c_wait_for_event}.
 
-\section{Implementation}
+\begin{lstlisting}[style=colorEX,language=C,caption={Waiting for the event in C},label={code:c_wait_for_event}]
+pacc_start();
+
+soc_eu_fcEventMask_setEvent(ARCHI_SOC_EVENT_FCHWPE0);
+__rt_periph_wait_event(ARCHI_SOC_EVENT_FCHWPE0, 1);
+
+pacc_stop();
+\end{lstlisting}
+
+However, that function has not been implemented in the Rust drivers, so I had to slightly
+vary the implementation of the test code.\\
+First I had to define a Mutex \footnote{https://doc.rust-lang.org/std/sync/struct.Mutex.html}
+for the event state, to monitor whether an event interrupt has been triggered
+and another Mutex to access the event interrupt struct throughout the code as demonstrated
+in Listing~\ref{code:mutex}.
+
+\begin{lstlisting}[style=colorEX,language=Rust,caption={Definition of the necessary Mutexes},label={code:mutex}]
+static EVENT_STATE: Mutex<Cell<bool>> = Mutex::new(Cell::new(false));
+static EVENT: Mutex<RefCell<Option<EventInterrupt>>> = Mutex::new(RefCell::new(None));
+\end{lstlisting}
+
+Subsequently, I defined an event handler as presented in Listing~\ref{code:event_handler}, which
+stops the accelerator when it is done and changes the global event state Mutex.
+
+\begin{lstlisting}[style=colorEX,language=Rust,caption={Event handler function},label={code:event_handler}]
+fn hwpe_event_handler() {
+    interrupt::free(|cs| {
+        let peripherals = unsafe { pac::Peripherals::steal() };
+
+        let accelerator = Accelerator::new(peripherals.ACCELERATOR);
+        accelerator.stop();
+        EVENT_STATE.borrow(*cs).set(true);
+    })
+}
+\end{lstlisting}
+
+After that I just had to enable the event and set the event handler to deal with the event when it is triggered.
+The code of that can be seen in Listing~\ref{code:enable_event}.
+
+\begin{lstlisting}[style=colorEX,language=Rust,caption={Code to enable the hardware event and set the handler},label={code:enable_event}]
+unsafe {
+    event_interrupt.enable_event(EventId::Hwpe0);
+    event_interrupt.set_event_handler(EventId::Hwpe0, hwpe_event_handler);
+}
+\end{lstlisting}
+
+Finally, I could write the busy wait, which basically does nothing until the interrupt is received
+and then changes the event state.
+An example of that is displayed in Listing~\ref{code:busy_wait}
+
+\begin{lstlisting}[style=colorEX,language=Rust,caption={Snippet of the busy wait that waits for UltraTrail to finish},label={code:busy_wait}]
+accelerator.start();
+
+let mut event = false;
+while !event {
+    for _ in 0..1000 {
+        unsafe {
+            riscv::asm::nop();
+        }
+    }
+    interrupt::free(|cs| {
+        let state = EVENT_STATE.borrow(*cs).get();
+
+        if state {
+            event = true;
+            EVENT_STATE.borrow(*cs).set(false);
+        }
+    })
+}
+
+// ...
+\end{lstlisting}
 
 \section{Experiments}
 
+The expected results are stored in a vector containing 12 16bit integers, displayed in the Listing~\ref{code:acc_results}.
 
+\begin{lstlisting}[style=colorEX,language=Rust,caption={The expected results from the driver test},label={code:acc_results}]
+let correct_results = [
+    0xf246, 0x16bf, 0x08a0, 0xfe52, 0xf709, 0xef58, 0xff6b, 0xf946, 0xfebd, 0x0f40, 0xee45,
+    0x18f0,
+];
+\end{lstlisting}
+
+When comparing the code in Listing~\ref{code:acc_results} to the minicom output shown in \ref{code:minicom_out_acc},
+one realizes that they match. Which leads me to believe that the UltraTrail driver works as intended.
+
+\begin{lstlisting}[style=colorEx,caption={Minicom output after executing the driver test},label={code:minicom_out_acc}]
+result #0: 0xf246
+result #1: 0x16bf
+result #2: 0x8a0
+result #3: 0xfe52
+result #4: 0xf709
+result #5: 0xef58
+result #6: 0xff6b
+result #7: 0xf946
+result #8: 0xfebd
+result #9: 0xf40
+result #10: 0xee45
+result #11: 0x18f0
+\end{lstlisting}
 
 
 % Hier sollen die erreichten Ergebnisse vorgestellt werden.
