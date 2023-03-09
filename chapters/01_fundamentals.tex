@@ -92,9 +92,9 @@ Rust on the other hand can (mostly) give compile time guarantees on the software
 \subsubsection{Garbage collection}
 
 Most programming languages that try to achieve memory safety use a garbage collector for that purpose \cite{java_garbage_collector}.
-A garbage collector first identifies pieces of memory that are no longer used, illustrated in figure \ref{fig:gc_mark}.
-Then the marked pieces of memory are periodically deleted. Figure \ref{fig:gc_delete} describes how that same chunk of memory would look like after marked sections are deleted.
-Finally, after the deletion, the garbage collector will 'compact' the memory to avoid memory fragmentation and improve the speed of future allocations as shown in figure \ref{fig:gc_compact}.
+A garbage collector first identifies pieces of memory that are no longer used, illustrated in Figure~\ref{fig:gc_mark}.
+Then the marked pieces of memory are periodically deleted. Figure~\ref{fig:gc_delete} describes how that same chunk of memory would look like after marked sections are deleted.
+Finally, after the deletion, the garbage collector will 'compact' the memory to avoid memory fragmentation and improve the speed of future allocations as shown in Figure~\ref{fig:gc_compact}.
 
 \begin{figure}[htb]
     \centering
