@@ -138,9 +138,7 @@ These 'owners' are generally variables. \ref{code:owner} presents a simple examp
 'owner' ('\lstinline{owner}').\\
 
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Simple example of a value and it's owner},label={code:owner}]
-{
-    let owner = 5;
-}
+let owner = 5;
 \end{lstlisting}
 
 It doesn't matter that another 'owner' might have the same value. In the code depicted in \ref{code:two_owners}
@@ -148,10 +146,8 @@ It doesn't matter that another 'owner' might have the same value. In the code de
 other programming language and have nothing to do with each other. They are different 'owners'.\\
 
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Simple example of two owners},label={code:two_owners}]
-{
-    let owner = 5;
-    let owner2 = 5;
-}
+let owner = 5;
+let owner2 = 5;
 \end{lstlisting}
 
 
@@ -160,17 +156,13 @@ example \ref{code:copy} the value is simply copied to the second variable, and n
 hold the same value, but other than that have nothing to do with each other. They are different 'owners'.\\
 
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Simple example of a copy},label={code:copy}]
-{
-    let owner = 5;
-    let owner2 = owner;
-}
+let owner = 5;
+let owner2 = owner;
 \end{lstlisting}
 
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Simple example of a move},label={code:move}]
-{
-    let owner = String::from("value");
-    let owner2 = owner;
-}
+let owner = String::from("value");
+let owner2 = owner;
 \end{lstlisting}
 
 If the value is stored on the heap like in example \ref{code:move}, the value is not copied, because that could
@@ -197,22 +189,18 @@ The code snippet \ref{code:borrow} displays a valid use of rule 1 and code snipp
 of what is valid and invalid under rule 2.
 
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Simple example of an immutable borrow},label={code:borrow}]
-{
-    let owner = 5;
-    let borrower1 = &owner;
-    let borrower2 = &owner;
-}
+let owner = 5;
+let borrower1 = &owner;
+let borrower2 = &owner;
 \end{lstlisting}
 
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Simple example of a mutable borrow},label={code:mut_borrow}]
-{
-    let owner = 5;
-    let borrower = &mut owner;
+let owner = 5;
+let borrower = &mut owner;
 
-    // These 2 statements are not allowed, as the value as already borrowed as mutable.
-    // let borrower1 = &owner;
-    // let borrower2 = &mut owner;
-}
+// These 2 statements are not allowed, as the value as already borrowed as mutable.
+// let borrower1 = &owner;
+// let borrower2 = &mut owner;
 \end{lstlisting}
 
 \subsection{Embedded Rust}
