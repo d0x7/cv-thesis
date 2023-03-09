@@ -166,7 +166,12 @@ let owner2 = owner;
 \end{lstlisting}
 
 If the value is stored on the heap like in example \ref{code:move}, the value is not copied, because that could
-be potentially very expensive.
+be potentially very expensive\footnote{The more technical reason why variables for certain types cannot be copied
+is that they do not implement the 'Copy' trait. This trait is only implemented for 'small' types like integers,
+characters, and so on. A 'String' could theoretically be very large, while integers are limited to a few bytes at most.
+However, one could implement this trait for a given type, and then it would be copied.
+But this rarely makes sense for 'larger' values, because then copying is computationally expensive.
+So usually the desired behavior is that those values are moved.}.
 So only the pointer (memory address), size of the data, and the capacity of the memory block is copied.
 But now '\lstinline{value}' has two owners, which violates rule 2.
 This rule is important because due to rule 3:
