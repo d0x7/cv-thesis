@@ -189,13 +189,13 @@ The code snippet \ref{code:borrow} displays a valid use of rule 1 and code snipp
 of what is valid and invalid under rule 2.
 
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Simple example of an immutable borrow},label={code:borrow}]
-let owner = 5;
+let mut owner = 5;
 let borrower1 = &owner;
 let borrower2 = &owner;
 \end{lstlisting}
 
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Simple example of a mutable borrow},label={code:mut_borrow}]
-let owner = 5;
+let mut owner = 5;
 let borrower = &mut owner;
 
 // These 2 statements are not allowed, as the value as already borrowed as mutable.
