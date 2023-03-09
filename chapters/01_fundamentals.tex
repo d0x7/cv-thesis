@@ -251,7 +251,7 @@ REGION_ALIAS("REGION_STACK", RAM);
 
 
 However, there are also quite a few differences in the actual program code.
-Usually Rust programs contain a main function that looks like the example in \ref{code:os_main}.
+Usually Rust programs contain a main function that looks like the example in Listing~\ref{code:os_main}.
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Standard main function in Rust},label={code:os_main}]
 fn main() {
     // contents of main function
@@ -292,7 +292,7 @@ fn main() -> ! {
 }
 \end{lstlisting}
 
-\ref{code:embedded_main} displays a main function alike to the ones I've used in my programs.
+Listing~\ref{code:embedded_main} displays a main function alike to the ones I've used in my programs.
 The '\lstinline{#![no_main]}' directive tells the compiler that I will not use the standard main function.
 Since this function will never return, the return type needs to specify exactly that.
 In Rust, return types are specified using the '\lstinline{->}', followed by the type \cite{rust_return}.
@@ -309,7 +309,7 @@ So these features need to be replaced by their own crates, if available.
 The crates that provide those features in this case are called the '\lstinline{pulpissimo_hal}' and '\lstinline{pulpissimo_pac}'.
 They act as an abstraction layer over and provide an interface to interact with the hardware.
 \\
-A minimal example of a running program can be found in \ref{code:min_example}.
+A minimal example of a running program can be found in Listing~\ref{code:min_example}.
 This minimal example doesn't use any features from the '\lstinline{pulpissimo_pac}' directly, which is why it is not 'included'.
 Also, the endless loop at the end is replaced by the '\lstinline{exit}' function from the '\lstinline{pulpissimo_hal}' crate.
 This only matters if the program is running on simulated hardware. When running the program on real hardware, the '\lstinline{exit}' function is
@@ -362,7 +362,7 @@ In the transmission, the MSB has a fixed position, which means that the position
 is variable due to possible size differences between the word lengths of transmitter and receiver,
 and it being dependent on the word length.\\
 So when the word length of the system exceeds that of the transmitter, the LSBs are truncated
-for the transmission as demonstrated in \ref{fig:truncation}.
+for the transmission as demonstrated in Figure~\ref{fig:truncation}.
 If the receiver receives more bits than its word length, everything after the LSB
 of the receiver is ignored, and if the receiver gets fewer bits than its word length,
 the missing bits are set to 0.\\

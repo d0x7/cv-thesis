@@ -45,7 +45,7 @@ The LRCLK will also be referred to as 'Word Select' (WS) in some instances \cite
 
 \subsubsection{Timing}
 
-Figure \ref{fig:i2s_timing} shows the timing diagram of the $I^2S$ microphone.
+Figure~\ref{fig:i2s_timing} shows the timing diagram of the $I^2S$ microphone.
 A clock period should take between \SI{244.14}{\nano\second} and \SI{488.28}{\nano\second}.
 A high or low pulse on the clock should be 35\% of the duration of a period.
 The maximum delay of the data from a rising edge of the clock should be \SI{65.92}{\nano\second}
@@ -84,7 +84,7 @@ However, it only has one clock line (CLK), and no WS \cite{pdm_mic_pinout}.
 
 \subsubsection{Timing}
 
-Figure \ref{fig:pdm_timing} shows the timing diagram for the PDM microphone.
+Figure~\ref{fig:pdm_timing} shows the timing diagram for the PDM microphone.
 Based on the clock frequency, a period in normal mode should take between \SI{308}{\nano\second} and \SI{1000}{\nano\second}.
 The right channel (PDM R) is latched onto the rising edge of the clock and is enabled if the L/R pin is set accordingly.
 It is disabled on the falling edge of the clock.
