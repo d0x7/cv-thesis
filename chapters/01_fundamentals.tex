@@ -236,7 +236,6 @@ The \emph{MEMORY} section defines two sections in memory, 'RAM' and 'LTWO'.
 In this case this data is put into the 'LTWO' section created above.
 After that, a few aliases are created that either correspond to the 'RAM' section or 'LTWO' section.
 
-\newpage
 \begin{minipage}{\textwidth}
 \begin{lstlisting}[style=colorEX,caption={Example memory.x file},label={code:memory_x}]
 MEMORY
@@ -270,6 +269,7 @@ REGION_ALIAS("REGION_STACK", RAM);
 
 However, there are also quite a few differences in the actual program code.
 Usually Rust programs contain a main function that looks like the example in Listing~\ref{code:os_main}.
+\\
 \begin{minipage}{\textwidth}
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Standard main function in Rust},label={code:os_main}]
 fn main() {
@@ -277,6 +277,7 @@ fn main() {
 }
 \end{lstlisting}
 \end{minipage}
+
 This works similar to normal C code where the main function either serves as entry point for the program or will be called by the '\lstinline{_start}' function provided by \emph{glibc} \cite{before_main}.
 This '\lstinline{_start}' function initializes the program runtime by setting up things like the stack and writing arguments into memory to name a few.
 After initialization, the main function is then called.
@@ -299,7 +300,7 @@ Due to the lack of an OS, there is no cleanup after the program ended either.
 As a matter of fact, since the program will be the only thing running on the hardware,
 the main function will never return, for our intents and purposes.
 The program also only really stops when the device is turned off or reset.
-
+\\
 \begin{minipage}{\textwidth}
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Example main function for the pulp-platform},label={code:embedded_main}]
 #![no_main]
@@ -347,8 +348,6 @@ for all intents and purposes equal to an endless loop \cite[Ch 4.3.10]{rust_pulp
 This example also uses the '\lstinline{println}' macro from the '\lstinline{pulpissimo_hal}' crate to write messages
 to standard-out (stdout), when running in a simulation, or send them using a universal asynchronous receiver-transmitter (UART)
 to be viewed in software like minicom, if the program is running on real hardware.
-
-\newpage
 
 \begin{minipage}{\textwidth}
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Minimal example of a program running on the pulpissimo hardware},label={code:min_example}]
