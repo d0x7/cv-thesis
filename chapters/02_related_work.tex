@@ -91,6 +91,9 @@ from GitHub or self-made.\\\\
 Mycroft consists of several technologies; 'Mimic' \cite{mycroft_mimic3}, their text-to-speech engine, 'Adapt' \cite{mycroft_adapt} and 'Padatious' \cite{mycroft_padatious},
 their intent parsers for natural language understanding, and most interestingly for this thesis, 'Precise' \cite{mycroft_precise} their wake word listener.\\
 Precise uses a type of RNN, a Grated Recurrent Unit (GRU), illustrated in Figure~\ref{fig:precise_gru}.
+Once the raw audio data is handed over to Precise it is split into chunks.
+MFCC features are then calculated from these chunks, which are handed over to the GRU.
+After a dense layer at the end, the GRU can predict for each chunk, whether it contains the keyword or not.
 
 
 \begin{figure}[htb]
