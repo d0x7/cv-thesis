@@ -13,7 +13,8 @@
 
 Driver support for $I^2S$ and PDM has already been implemented into the PULPissimo HAL \cite[Cha 4.3.7]{rust_pulp},
 however the microphones unfortunately did not work right away for a number of reasons.
-In contrast to the PDM microphone, the $I^2S$ microphone does not work on the PULPissimo chip, due to \todo{why}.
+In contrast to the PDM microphone, the $I^2S$ microphone does not work on the PULPissimo chip, due to a hardware compatibility issue.
+The $I^2S$ microphone sends a total of 24 bits, a word 18 bit word, and 6 zero bits. But the PULPissimo can only handle 16 bits.
 While the PDM microphone is compatible with the PULPissimo chip, the Rust drivers were not mature enough for it work using Rust.
 
 \subsection{Experiments}
