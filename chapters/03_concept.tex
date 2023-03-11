@@ -9,7 +9,20 @@
 Goal of this thesis is to implement keyword spotting on the UltraTrail architecture in Rust,
 which relies on three components.
 A microphone input, Mel Frequency Cepstral Coefficients (MFCC) \cite[Cha 2.5]{rust_pulp} to transform the audio to
-a format that UltraTrail can work with and the UltraTrail drivers.\\\\
+a format that UltraTrail can work with and the UltraTrail drivers.
+Figure~\ref{fig:pipeline} displays how the keyword-spotting process would look like.
+First, there needs to be a sound source. Like a human speaking.
+The microphone would pick that sound up, then after the MFCC features are extracted, they would serve
+as an input for UltraTrail. UltraTrail would then determine if the audio picked up by the microphone
+contains the desired keyword or not.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/pipeline.png}
+    \caption[Illustration of the keyword-spotting process]{Illustration of the keyword-spotting process}
+    \label{fig:pipeline}
+\end{figure}
+
 One PDM and one $I^2S$ microphone have been selected, which exclusively use the $I^2S$ bus and were introduced
 in chapter \ref{cha:fundamentals}.
 In order to add support for the UltraTrail architecture and the microphones, the \lstinline{pulissimo_hal}
