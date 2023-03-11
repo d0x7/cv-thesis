@@ -107,8 +107,7 @@ Expected was a sine wave, like in Figure~\ref{fig:pdm_c}, which has been recorde
     \label{fig:pdm_c}
 \end{figure}
 
-\newpage
-
+\begin{minipage}{\textwidth}
 \section{UltraTrail}
 
 \subsection{Implementation}
@@ -126,6 +125,7 @@ Most importantly, the C drivers for the PULPissimo provide the \lstinline{__rt_p
 which is basically a sophisticated busy wait.
 The test code uses that function to wait for UltraTrail to trigger an event interrupt, to announce that
 it is done processing as shown in Listing~\ref{code:c_wait_for_event}.
+\end{minipage}
 
 \begin{minipage}{\textwidth}
 \begin{lstlisting}[style=colorEX,language=C,caption={Waiting for the event in C},label={code:c_wait_for_event}]
