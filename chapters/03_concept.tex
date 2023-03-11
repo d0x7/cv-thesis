@@ -105,13 +105,10 @@ PDM L and PDM R takes at least \SI{18}{\nano\second}, while disabling PDM L and 
 
 \subsection{Microphones}
 
-A variety of tests are used to determine the functionality of the microphones.
-The first test simply consists of playing some sort of noise and analyzing the output of the microphones to see if
-they respond in some predictable manner.
-After that finer testing is carried out by playing a sound that represents a perfect sign wave,
-which should yield a perfect sign wave on the end of the microphones as well.\\
-An array of equipment is used to analyze the output of the microphones; namely a logic analyzer, an oscilloscope
-(for debugging purposes), as well as a few python tools to save and analyze the output data.
+To determine the functionality of the microphone, a sound that represents a perfect sine wave will be
+played while the microphone is recording.
+The output of the microphone should yield a perfect sine wave as well if it works as expected.\\
+The data is analyzed using python scripts and plotted using pyplot\footnote{\url{https://matplotlib.org/stable/tutorials/introductory/pyplot.html}}.
 
 \subsection{UltraTrail}
 
