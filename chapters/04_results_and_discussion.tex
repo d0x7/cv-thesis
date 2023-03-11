@@ -57,10 +57,10 @@ stops the accelerator when it is done and changes the global event state Mutex.
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Event handler function},label={code:event_handler}]
 fn hwpe_event_handler() {
     interrupt::free(|cs| {
-        let peripherals = unsafe { pac::Peripherals::steal() };
+        unsafe {
+            Accelerator::stop_steal();
+        }
 
-        let accelerator = Accelerator::new(peripherals.ACCELERATOR);
-        accelerator.stop();
         EVENT_STATE.borrow(*cs).set(true);
     })
 }
