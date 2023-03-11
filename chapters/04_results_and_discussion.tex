@@ -38,7 +38,6 @@ where \emph{<file name>} is the name of the output file.
 This creates a 32bit, PCM encoded, mono WAVE audio file with a sample rate of \SI{48000}{\hertz}.
 The \SI{1}{\kilo\hertz} sine wave audio has been played using the speakers of a Redmi Note 7 phone.
 
-
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{figures/i2s/i2s_raw_data.png}
@@ -128,6 +127,7 @@ which is basically a sophisticated busy wait.
 The test code uses that function to wait for UltraTrail to trigger an event interrupt, to announce that
 it is done processing as shown in Listing~\ref{code:c_wait_for_event}.
 
+\begin{minipage}{\textwidth}
 \begin{lstlisting}[style=colorEX,language=C,caption={Waiting for the event in C},label={code:c_wait_for_event}]
 pacc_start();
 
@@ -136,6 +136,7 @@ __rt_periph_wait_event(ARCHI_SOC_EVENT_FCHWPE0, 1);
 
 pacc_stop();
 \end{lstlisting}
+\end{minipage}
 
 However, that function has not been implemented in the Rust drivers, so I had to slightly
 vary the implementation of the test code.\\
@@ -150,6 +151,7 @@ static EVENT_STATE: Mutex<Cell<bool>> = Mutex::new(Cell::new(false));
 Subsequently, I defined an event handler as presented in Listing~\ref{code:event_handler}, which
 stops the accelerator when it is done and changes the global event state Mutex.
 
+\begin{minipage}{\textwidth}
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Event handler function},label={code:event_handler}]
 fn hwpe_event_handler() {
     interrupt::free(|cs| {
@@ -161,6 +163,7 @@ fn hwpe_event_handler() {
     })
 }
 \end{lstlisting}
+\end{minipage}
 
 After that I just had to enable the event and set the event handler to deal with the event when it is triggered.
 The code of that can be seen in Listing~\ref{code:enable_event}.
