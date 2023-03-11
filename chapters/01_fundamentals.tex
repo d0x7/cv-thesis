@@ -314,6 +314,14 @@ However, the standard library provides a lot of useful features, like a dynamic 
 So these features need to be replaced by their own crates, if available.
 The crates that provide those features in this case are called the '\lstinline{pulpissimo_hal}' and '\lstinline{pulpissimo_pac}'.
 They act as an abstraction layer over and provide an interface to interact with the hardware.
+The Peripheral Access Crate (PAC) provides a code abstraction over the hardware registers and peripherals.
+The Hardware Abstraction Layer (HAL) contains drivers that use the PAC to provide a software interface
+to interact and control the hardware.
+These drivers can then be used to implement programs that do something like light up an LED, display something on a screen,
+without necessarily knowing anything out the functionality of the underlying hardware.
+These abstractions make it easier to develop a wide array of software because the programmer doesn't have to concern themselves
+with things like registers and what bits need to be set to make something work, or the functionality of buses or how to draw
+something on a screen.
 \\
 A minimal example of a running program can be found in Listing~\ref{code:min_example}.
 This minimal example doesn't use any features from the '\lstinline{pulpissimo_pac}' directly, which is why it is not 'included'.
