@@ -211,7 +211,9 @@ let borrower = &mut owner;
 \subsection{Embedded Rust}
 
 Developing software that runs directly on hardware differs slightly from 'normal' software due to the lack of an operating system (OS).
-When developing for a microcontroller (MCU) there is no OS that supervises and manages programs or facilitates communication with peripherals.
+When developing for a microcontroller (MCU) there usually is no OS that supervises and manages programs or facilitates communication with peripherals\footnote
+{There are real-time operating systems (RTOSs) that run on MCUs that take care of many of these things,
+and several ARM MCUs can and sometimes do run Linux. But that is not relevant to this thesis, since the MCU I'm working on doesn't have an OS running on it.}.
 Therefore, embedded Rust programs look a little different from those that would run on a Windows, Linux or Mac computer.
 \\
 First, since there is no operating system to allocate memory, put the code into the right memory space and start the program.
