@@ -85,15 +85,10 @@ accelerator.start();
 
 let mut event = false;
 while !event {
-    for _ in 0..1000 {
-        unsafe {
-            riscv::asm::nop();
-        }
-    }
-    interrupt::free(|cs| {
-        let state = EVENT_STATE.borrow(*cs).get();
+    wait_x_nops(1000);
 
-        if state {
+    interrupt::free(|cs| {
+        if EVENT_STATE.borrow(*cs).get() {
             event = true;
             EVENT_STATE.borrow(*cs).set(false);
         }
