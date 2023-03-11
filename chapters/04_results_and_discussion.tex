@@ -43,7 +43,7 @@ pacc_stop();
 
 However, that function has not been implemented in the Rust drivers, so I had to slightly
 vary the implementation of the test code.\\
-First I had to define a Mutex \footnote{https://doc.rust-lang.org/std/sync/struct.Mutex.html}
+First I had to define a Mutex \footnote{\url{https://doc.rust-lang.org/std/sync/struct.Mutex.html}}
 for the event state, to monitor whether an event interrupt has been triggered as demonstrated
 in Listing~\ref{code:mutex}.
 
