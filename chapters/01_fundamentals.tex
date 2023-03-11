@@ -221,6 +221,10 @@ So the developer has to take care of that when creating the executable, which is
 For Rust programs these instructions are written into a \emph{memory.x} file.
 This file contains information about the memory layout of the hardware that the program will be running on.
 An example of such a \emph{memory.x} file is displayed in \ref{code:memory_x}.
+The \emph{MEMORY} section defines two sections in memory, 'RAM' and 'LTWO'.
+\emph{SECTIONS} maps a label to a continuous block of flash memory that the linker can link data to.
+In this case this data is put into the 'LTWO' section created above.
+After that, a few aliases are created that either correspond to the 'RAM' section or 'LTWO' section.
 
 \newpage
 \begin{lstlisting}[style=colorEX,caption={Example memory.x file},label={code:memory_x}]
