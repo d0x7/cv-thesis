@@ -1,15 +1,15 @@
 % =============================================================================
 % FILE NAME : abstract.tex
 % DEPARTMENT: University of Tuebingen
-% AUTOR     : Paul Palomero Bernardo
+% AUTOR     : Tom Schammo
 % =============================================================================
 % CONTENT   : Include for abstract (english)
 % =============================================================================
-1. Warum ist diese Arbeit wichtig?
-
-\noindent 2. Welches Problem wird gelöst?
-
-\noindent 3. Welcher Ansatz/Welche Lösung wird verwendet?
-
-\noindent 4. Welche Ergebnisse wurden erzielt?
-
+This thesis sets out to implement keyword-spotting on the UltraTrail architecture.
+One additional goal is extending the Rust ecosystem by adding support for UltraTrail to Rust.
+To achive this, UltraTrail is added to the PAC and its drivers are implmented in the HAL.
+Then the implementation of the $I^2S$ and PDM drivers are tested.
+Testing reveals that the microphone drivers do not work as expected.
+While fixing a few bugs, it was not possible to get the microphones working as
+desired, so keyword-spotting could not be implemented.
+However the UltraTrail driver has successfully been implemented and tested.
