@@ -168,17 +168,20 @@ fn hwpe_event_handler() {
 After that I just had to enable the event and set the event handler to deal with the event when it is triggered.
 The code of that can be seen in Listing~\ref{code:enable_event}.
 
+\begin{minipage}{\textwidth}
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Code to enable the hardware event and set the handler},label={code:enable_event}]
 unsafe {
     event_interrupt.enable_event(EventId::Hwpe0);
     event_interrupt.set_event_handler(EventId::Hwpe0, hwpe_event_handler);
 }
 \end{lstlisting}
+\end{minipage}
 
 Finally, I could write the busy wait, which basically does nothing until the interrupt is received
 and then changes the event state.
 An example of that is displayed in Listing~\ref{code:busy_wait}
 
+\begin{minipage}{\textwidth}
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Snippet of the busy wait that waits for UltraTrail to finish},label={code:busy_wait}]
 accelerator.start();
 
@@ -196,21 +199,25 @@ while !event {
 
 // ...
 \end{lstlisting}
+\end{minipage}
 
 \subsection{Experiments}
 
 The expected results are stored in a vector containing 12 16bit integers, displayed in the Listing~\ref{code:acc_results}.
 
+\begin{minipage}{\textwidth}
 \begin{lstlisting}[style=colorEX,language=Rust,caption={The expected results from the driver test},label={code:acc_results}]
 let correct_results = [
     0xf246, 0x16bf, 0x08a0, 0xfe52, 0xf709, 0xef58, 0xff6b, 0xf946, 0xfebd, 0x0f40, 0xee45,
     0x18f0,
 ];
 \end{lstlisting}
+\end{minipage}
 
 When comparing the code in Listing~\ref{code:acc_results} to the minicom output shown in \ref{code:minicom_out_acc},
 one realizes that they match. Which leads me to believe that the UltraTrail driver works as intended.
 
+\begin{minipage}{\textwidth}
 \begin{lstlisting}[style=colorEx,caption={Minicom output after executing the driver test},label={code:minicom_out_acc}]
 result #0: 0xf246
 result #1: 0x16bf
@@ -225,6 +232,7 @@ result #9: 0xf40
 result #10: 0xee45
 result #11: 0x18f0
 \end{lstlisting}
+\end{minipage}
 
 
 % Hier sollen die erreichten Ergebnisse vorgestellt werden.

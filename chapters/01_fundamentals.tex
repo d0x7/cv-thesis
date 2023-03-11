@@ -145,25 +145,31 @@ It doesn't matter that another 'owner' might have the same value. In the code de
 '\lstinline{owner}' and '\lstinline{owner2}' have the same value, but they are different variables, just like in any
 other programming language and have nothing to do with each other. They are different 'owners'.\\
 
+\begin{minipage}{\textwidth}
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Simple example of two owners},label={code:two_owners}]
 let owner = 5;
 let owner2 = 5;
 \end{lstlisting}
+\end{minipage}
 
 
 If one variable is assigned to another, one of two things happens; if the value is saved on the stack like in
 example \ref{code:copy} the value is simply copied to the second variable, and now '\lstinline{owner}' and '\lstinline{owner2}'
 hold the same value, but other than that have nothing to do with each other. They are different 'owners'.\\
 
+\begin{minipage}{\textwidth}
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Simple example of a copy},label={code:copy}]
 let owner = 5;
 let owner2 = owner;
 \end{lstlisting}
+\end{minipage}
 
+\begin{minipage}{\textwidth}
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Simple example of a move},label={code:move}]
 let owner = String::from("value");
 let owner2 = owner;
 \end{lstlisting}
+\end{minipage}
 
 If the value is stored on the heap like in example \ref{code:move}, the value is not copied, because that could
 be potentially very expensive\footnote{The more technical reason why variables for certain types cannot be copied
@@ -193,12 +199,15 @@ There are two more rules for references and borrowing:
 The code snippet \ref{code:borrow} displays a valid use of rule 1 and code snippet \ref{code:mut_borrow} gives both examples
 of what is valid and invalid under rule 2.
 
+\begin{minipage}{\textwidth}
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Simple example of an immutable borrow},label={code:borrow}]
 let mut owner = 5;
 let borrower1 = &owner;
 let borrower2 = &owner;
 \end{lstlisting}
+\end{minipage}
 
+\begin{minipage}{\textwidth}
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Simple example of a mutable borrow},label={code:mut_borrow}]
 let mut owner = 5;
 let borrower = &mut owner;
@@ -207,6 +216,7 @@ let borrower = &mut owner;
 // let borrower1 = &owner;
 // let borrower2 = &mut owner;
 \end{lstlisting}
+\end{minipage}
 
 \subsection{Embedded Rust}
 
@@ -227,6 +237,7 @@ In this case this data is put into the 'LTWO' section created above.
 After that, a few aliases are created that either correspond to the 'RAM' section or 'LTWO' section.
 
 \newpage
+\begin{minipage}{\textwidth}
 \begin{lstlisting}[style=colorEX,caption={Example memory.x file},label={code:memory_x}]
 MEMORY
 {
@@ -254,15 +265,18 @@ REGION_ALIAS("REGION_HEAP", RAM);
 REGION_ALIAS("REGION_STACK", RAM);
 
 \end{lstlisting}
+\end{minipage}
 
 
 However, there are also quite a few differences in the actual program code.
 Usually Rust programs contain a main function that looks like the example in Listing~\ref{code:os_main}.
+\begin{minipage}{\textwidth}
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Standard main function in Rust},label={code:os_main}]
 fn main() {
     // contents of main function
 }
 \end{lstlisting}
+\end{minipage}
 This works similar to normal C code where the main function either serves as entry point for the program or will be called by the '\lstinline{_start}' function provided by \emph{glibc} \cite{before_main}.
 This '\lstinline{_start}' function initializes the program runtime by setting up things like the stack and writing arguments into memory to name a few.
 After initialization, the main function is then called.
@@ -286,6 +300,7 @@ As a matter of fact, since the program will be the only thing running on the har
 the main function will never return, for our intents and purposes.
 The program also only really stops when the device is turned off or reset.
 
+\begin{minipage}{\textwidth}
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Example main function for the pulp-platform},label={code:embedded_main}]
 #![no_main]
 
@@ -297,6 +312,7 @@ fn main() -> ! {
     loop {}
 }
 \end{lstlisting}
+\end{minipage}
 
 Listing~\ref{code:embedded_main} displays a main function alike to the ones I've used in my programs.
 The '\lstinline{#![no_main]}' directive tells the compiler that I will not use the standard main function.
@@ -334,6 +350,7 @@ to be viewed in software like minicom, if the program is running on real hardwar
 
 \newpage
 
+\begin{minipage}{\textwidth}
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Minimal example of a program running on the pulpissimo hardware},label={code:min_example}]
 #![no_main]
 #![no_std]
@@ -349,6 +366,7 @@ fn main() -> ! {
     exit(0)
 }
 \end{lstlisting}
+\end{minipage}
 
 
 \section{Microphone technology}
