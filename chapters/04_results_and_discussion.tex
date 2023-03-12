@@ -12,10 +12,10 @@
 \subsection{Implementation}
 
 Driver support for $I^2S$ and PDM has already been implemented into the PULPissimo HAL \cite[Cha 4.3.7]{rust_pulp},
-however the microphones unfortunately did not work right away for a number of reasons.
+however, the microphones, unfortunately, did not work right away for several reasons.
 In contrast to the PDM microphone, the $I^2S$ microphone does not work on the PULPissimo chip, due to a hardware compatibility issue.
-The $I^2S$ microphone sends a total of 24 bits, a word 18 bit word, and 6 zero bits. But the PULPissimo can only handle 16 bits.
-While the PDM microphone is compatible with the PULPissimo chip, the Rust drivers were not mature enough for it work using Rust.
+The $I^2S$ microphone sends a total of 24 bits, a word 18-bit word, and 6 zero bits. But the PULPissimo can only handle 16 bits.
+While the PDM microphone is compatible with the PULPissimo chip, the Rust drivers were not mature enough for it to work using Rust.
 
 \subsection{Experiments}
 
@@ -35,7 +35,7 @@ The $I^2S$ microphone has been wired as displayed in Figure~\ref{fig:i2s_wiring}
 Additionally, SEL has been tied to ground.
 The recording was made using this command \lstinline{arecord -D dmic_sv -c2 -r 48000 -f S32_LE -t wav -V mono -v <file name>},
 where \emph{<file name>} is the name of the output file.
-This creates a 32bit, PCM encoded, mono WAVE audio file with a sample rate of \SI{48000}{\hertz}.
+This creates a 32-bit, PCM encoded, mono WAVE audio file with a sample rate of \SI{48000}{\hertz}.
 The \SI{1}{\kilo\hertz} sine wave audio has been played using the speakers of a Redmi Note 7 phone.
 
 \begin{figure}[H]
