@@ -6,7 +6,6 @@
 % CONTENT   : Include for chapter "Fundamentals"
 % =============================================================================
 
-
 \section{RISC-V}
 
 RISC-V \cite{riscv} is an open standard Instruction Set Architecture (ISA)
@@ -17,19 +16,19 @@ However, the authors now aim for RISC-V to also be used in industry implementati
 
 A computer program consists of several instructions.
 These instructions are 'commands' that a computer understands and can react to by performing certain tasks in response.
-A compiler, in case of compiled languages like C, C++, Rust or Go, transforms code written by a human into instructions.
-In case of interpreted languages like Python, Java or JavaScript, the source code is converted into these instructions
+A compiler, in case of compiled languages like C, C++, Rust, or Go, transforms code written by a human into instructions.
+In case of interpreted languages like Python, Java, or JavaScript, the source code is converted into these instructions
 (also sometimes referred to as 'machine code') by an interpreter or Just-In-Time (JIT) compiler during the programs' execution.
 Sometimes that code is first transformed into bytecode which serves as an intermediate representation of the source code
 that can be optimized.
-Java, for example is first compiled into bytecode that can be distributed and executed by the Java Virtual Machine (JVM),
+Java, for example, is first compiled into bytecode that can be distributed and executed by the Java Virtual Machine (JVM),
 whereas the python source code is often interpreted immediately line by line.
 \\
 An Instruction Set is, as the name suggests, the set of instructions that a specific computer, or to be more precise,
 its Central Processing Unit (CPU) can understand.
 Which instructions are available depends on the hardware of a particular system.
 Instruction Set Architectures abstractly describe the architecture of a computer,
-like supported data types, available registers, how main memory is managed by the hardware and
+like supported data types, available registers, how main memory is managed by the hardware, and
 which instructions a microprocessor can execute \cite{isa}, which can then be implemented by a CPU.
 ISAs are often classified by their complexity, belonging either to the set of 'complex instruction set computers' (CISC), like x86,
 or 'reduced instruction set computers' (RISC) like ARM \cite{arm_architecture} or RISC-V \cite{riscv_spec}.
@@ -53,11 +52,11 @@ the usage of RISC-V.
 As Artificial Intelligence (AI) becomes more modern and pervasive, it is only logical that it has found its way into embedded devices.
 Especially with the rising trend of IoT devices and smart homes, embedded AI has found its way into the hands of consumers,
 from voice assistants like Amazon's Alexa \cite{alexa} to autonomous robots like iRobot's Roomba \cite{roomba} or even self-driving cars like Tesla's Autopilot \cite{autopilot}.
-However size and power requirements of those devices severely limit their capabilities, which is why the development of specialized hardware to improve performance
+However, the size and power requirements of those devices severely limit their capabilities, which is why the development of specialized hardware to improve performance
 and power usage becomes a necessity.\\\\
 In my thesis I'm working with the UltraTrail TC-ResNet AI Accelerator \cite{ultratrail}.
 An AI Accelerator is a type of hardware accelerator specialized for artificial intelligence (AI) and machine learning (ML) applications, such as neural networks (NN).
-A hardware accelerator is a set of hardware that specializes in carrying out a specific set of tasks really well while sacrificing generality.
+A hardware accelerator is a set of hardware that specializes in carrying out a specific set of tasks well while sacrificing generality.
 It is created to perform solve one type of problem faster and/or more efficiently than a generic CPU could with the trade-off that it may not be able to do other things at all.
 Examples include, but are not limited to, GPUs, sound cards, cryptographic accelerators, or, in this case, AI accelerators.\\\\
 
@@ -65,7 +64,7 @@ Examples include, but are not limited to, GPUs, sound cards, cryptographic accel
 \section{Rust}
 
 The software written for this thesis, that is running on the PULPissimo \cite{pulpissimo} has been implemented using the Rust programming language \cite{rustlang}.
-Rust is a relatively new general-purpose programming language that can be used to write high performance code, comparable
+Rust is a relatively new general-purpose programming language that can be used to write high-performance code, comparable
 to C or C++, while providing memory safety without the use of a garbage collector.
 It is used for a wide variety of applications including web servers, operating systems, cryptography, and embedded devices.
 
@@ -73,8 +72,8 @@ It is used for a wide variety of applications including web servers, operating s
 
 While C is the industry standard for writing software for embedded systems, along with C++ being fairly popular as well, Rust has a couple of
 advantages over those languages.\\\\
-The biggest downside of C is likely the lack of memory safety, which can not only cause software to be less reliable, but
-can also make a system vulnerable to different attacks, such as buffer overflows, reading uninitialized variables or use-after-free, which can compromise cybersecurity \cite{memory_safety}.\\
+The biggest downside of C is likely the lack of memory safety, which can not only cause software to be less reliable but
+can also make a system vulnerable to different attacks, such as buffer overflows, reading uninitialized variables, or use-after-free, which can compromise cybersecurity \cite{memory_safety}.\\
 C++ fixes some of those issues due to the availability of smart pointers, but those are fairly 'modern' C++ features, thus being only available if compilers support more recent
 versions of C++ (with C++ 11 starting to introduce many new important concepts \cite{cpp11}).
 There is also no guarantee that those features have been used in any given program.
@@ -90,7 +89,7 @@ Rust on the other hand can (mostly) give compile time guarantees on the software
 
 Most programming languages that try to achieve memory safety use a garbage collector for that purpose \cite{java_garbage_collector}.
 A garbage collector first identifies pieces of memory that are no longer used, illustrated in Figure~\ref{fig:gc_mark}.
-Then the marked pieces of memory are periodically deleted. Figure~\ref{fig:gc_delete} describes how that same chunk of memory would look like after marked sections are deleted.
+Then the marked pieces of memory are periodically deleted. Figure~\ref{fig:gc_delete} describes how that same chunk of memory would look after marked sections are deleted.
 Finally, after the deletion, the garbage collector will 'compact' the memory to avoid memory fragmentation and improve the speed of future allocations as shown in Figure~\ref{fig:gc_compact}.
 \end{minipage}
 
@@ -117,13 +116,13 @@ Finally, after the deletion, the garbage collector will 'compact' the memory to 
 
 Garbage collectors however have a few drawbacks, like unpredictable latency (the running program has to be stopped while the garbage collector is running) and a hit in performance.
 The runtime of the programming language, that contains the garbage collector, also needs to be installed on the target system and run alongside the program, using additional
-resources which can be problematic in a resource scarce environment like small embedded devices.
-Therefore, garbage collected languages are rarely used in embedded systems programming.
+resources which can be problematic in a resource-scarce environment like small embedded devices.
+Therefore, garbage-collected languages are rarely used in embedded systems programming.
 Rust uses a different, and unique approach to guarantee memory safety without suffering from any of the aforementioned drawbacks.
 
 \subsubsection{Ownership in Rust}
 
-Rust uses an 'ownership' model \cite{rust_ownership} to make memory safety guarantees at compile time and without the need of a garbage collector,
+Rust uses an 'ownership' model \cite{rust_ownership} to make memory safety guarantees at compile time and without the need for a garbage collector,
 which is good for safety, and does not negatively impact performance or latency.
 This model consists of 3 simple rules:
 \begin{enumerate}
@@ -176,7 +175,7 @@ characters, and so on. A 'String' could theoretically be very large, while integ
 However, one could implement this trait for a given type, and then it would be copied.
 But this rarely makes sense for 'larger' values, because then copying is computationally expensive.
 So usually the desired behavior is that those values are moved.}.
-So only the pointer (memory address), size of the data, and the capacity of the memory block is copied.
+So only the pointer (memory address), the size of the data, and the capacity of the memory block are copied.
 But now '\lstinline{value}' has two owners, which violates rule 2.
 This rule is important because due to rule 3:
 \begin{enumerate}
@@ -186,12 +185,12 @@ This rule is important because due to rule 3:
 To avoid those things '\lstinline{value}' is considered to be 'moved' to its new owner, the variable '\lstinline{owner2}'.
 The original owner ('\lstinline{owner}') is no longer valid.\\
 This works similarly for functions, and these 3 rules allow the compiler to check for any mistakes that would lead to
-a double free, use-after-free or memory that has forgotten to be freed.
+a double-free, use-after-free, or memory that has forgotten to be freed.
 However, there is one more important aspect of memory management in Rust; the borrow operator.
 The borrow operator ('\lstinline{&}') \cite{rust_borrow} allows other variables access to a value without changing the owner.
 There are two more rules for references and borrowing:
 \begin{enumerate}
-    \item There can be an any number of immutable references to a value.
+    \item There can be any number of immutable references to a value.
     \item There can never be more than one mutable reference to a value.
 \end{enumerate}
 The code snippet \ref{code:borrow} displays a valid use of rule 1 and code snippet \ref{code:mut_borrow} gives both examples
@@ -210,7 +209,7 @@ let borrower2 = &owner;
 let mut owner = 5;
 let borrower = &mut owner;
 
-// These 2 statements are not allowed, as the value as already borrowed as mutable.
+// These 2 statements are not allowed, as the value is already borrowed as mutable.
 // let borrower1 = &owner;
 // let borrower2 = &mut owner;
 \end{lstlisting}
@@ -222,16 +221,16 @@ Developing software that runs directly on hardware differs slightly from 'normal
 When developing for a microcontroller (MCU) there usually is no OS that supervises and manages programs or facilitates communication with peripherals\footnote
 {There are real-time operating systems (RTOSs) that run on MCUs that take care of many of these things,
 and several ARM MCUs can and sometimes do run Linux. But that is not relevant to this thesis, since the MCU I'm working on doesn't have an OS running on it.}.
-Therefore, embedded Rust programs look a little different from those that would run on a Windows, Linux or Mac computer.
+Therefore, embedded Rust programs look a little different from those that would run on a Windows, Linux, or Mac computer.
 \\
 First, since there is no operating system to allocate memory, put the code into the right memory space and start the program.
 So the developer has to take care of that when creating the executable, which is why 'special' instructions for the linker are necessary.
-For Rust programs these instructions are written into a \emph{memory.x} file.
+For Rust programs, these instructions are written into a \emph{memory.x} file.
 This file contains information about the memory layout of the hardware that the program will be running on.
 An example of such a \emph{memory.x} file is displayed in \ref{code:memory_x}.
 The \emph{MEMORY} section defines two sections in memory, 'RAM' and 'LTWO'.
 \emph{SECTIONS} maps a label to a continuous block of flash memory that the linker can link data to.
-In this case this data is put into the 'LTWO' section created above.
+In this case, this data is put into the 'LTWO' section created above.
 After that, a few aliases are created that either correspond to the 'RAM' section or 'LTWO' section.
 
 \begin{minipage}{\textwidth}
@@ -266,33 +265,33 @@ REGION_ALIAS("REGION_STACK", RAM);
 
 
 However, there are also quite a few differences in the actual program code.
-Usually Rust programs contain a main function that looks like the example in Listing~\ref{code:os_main}.
+Usually, Rust programs contain a main function that looks like the example in Listing~\ref{code:os_main}.
 \\
 \begin{minipage}{\textwidth}
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Standard main function in Rust},label={code:os_main}]
 fn main() {
-    // contents of main function
+    // contents of the main function
 }
 \end{lstlisting}
 \end{minipage}
 
-This works similar to normal C code where the main function either serves as entry point for the program or will be called by the '\lstinline{_start}' function provided by \emph{glibc} \cite{before_main}.
+This works similarly to normal C code where the main function either serves as the entry point for the program or will be called by the '\lstinline{_start}' function provided by \emph{glibc} \cite{before_main}.
 This '\lstinline{_start}' function initializes the program runtime by setting up things like the stack and writing arguments into memory to name a few.
 After initialization, the main function is then called.
 This is equal for programs that run with or without an OS.\\
 The difference in this startup process occurs before the '\lstinline{_start}' function.
 If the program runs on a device with an OS, the OS first does some preparation and initialization for the program to run.
 The program environment is configured by, among other things, checking permissions (is the user allowed to run this program),
-allocating space on the stack and heap, initializing the stack pointer, linking dynamically linked libraries and calling pre-initialization functions \cite{before_main}.
-Once the program environment is configured, the programs '\lstinline{_start}' is called by the OS.
+allocating space on the stack and heap, initializing the stack pointer, linking dynamically linked libraries, and calling pre-initialization functions \cite{before_main}.
+Once the program environment is configured, the program '\lstinline{_start}' is called by the OS.
 
 
-When a program is running on 'bare-metal' (meaning without an OS or even a bootloader that launches the  application), this process is more crude.
+When a program is running on 'bare-metal' (meaning without an OS or even a bootloader that launches the application), this process is more crude.
 The '\lstinline{_start}' function still serves as the entry point for the program, but there are fewer steps involved in getting there.
 After the application is compiled by the programmer, it is 'flashed' onto the device, meaning written to flash memory.
 When the processor is powered on, it will copy the program into Random Access Memory (RAM) and jump to the reset interrupt vector address.
 The programs reset interrupt handler will then initialize the system and configure any necessary hardware components
-like registers, external RAM or the Memory Management Unit (MMU).
+like registers, external RAM, or the Memory Management Unit (MMU).
 After that the handler jumps to '\lstinline{_start}' (if present) \cite{before_main}.\\\\
 Due to the lack of an OS, there is no cleanup after the program ended either.
 As a matter of fact, since the program will be the only thing running on the hardware,
@@ -320,20 +319,20 @@ In Rust, return types are specified using the '\lstinline{->}', followed by the 
 Replacing the type with a '\lstinline{!}' indicates that the function doesn't return \cite{rust_never_type}.
 \\
 The '\lstinline{#[entry]}' attribute, imported by the '\lstinline{use riscv_rt::entry}' statement, is used to declare the entry point of the program \cite{riscv_rt_entry}
-The requirement for this attribute is that the function never returns, which also why the loop at the end is necessary.
+The requirement for this attribute is that the function never returns, which is also why the loop at the end is necessary.
 \\\\
 This is close to a working program, but not exactly.
 Without the OS, the device is also not able to use the standard library.
-Which is why the '\lstinline{#![no_std]}' directive is necessary, as it prevents Rust from loading the standard library \cite{rust_no_std}.
+This is why the '\lstinline{#![no_std]}' directive is necessary, as it prevents Rust from loading the standard library \cite{rust_no_std}.
 However, the standard library provides a lot of useful features, like a dynamic memory allocator or a panic handler.
 So these features need to be replaced by their own crates, if available.
-The crates that provide those features in this case are called the '\lstinline{pulpissimo_hal}' and '\lstinline{pulpissimo_pac}'.
+The crates that provide those features, in this case, are called the '\lstinline{pulpissimo_hal}' and '\lstinline{pulpissimo_pac}'.
 They act as an abstraction layer over and provide an interface to interact with the hardware.
 The Peripheral Access Crate (PAC) provides a code abstraction over the hardware registers and peripherals.
 The Hardware Abstraction Layer (HAL) contains drivers that use the PAC to provide a software interface
-to interact and control the hardware.
+to interact with and control the hardware.
 These drivers can then be used to implement programs that do something like light up an LED, display something on a screen,
-without necessarily knowing anything out the functionality of the underlying hardware.
+without necessarily knowing anything about the functionality of the underlying hardware.
 These abstractions make it easier to develop a wide array of software because the programmer doesn't have to concern themselves
 with things like registers and what bits need to be set to make something work, or the functionality of buses or how to draw
 something on a screen.
@@ -379,7 +378,7 @@ signal into a more easily processable, digital representation.
 
 The inter-IC sound ($I^2S$) \cite{i2s} bus is a serial link that has been developed especially for digital audio.
 It uses three lines, one serial data line (SD), which is used to transmit data, one continuous serial clock line (SCK),
-which is used as the clock, and one word select line (WS).
+which is used as the clock, and one word-select line (WS).
 $I^2S$ can be used in different configurations, but the master always provides WS and SCK.
 
 \subsubsection{Serial Data}
@@ -387,7 +386,7 @@ $I^2S$ can be used in different configurations, but the master always provides W
 The data consists of signed integers (in two's complement).
 Due to possible differences between the word lengths and neither the transmitter nor the
 receiver having any knowledge about the capabilities of the other, the 'most significant bit' (MSB) is transmitted first.
-This is the bit with the highest value in a binary number, usually it is the bit in the left-most position,
+This is the bit with the highest value in a binary number, usually, it is the bit in the left-most position,
 while the 'least significant bit' (LSB) is located on the right end of the binary sequence.
 In the transmission, the MSB has a fixed position, which means that the position of the LSB
 is variable due to possible size differences between the word lengths of transmitter and receiver,
@@ -398,7 +397,7 @@ If the receiver receives more bits than its word length, everything after the LS
 of the receiver is ignored, and if the receiver gets fewer bits than its word length,
 the missing bits are set to 0.\\
 Furthermore, data sent by the transmitter can either be synchronized with a trailing or leading edge
-of the clock signal, however received data must be latched onto the leading edge.
+of the clock signal, however, received data must be latched onto the leading edge.
 
 
 \begin{figure}[htb]
@@ -423,11 +422,11 @@ So the analog signal is encoded using only 1 bit at a high sampling rate.\\
 Therefore, a constant bit stream of 1s would represent that the amplitude of the analog signal is maxed out,
 while a constant bit stream of 0s would represent that the amplitude of the analog signal is at its lowest value.
 Alternating 1s and 0s represent an amplitude of exactly 0.\\\\
-While many digital audio systems use Pule Code Modulation (PCM), which, in contrast to PDM, uses multiple bits to represent a signal,
+While many digital audio systems use Pulse Code Modulation (PCM), which, in contrast to PDM, uses multiple bits to represent a signal,
 PDM is used a lot in mobile phones \cite{pdm_utexas} due to its simplicity and low cost.
 PDM is similar to '1-bit-PCM', however a one bit wide PCM encoded signal would be much too noisy to be useful.
 So to counteract the noise increase of only using 1 bit the signal is 'over sampled', thereby increasing the bandwidth of the system.
-The new spectrum that is created by oversampling the signal has such a high frequency that it is out of audible range of the human ear.
+The new spectrum that is created by oversampling the signal has such a high frequency that it is out of the audible range of the human ear.
 'Noise Shaping' can then be used to 'push' noise into that new spectrum, thus removing it from the audible signal \cite{pdm_texas}.
 
 \section{Microphones}
@@ -448,8 +447,8 @@ and a logical low is read for any voltage between \SI{-0.3}{\volt} and 35\% of $
 
 \subsubsection{Pinout}
 
-The breakout board has 6 pins, $V_{DD}$ and Ground (GND), which are responsible for power, as well as 4 data pins.
-The output of the microphone can be read on 'Data Out' (DOUT), the channel (right/left mono audio) can be changed by
+The breakout board has 6 pins, $V_{DD}$, and Ground (GND), which are responsible for power, as well as 4 data pins.
+The output of the microphone can be read on 'Data Out' (DOUT), and the channel (right/left mono audio) can be changed by
 changing the voltage of the 'Select' (SEL) pin, which is set to low (left) by default.
 The 'bit clock' (BCLK) is the main clock of the device that determines when data is transmitted, and the 'left/right clock' (LRCLK)
 controls whether data is transmitted on the left or right channel.
@@ -478,11 +477,11 @@ Data is sent with the MSB first and delayed by one clock cycle after a change in
 \subsubsection{Technical Specification}
 
 The PDM MEMS microphone from Adafruit \cite{pdm_mic} is a digital microphone.
-It uses the $I^2S$ bus to communicate, but instead of the typical 24 bit encoding of $I^2S$ microphones, PDM microphones only use 1 bit.
+It uses the $I^2S$ bus to communicate, but instead of the typical 24-bit encoding of $I^2S$ microphones, PDM microphones only use 1 bit.
 It requires a supply voltage between \SI{1.64}{\volt} and \SI{3.6}{\volt} while drawing a current of \SI{600}{\micro\ampere}, with a clock
 frequency from \SI{1}{\mega\hertz} to \SI{3.25}{\mega\hertz}.
 However, the clock frequency should be reduced to a maximum of \SI{0.23}{\mega\hertz} while the microphone is in 'power-down' mode.
-During power down mode the current draw is reduced to \SI{20}{\micro\ampere}.
+During power down mode, the current draw is reduced to \SI{20}{\micro\ampere}.
 A logical high is read for any voltage between 65\% of ($V_{DD}$) and $V_{DD}$ + \SI{0.3}{\volt},
 and a logical low is read for any voltage between \SI{-0.3}{\volt} and 35\% of $V_{DD}$ \cite{pdm_mic_datasheet}.
 
@@ -502,8 +501,8 @@ The right channel (PDM R) is latched onto the rising edge of the clock and is en
 It is disabled on the falling edge of the clock.
 The left channel (PDM L) is latched onto and thus enabled on a falling edge of the clock (assuming L/R is set accordingly),
 and disabled on a rising edge.
-According to data acquired from design simulations by manufacturer,
-PDM L and PDM R takes at least \SI{18}{\nano\second}, while disabling PDM L and PDM R takes at most \SI{16}{\nano\second}.
+According to data acquired from design simulations by the manufacturer,
+PDM L and PDM R take at least \SI{18}{\nano\second} while disabling PDM L and PDM R takes at most \SI{16}{\nano\second}.
 
 
 \begin{figure}[htb]

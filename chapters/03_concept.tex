@@ -6,11 +6,11 @@
 % CONTENT   : Include for chapter "Concept"
 % =============================================================================
 
-Goal of this thesis is to implement keyword spotting on the UltraTrail architecture in Rust,
+The goal of this thesis is to implement keyword spotting on the UltraTrail architecture in Rust,
 which relies on three components.
 A microphone input, Mel Frequency Cepstral Coefficients (MFCC) \cite[Cha 2.5]{rust_pulp} to transform the audio to
 a format that UltraTrail can work with and the UltraTrail drivers.
-Figure~\ref{fig:pipeline} displays how the keyword-spotting process would look like.
+Figure~\ref{fig:pipeline} displays what the keyword-spotting process would look like.
 First, there needs to be a sound source. Like a human speaking.
 The microphone would pick that sound up, then after the MFCC features are extracted, they would serve
 as an input for UltraTrail. UltraTrail would then determine if the audio picked up by the microphone
@@ -25,7 +25,7 @@ contains the desired keyword or not.
 
 One PDM and one $I^2S$ microphone have been selected, which exclusively use the $I^2S$ bus and were introduced
 in chapter \ref{cha:fundamentals}.
-In order to add support for the UltraTrail architecture and the microphones, the \lstinline{pulissimo_hal}
+To add support for the UltraTrail architecture and the microphones, the \lstinline{pulissimo_hal}
 and \lstinline{pulissimo_pac} crates have to be expanded with drivers and example/test programs.
 The PAC contains an SVD file that can be converted to Rust code to provide access to hardware registers
 while the HAL crate provides the drivers and example programs for both UltraTrail and the microphones.
@@ -48,4 +48,4 @@ A logic analyzer and oscilloscope are used as well to debug driver problems.
 The UltraTrail test makes sure that configuration changes have the desired effect (bits are correctly set in the correct registers),
 and the AI accelerator is tested using a predefined set of input data.
 After the input data is loaded correctly, the accelerator is started and will trigger a hardware-peripheral event when it is done.
-After that the results are compared with the desired results, which finally determines the functionality of the drivers.
+After that, the results are compared with the desired results, which finally determines the functionality of the drivers.
