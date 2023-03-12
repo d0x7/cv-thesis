@@ -129,7 +129,7 @@ performs different configurations by reading and writing the different registers
 \\\\
 However, there have been a few differences when it comes to the implementation details.
 Most importantly, the C drivers for the PULPissimo provide the \lstinline{__rt_periph_wait_event} function,
-which is basically a sophisticated busy wait.
+which is a sophisticated busy wait.
 The test code uses that function to wait for UltraTrail to trigger an event interrupt, to announce that
 it is done processing as shown in Listing~\ref{code:c_wait_for_event}.
 \end{minipage}
@@ -184,7 +184,7 @@ unsafe {
 \end{lstlisting}
 \end{minipage}
 
-Finally, I could write the busy wait, which basically does nothing until the interrupt is received
+Finally, I could write the busy wait, which does nothing until the interrupt is received
 and then changes the event state.
 An example of that is displayed in Listing~\ref{code:busy_wait}
 
