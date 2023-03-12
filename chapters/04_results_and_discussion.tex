@@ -35,7 +35,7 @@ The $I^2S$ microphone has been wired as displayed in Figure~\ref{fig:i2s_wiring}
 Additionally, SEL has been tied to ground.
 The recording was made using this command \lstinline{arecord -D dmic_sv -c2 -r 48000 -f S32_LE -t wav -V mono -v <file name>},
 where \emph{<file name>} is the name of the output file.
-This creates a 32-bit, PCM encoded, mono WAVE audio file with a sample rate of \SI{48000}{\hertz}.
+This creates a 32-bit, PCM-encoded mono WAVE audio file with a sample rate of \SI{48000}{\hertz}.
 The \SI{1}{\kilo\hertz} sine wave audio has been played using the speakers of a Redmi Note 7 phone.
 
 \begin{figure}[H]
@@ -46,7 +46,7 @@ The \SI{1}{\kilo\hertz} sine wave audio has been played using the speakers of a 
 \end{figure}
 
 When analyzing the raw data displayed in Figure~\ref{fig:i2s_raw}, the spike from seconds 0 to about 0.5
-is very noticeable. That is because the microphone seem to have a 'warm-up time', it takes about 1 second for it to be operational and produce clean data.
+is very noticeable. That is because the microphone seems to have a 'warm-up time', it takes about 1 second for it to be operational and produce clean data.
 This has also been noticed on the PULPissimo board with the PDM microphone.
 However, after that period, the $I^2S$ microphone is completely operational.
 A segment of the recording (normalized) is shown in Figure~\ref{fig:i2s_section}, revealing a clean sine wave.
@@ -66,12 +66,12 @@ Firstly, the audio that had been played might not have been a perfect sine wave 
 There could've also been variations due to the speakers that had been used, the speakers
 might not have produced a 100\% accurate tone.
 Or this discrepancy could also be caused by something on the recording side.
-Perhaps it is a result of limitations the microphone.
+Perhaps it is a result of microphone limitations.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{figures/i2s/i2s_one_period.png}
-    \caption[A single period of the normalized audio data, overlaid with perfect sine wave of the same frequency]{Single period of the audio data, overlaid with sine wave}
+    \caption[A single period of the normalized audio data, overlaid with a perfect sine wave of the same frequency]{Single period of the audio data, overlaid with sine wave}
     \label{fig:i2s_period}
 \end{figure}
 
@@ -233,8 +233,3 @@ result #10: 0xee45
 result #11: 0x18f0
 \end{lstlisting}
 \end{minipage}
-
-
-% Hier sollen die erreichten Ergebnisse vorgestellt werden.
-% Hierzu zählt die Vorstellung des Versuchsaufbaus sowie die geeignete Aufbereitung und Diskussion der Ergebnisse.
-% Mehrwert oder Nutzen benennen!
