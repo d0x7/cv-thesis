@@ -33,8 +33,15 @@ which I then recorded using the microphone.
 
 The $I^2S$ microphone has been wired as displayed in Figure~\ref{fig:i2s_wiring} \cite{i2s_wiring}.
 Additionally, SEL has been tied to ground.
-The recording was made using this command \lstinline{arecord -D dmic_sv -c2 -r 48000 -f S32_LE -t wav -V mono -v <file name>},
+The recording was made using the command in Listing~\ref{code:record},
 where \emph{<file name>} is the name of the output file.
+
+\begin{minipage}{\textwidth}
+\begin{lstlisting}[style=colorEX,language=bash,caption={Recording Command},label={code:record}]
+arecord -D dmic_sv -c2 -r 48000 -f S32_LE -t wav -V mono -v <file name>
+\end{lstlisting}
+\end{minipage}
+
 This creates a 32-bit, PCM-encoded mono WAVE audio file with a sample rate of \SI{48000}{\hertz}.
 The \SI{1}{\kilo\hertz} sine wave audio has been played using the speakers of a Redmi Note 7 phone.
 
