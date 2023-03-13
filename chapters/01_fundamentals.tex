@@ -134,9 +134,11 @@ This model consists of 3 simple rules:
 These 'owners' are generally variables. \ref{code:owner} presents a simple example of a 'value' ('\lstinline{5}') and its
 'owner' ('\lstinline{owner}').\\
 
+\begin{minipage}{\textwidth}
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Simple example of a value and it's owner},label={code:owner}]
 let owner = 5;
 \end{lstlisting}
+\end{minipage}
 
 It doesn't matter that another 'owner' might have the same value. In the code depicted in \ref{code:two_owners}
 '\lstinline{owner}' and '\lstinline{owner2}' have the same value, but they are different variables, just like in any
