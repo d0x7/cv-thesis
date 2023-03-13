@@ -52,11 +52,11 @@ The \SI{1}{\kilo\hertz} sine wave audio has been played using the speakers of a 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{figures/i2s/i2s_raw_data.png}
-    \caption[PCM data of the $I^2S$ microphone plotted]{PCM data of the $I^2S$ microphone plotted}
+    \caption[PCM data of the $I^2S$ microphone normalized and plotted]{PCM data of the $I^2S$ microphone normalized plotted}
     \label{fig:i2s_raw}
 \end{figure}
 
-When analyzing the raw data displayed in Figure~\ref{fig:i2s_raw}, the spike from seconds 0 to about 0.5
+When analyzing the 5-second audio data capture displayed in Figure~\ref{fig:i2s_raw}, the spike from seconds 0 to about 0.5
 is very noticeable. That is because the microphone seems to have a 'warm-up time', it takes about 1 second for it to be operational and produce clean data.
 This has also been noticed on the PULPissimo board with the PDM microphone.
 However, after that period, the $I^2S$ microphone is completely operational.
