@@ -6,7 +6,7 @@
 % CONTENT   : Include for chapter "Conclusion and Future Work"
 % =============================================================================
 
-\subsection{Summary}
+\section{Summary}
 
 The goal of this thesis was to implement keyword spotting on the PULPissimo and to add a Rust implementation of the UtraTrail drivers.
 First, the UltraTrail AI accelerator was added to the PAC and the drivers were implemented in the HAL crate.
@@ -15,7 +15,7 @@ The PDM and $I^2S$ drivers were then tested, which revealed that the chosen $I^2
 microphone is not compatible with the PULPissimo SoC and the PDM drivers are not fully functional.
 Time has been invested in completing the PDM driver, and some bugs have been fixed, but the driver still does not work properly.
 
-\subsection{Future Work}
+\section{Future Work}
 
 Fixing the PDM driver has proven to be quite challenging, at least in part due to incomplete documentation.
 Since the $I^2S$ microphone turned out to be incompatible, there have been no tests to see if the $I^2S$
