@@ -151,7 +151,8 @@ After modifying the driver code to support PDM as described in the 'Implementati
 the program no longer outputs any data (only 0-byte values), and the oscilloscope output is shown in Figure~\ref{fig:pdm_no_config}.
 It is immediately obvious that there is something wrong.
 The reason for this behavior is that the board's PDM clock was disabled after causing problems because PDM was not enabled.
-So after re-enabling the PDM clock the signal looks as depicted in Figure~\ref{fig:pdm_working}.
+After re-enabling the PDM clock the signal looks as depicted in Figure~\ref{fig:pdm_working}.
+This changes the frequency of the $I^2S$ clock, so after adjusting the configuration the microphone is ready for testing.
 
 \begin{figure}[H]
     \begin{center}
@@ -161,7 +162,49 @@ So after re-enabling the PDM clock the signal looks as depicted in Figure~\ref{f
     \label{fig:pdm_working}
 \end{figure}
 
-Now that the PDM microphone is enabled and working, it is possible to perform the aforementioned test and analyze the data.
+\begin{minipage}{\textwidth}
+The microphone has been tested with two different configurations displayed in Listing~\ref{code:pdm_config_ready} and Listing~\ref{code:pdm_config_high}.
+For both the decimation factor has been increased to 8, and one uses a sampling rate of \SI{16}{\kilo\hertz} and the other uses a sampling rate of \SI{48}{\kilo\hertz}.
+
+\begin{lstlisting}[style=colorEX,language=Rust,caption={Updated configuration of the PDM microphone with a 16kHz sampling rate},label={code:pdm_config_ready}]
+let conf = i2s::Config {
+    frequency: 16000,
+    decimation_log2: 8,
+    pdm: true,
+    dual: false,
+};
+\end{lstlisting}
+
+\begin{lstlisting}[style=colorEX,language=Rust,caption={Updated configuration of the PDM microphone with a 48 sampling rate},label={code:pdm_config_high}]
+let conf = i2s::Config {
+    frequency: 48000,
+    decimation_log2: 8,
+    pdm: true,
+    dual: false,
+};
+\end{lstlisting}
+\end{minipage}
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=0.5\textwidth]{figures/16k_1mhz_sine.png}
+    \end{center}
+    \caption[Oscilloscope capture of the data line (yellow) and clock line (red) of the PDM microphone with a 16kHz sampling rate]{Oscilloscope capture of the data line (yellow) and clock line (red) of the PDM microphone with a 16kHz sampling rate}
+    \label{fig:pdm_16k}
+\end{figure}
+
+A sampling rate of \SI{16}{\kilo\hertz} and \SI{48}{\kilo\hertz} with a decimation log of 8
+result in a clock frequency of about \SI{1}{\mega\hertz} and \SI{3}{\mega\hertz} respectively,
+which is once on the lower and once on the upper end of the clock frequency that the PDM
+microphone is operational at.
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=0.5\textwidth]{figures/48k_3mhz_sine.png}
+    \end{center}
+    \caption[Oscilloscope capture of the data line (yellow) and clock line (red) of the PDM microphone with a 48kHz sampling rate]{Oscilloscope capture of the data line (yellow) and clock line (red) of the PDM microphone with a 48kHz sampling rate}
+    \label{fig:pdm_48k}
+\end{figure}
 
 \begin{figure}[H]
     \centering
