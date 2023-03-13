@@ -84,16 +84,54 @@ Perhaps it is a result of microphone limitations.
 
 \subsubsection{PDM Microphone}
 
-The PDM microphone has been wired as displayed in Figure~\ref{fig:pdm_wiring}.
-A logic level converter\footnote{\url{https://cdn-shop.adafruit.com/datasheets/txb0108.pdf}}
-has been used because the microphone needs a supply voltage of \SI{3.3}{\volt}, but the
-PULPissimo clock uses \SI{1.8}{\volt}.
+Several setups have been used for the PDM microphone.
+Probably the simplest setup would be to connect CLK, DAT, SEL, GND, and 3V (also sometimes referred to as $V_DD$) on the microphone
+to \lstinline{I2S0_SCK} (clock of the $I^2S$ bus), \lstinline{I2S0_SDI} (data line of the $I^2S$ bus), \lstinline{I2S0_WS} (word select), GND (ground),
+and \lstinline{+3V VOUT} (\SI{3.3}{\volt} output) on the development board respectively,
+which are all listed in the development board reference manual \cite{pulpissimo}.
+However, I decided to tie SEL to ground, since there was no intention of using stereo audio in the first place.\\
+Furthermore, the decision to use a logic level converter\footnote{\url{https://cdn-shop.adafruit.com/datasheets/txb0108.pdf}}
+has been made to protect the board and avoid potential problems due to voltage differences between the data and clock lines.
+The PULPissimo runs internally on \SI{1.8}{\volt}, which is also the voltage level of the $I^2S$ clock pin.
+However, according to the data sheet, the PDM microphone requires \SI{3.3}{\volt}.
+So one end of the logic level converter is set to \SI{1.8}{\volt}, which is the side that the development board
+is connected to, while the other end is set to \SI{3.3}{\volt}, which is the side that the microphone is connected to.
+So the microphone receives \SI{3.3}{\volt} for the clock signal and the power source and has an output voltage level
+of \SI{3.3}{\volt} on the data line.
+While the board has an output of \SI{1.8}{\volt} on its clock line and the data it receives from the microphone is also
+converted to \SI{1.8}{\volt}.
+The final wiring of the PDM microphone is shown in Figure~\ref{fig:pdm_wiring}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{figures/pdm/wiring.png}
     \caption[PDM microphone wiring with an abstraction for the PULPissimo]{PDM microphone wiring}
     \label{fig:pdm_wiring}
+\end{figure}
+
+As shown in the Listing~\ref{code:pdm_config}, the peripheral frequency on the board is set to \SI{212.5}{\mega\hertz}
+and the sampling rate of the PDM microphone is set to \SI{16}{\kilo\hertz} with a decimation log of 7.
+This results in approximately \SI{1}{\mega\hertz} clock on the $I^2S$ bus, as shown in the Figure~\ref{fig:i2s_capture}.
+
+\begin{minipage}{\textwidth}
+\begin{lstlisting}[style=colorEX,language=Rust,caption={Configuration of the board clock and the PDM driver},label={code:pdm_config}]
+let clock = Clock::from_external(20_000_000u32.Hz(), 212_500_000u32.Hz());
+
+let conf = i2s::Config {
+    frequency: 16000,
+    decimation_log2: 7,
+    pdm: true,
+    dual: false,
+};
+\end{lstlisting}
+\end{minipage}
+
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=0.95\textwidth]{figures/i2s_capture.png}
+    \end{center}
+    \caption[Oscilloscope capture of the data line (yellow) and clock line (red) of the microphone]{Oscilloscope capture of the data line (yellow) and clock line (red)}
+    \label{fig:i2s_capute}
 \end{figure}
 
 
