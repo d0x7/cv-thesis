@@ -147,10 +147,10 @@ let conf = i2s::Config {
     \label{fig:pdm_no_config}
 \end{figure}
 
-After modifying the driver code to support PDM as mentioned in the 'Implementation' section of this chapter,
-the program no longer outputs any data (only 0 byte values), and the output of the oscilloscope is shown in Figure~\ref{fig:pdm_no_config}.
-It becomes immediately clear that there is still something missing.
-The reason for this behavior is that the PDM clock of the board had been disabled after causing problems, due to PDM not being enabled.
+After modifying the driver code to support PDM as described in the 'Implementation' section of this chapter,
+the program no longer outputs any data (only 0-byte values), and the oscilloscope output is shown in Figure~\ref{fig:pdm_no_config}.
+It is immediately obvious that there is something wrong.
+The reason for this behavior is that the board's PDM clock was disabled after causing problems because PDM was not enabled.
 So after re-enabling the PDM clock the signal looks as depicted in Figure~\ref{fig:pdm_working}.
 
 \begin{figure}[H]
@@ -161,8 +161,7 @@ So after re-enabling the PDM clock the signal looks as depicted in Figure~\ref{f
     \label{fig:pdm_working}
 \end{figure}
 
-Now that the PDM microphone is enabled and working, it is possible to conduct the aforementioned test and
-evaluate the data.
+Now that the PDM microphone is enabled and working, it is possible to perform the aforementioned test and analyze the data.
 
 \begin{figure}[H]
     \centering
