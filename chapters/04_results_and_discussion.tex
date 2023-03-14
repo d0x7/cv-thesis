@@ -238,7 +238,7 @@ Expected was a (near) perfect sine wave, similar to Figure~\ref{fig:pdm_c},
 which was recorded with the same microphone and wiring using the C driver.
 The reason why the plotted data is so flat is that the recording is quieter.
 It is not clear what caused the recording to be inaccurate.
-Presumably, there still is at least one bug in the driver.
+Presumably, either the driver was not implemented correctly, or something is missing in the documentation, resulting in an incomplete driver.
 The oscillations shown in Figures~\ref{fig:pdm_16k} and \ref{fig:pdm_48k} also seem very suspicious.
 They are especially dominant on the clock signal, but they are also present on the data signal.
 The clock signal should be a clean square wave, but each time it rises or falls,
