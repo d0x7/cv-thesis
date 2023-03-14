@@ -115,7 +115,7 @@ The final wiring of the PDM microphone is shown in Figure~\ref{fig:pdm_wiring}.
 
 As shown in the Listing~\ref{code:pdm_config}, the peripheral frequency on the board is set to \SI{212.5}{\mega\hertz}
 and the sampling rate of the PDM microphone is set to \SI{16}{\kilo\hertz} with a decimation factor of 7.
-This results in about a \SI{1}{\mega\hertz} clock frequency on the $I^2S$ bus, as shown in the Figure~\ref{fig:i2s_capture}.
+This results in about a \SI{1}{\mega\hertz} clock frequency on the $I^2S$ bus, as shown in Figure~\ref{fig:i2s_capture}.
 However, this is not exactly 'PDM data', since the driver did not enable PDM for the reasons discussed in the 'Implementation' section.
 
 \begin{minipage}{\textwidth}
