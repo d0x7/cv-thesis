@@ -88,8 +88,8 @@ Perhaps it is a result of microphone limitations.
 
 \subsubsection{PDM Microphone}
 
-Several setups have been used for the PDM microphone.
-Probably the simplest setup would be to connect CLK, DAT, SEL, GND, and 3V (also sometimes referred to as $V_DD$) on the microphone
+Several setups have been tested with the PDM microphone.
+Probably the simplest setup would be to connect CLK, DAT, SEL, GND, and 3V (also sometimes referred to as $V_{DD}$) on the microphone
 to \lstinline{I2S0_SCK} (clock of the $I^2S$ bus), \lstinline{I2S0_SDI} (data line of the $I^2S$ bus), \lstinline{I2S0_WS} (word select), GND (ground),
 and \lstinline{+3V VOUT} (\SI{3.3}{\volt} output) on the development board respectively,
 which are all listed in the development board reference manual \cite{pulpissimo}.
@@ -100,9 +100,9 @@ The PULPissimo runs internally on \SI{1.8}{\volt}, which is also the voltage lev
 However, according to the data sheet, the PDM microphone requires \SI{3.3}{\volt}.
 So one end of the logic level converter is set to \SI{1.8}{\volt}, which is the side that the development board
 is connected to, while the other end is set to \SI{3.3}{\volt}, which is the side that the microphone is connected to.
-So the microphone receives \SI{3.3}{\volt} for the clock signal and the power source and has an output voltage level
-of \SI{3.3}{\volt} on the data line.
-While the board has an output of \SI{1.8}{\volt} on its clock line and the data it receives from the microphone is also
+So the microphone receives \SI{3.3}{\volt} for the clock signal and the power source, and has an output voltage level
+of \SI{3.3}{\volt} on the data line,
+while the board has an output of \SI{1.8}{\volt} on its clock line and the data it receives from the microphone is also
 converted to \SI{1.8}{\volt}.
 The final wiring of the PDM microphone is shown in Figure~\ref{fig:pdm_wiring}.
 
@@ -116,7 +116,7 @@ The final wiring of the PDM microphone is shown in Figure~\ref{fig:pdm_wiring}.
 As shown in the Listing~\ref{code:pdm_config}, the peripheral frequency on the board is set to \SI{212.5}{\mega\hertz}
 and the sampling rate of the PDM microphone is set to \SI{16}{\kilo\hertz} with a decimation log of 7.
 This results in approximately \SI{1}{\mega\hertz} clock on the $I^2S$ bus, as shown in the Figure~\ref{fig:i2s_capture}.
-However, this is not exactly 'PDM data', as the driver was not enabling PDM for the reasons discussed in the 'Implementation section'.
+However, this is not exactly 'PDM data', as the driver was not enabling PDM for the reasons discussed in the 'Implementation' section.
 
 \begin{minipage}{\textwidth}
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Configuration of the board clock and the PDM driver},label={code:pdm_config}]
@@ -150,7 +150,7 @@ let conf = i2s::Config {
 After modifying the driver code to support PDM as described in the 'Implementation' section of this chapter,
 the program no longer outputs any data (only 0-byte values), and the oscilloscope output is shown in Figure~\ref{fig:pdm_no_config}.
 It is immediately obvious that there is something wrong.
-The reason for this behavior is that the board's PDM clock was disabled after causing problems because PDM was not enabled.
+The reason for this behavior is that the board's PDM clock was disabled after causing problems because PDM was not enabled to begin with.
 After re-enabling the PDM clock the signal looks as depicted in Figure~\ref{fig:pdm_working}.
 This changes the frequency of the $I^2S$ clock, so after adjusting the configuration the microphone is ready for testing.
 
@@ -164,7 +164,7 @@ This changes the frequency of the $I^2S$ clock, so after adjusting the configura
 
 \begin{minipage}{\textwidth}
 The microphone has been tested with two different configurations displayed in Listing~\ref{code:pdm_config_ready} and Listing~\ref{code:pdm_config_high}.
-For both the decimation factor has been increased to 8, and one uses a sampling rate of \SI{16}{\kilo\hertz} and the other uses a sampling rate of \SI{48}{\kilo\hertz}.
+For both the decimation factor has been increased to 8, and one uses a sampling rate of \SI{16}{\kilo\hertz} while the other uses a sampling rate of \SI{48}{\kilo\hertz}.
 
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Updated configuration of the PDM microphone with a 16kHz sampling rate},label={code:pdm_config_ready}]
 let conf = i2s::Config {
