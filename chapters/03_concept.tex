@@ -11,7 +11,7 @@ which relies on three components.
 A microphone input, Mel Frequency Cepstral Coefficients (MFCC) \cite[Cha 2.5]{rust_pulp} to transform the audio to
 a format that UltraTrail can work with and the UltraTrail drivers.
 Figure~\ref{fig:pipeline} displays what the keyword-spotting process would look like.
-First, there needs to be a sound source. Like a human speaking.
+First, there needs to be a sound source, such as a human speaking.
 The microphone would pick that sound up, then after the MFCC features are extracted, they would serve
 as an input for UltraTrail. UltraTrail would then determine if the audio picked up by the microphone
 contains the desired keyword or not.
