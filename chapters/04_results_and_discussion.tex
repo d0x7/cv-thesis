@@ -197,6 +197,7 @@ A sampling rate of \SI{16}{\kilo\hertz} and \SI{48}{\kilo\hertz} with a decimati
 result in a clock frequency of about \SI{1}{\mega\hertz} and \SI{3}{\mega\hertz} respectively,
 which is once on the lower and once on the upper end of the clock frequency that the PDM
 microphone is operational at.
+The corresponding oscilloscope captures can be seen in Figure~\ref{fig:pdm_16k} and Figure~\ref{fig:pdm_48k}.
 
 \begin{figure}[H]
     \begin{center}
@@ -206,20 +207,35 @@ microphone is operational at.
     \label{fig:pdm_48k}
 \end{figure}
 
+When analyzing the PCM data from these captures it becomes clear that the driver does not work as intended.
+Figure~\ref{fig:pdm_rust_16k} displays the signal with a sampling rate of \SI{16}{\kilo\hertz} and
+Figure~\ref{fig:pdm_rust_48k} displays the signal with a sampling rate of \SI{48}{\kilo\hertz}.
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/pdm/pdm_rust.png}
-    \caption[Segment of the audio data recorded by the PDM microphone using the Rust driver]{Segment of the audio data recorded by the PDM microphone using the Rust driver}
-    \label{fig:pdm_rust}
+    \includegraphics[width=0.9\textwidth]{figures/pdm/pdm_rust_16k.png}
+    \caption[Segment of the normalized audio data recorded by the PDM microphone using the Rust driver with sampling rate of 16kHz]{Segment of the normalized audio data recorded by the PDM microphone using the Rust driver with sampling rate of 16kHz}
+    \label{fig:pdm_rust_16k}
 \end{figure}
 
-Figure~\ref{fig:pdm_rust} shows a section of the recorded PDM data in a PCM encoding, and it is very clear that the driver does not work as intended.
-Expected was a sine wave, like in Figure~\ref{fig:pdm_c}, which has been recorded with the same microphone, same wiring using the C driver.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/pdm/pdm_rust_48k.png}
+    \caption[Segment of the normalized audio data recorded by the PDM microphone using the Rust driver with sampling rate of 48kHz]{Segment of the normalized audio data recorded by the PDM microphone using the Rust driver with sampling rate of 48kHz}
+    \label{fig:pdm_rust_48k}
+\end{figure}
+
+Neither displays anything resembling a sine wave.
+Expected was something that looks like Figure~\ref{fig:pdm_c}, which has been recorded with the same microphone and same wiring using the C driver.
+It is not clear what causes the recording to be inaccurate.
+Presumably there still is at least one bug in the driver.
+The swings that can be observed in the Figures~\ref{fig:pdm_16k} and \ref{fig:pdm_48k} also seem very suspicious.
+They are especially dominant on the clock signal, but they are also present on the data signal.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{figures/pdm/pdm_c.png}
-    \caption[Segment of the audio data recorded by the PDM microphone using the C driver]{Segment of the audio data recorded by the PDM microphone using the C driver}
+    \caption[Segment of the normalized audio data recorded by the PDM microphone using the C driver]{Segment of the normalized audio data recorded by the PDM microphone using the C driver}
     \label{fig:pdm_c}
 \end{figure}
 
