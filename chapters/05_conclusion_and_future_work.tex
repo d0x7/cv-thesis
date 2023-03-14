@@ -20,5 +20,7 @@ Time has been invested in completing the PDM driver, and some bugs have been fix
 Fixing the PDM driver has proven to be quite challenging, at least in part due to incomplete documentation.
 Since the $I^2S$ microphone turned out to be incompatible, there have been no tests to see if the $I^2S$
 driver suffers from the same problems as the PDM driver, so investigating this may also warrant future work.
-Finally, since keyword-spotting could not be implemented, future work could build on this thesis by completing
-the implementation of the PDM driver and using the UltraTrail driver to implement keyword-spotting.
+There are also newer iterations of the UltraTrail AI accelerator to which the driver could be ported
+that then could be tested as well.
+Finally, since the driver does not work, keyword-spotting could not be implemented,
+but if the PDM driver were to be fixed, the entire UltraTrail pipeline would be running on the development board for the first time.
