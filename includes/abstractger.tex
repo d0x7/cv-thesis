@@ -5,14 +5,12 @@
 % =============================================================================
 % CONTENT   : Include for abstract (german)
 % =============================================================================
-Ziel dieser Arbeit ist es keyword-spotting mit UltraTrail zu implementieren.
-Zusätzlich soll das Rust Ecosystem erweitert werden durch implementierung des UltraTrail treibers.
-Um dies zu errreichen wird UltraTrail zu der PAC hinzugefügt und die Treiber in der HAL implementiert.
-Anschließend werden die Implementierungen der $I^2S$ und PDM treiber getestet.
-Dies offenbart, dass die Mikrofontreiber nicht so wie erwartet funktionieren,
-und trotz dem lösen mehrerer Bugs ist es immer noch nicht möglich die Mikrofone wie gewünscht
-zu nutzen.
-Daher konnte keyword-spotting erstmal nicht implementiert werden.
-Allerdings wurde der UltraTrail Treiber erfolgreich implementiert und getestet,
-so dass zukünftige Arbeiten sich auf das effiziente Implementieren von keyword-spotting
-fokussieren können.
+
+Ziel dieser Arbeit ist die Implementierung von Keyword-Spotting auf der UltraTrail-Architektur.
+Zu dem Zweck werden verschiedene Eingabequellen implementiert und analysiert.
+Ein weiteres Ziel ist es, das Rust-Ökosystem zu erweitern, indem die Unterstützung für UltraTrail zu Rust hinzugefügt wird.
+Um dies zu erreichen, wird UltraTrail zur PAC hinzugefügt und die Treiber werden in der HAL implementiert.
+Die $I^2S$- und PDM-Treiberimplementierungen werden dann getestet.
+Die Tests zeigen, dass die Mikrofontreiber nicht wie erwartet funktionieren und trotz der Behebung einiger Probleme war es nicht möglich, die Mikrofone wie gewünscht zum Laufen zu bringen, daher konnte Keyword-Spotting nicht implementiert werden.
+Der UltraTrail-Treiber wurde jedoch erfolgreich implementiert und getestet, so dass
+die Wirksamkeit des Keyword-Spotting auf dem UltraTrail nun weiter erforscht werden kann.
