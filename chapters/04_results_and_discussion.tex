@@ -166,6 +166,10 @@ This changes the frequency of the $I^2S$ clock, so after adjusting the configura
 \begin{minipage}{\textwidth}
 The microphone has been tested with two different configurations displayed in Listing~\ref{code:pdm_config_ready} and Listing~\ref{code:pdm_config_high}.
 Both have the decimation factor increased to 8, and one uses a sampling rate of \SI{16}{\kilo\hertz} while the other uses a sampling rate of \SI{48}{\kilo\hertz}.
+The data is written to a buffer that is linked to the \lstinline{.l2_data} section.
+The advantage of this over creating a buffer on the stack is that \lstinline{.l2_data} is located on flash, which allows the buffer to be larger.
+The captures taken during the tests contain 16000 unsigned 16-bit integers.
+Allocating a buffer of this size on the stack would cause a stack overflow on the development board.
 
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Updated configuration of the PDM microphone with a 16kHz sampling rate},label={code:pdm_config_ready}]
 let conf = i2s::Config {
