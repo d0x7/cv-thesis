@@ -230,7 +230,9 @@ Figure~\ref{fig:pdm_rust_48k} shows the signal with a sampling rate of \SI{48}{\
 \end{figure}
 
 Neither displays anything resembling a sine wave.
-What is expected is something that looks like Figure~\ref{fig:pdm_c}, which was recorded with the same microphone and wiring using the C driver.
+Expected was a (near) perfect sine wave, similar to Figure~\ref{fig:pdm_c},
+which was recorded with the same microphone and wiring using the C driver.
+The reason why the plotted data is so flat is that the recording is quieter.
 It is not clear what caused the recording to be inaccurate.
 Presumably, there still is at least one bug in the driver.
 The oscillations shown in Figures~\ref{fig:pdm_16k} and \ref{fig:pdm_48k} also seem very suspicious.
