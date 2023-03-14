@@ -193,43 +193,45 @@ let conf = i2s::Config {
     \label{fig:pdm_16k}
 \end{figure}
 
-A sampling rate of \SI{16}{\kilo\hertz} and \SI{48}{\kilo\hertz} with a decimation log of 8
-result in a clock frequency of about \SI{1}{\mega\hertz} and \SI{3}{\mega\hertz} respectively,
-which is once on the lower and once on the upper end of the clock frequency that the PDM
-microphone is operational at.
-The corresponding oscilloscope captures can be seen in Figure~\ref{fig:pdm_16k} and Figure~\ref{fig:pdm_48k}.
+A sampling rate of \SI{16}{\kilo\hertz} and \SI{48}{\kilo\hertz} with a decimation factor of 8
+result in a clock frequency of approximately \SI{1}{\mega\hertz} and \SI{3}{\mega\hertz} respectively,
+which is one at the low and one at the high end of the clock frequency range at which the PDM
+microphone operates at.
+The corresponding oscilloscope captures are shown in Figure~\ref{fig:pdm_16k} and Figure~\ref{fig:pdm_48k}.
 
 \begin{figure}[H]
     \begin{center}
         \includegraphics[width=0.5\textwidth]{figures/48k_3mhz_sine.png}
     \end{center}
-    \caption[Oscilloscope capture of the data line (yellow) and clock line (red) of the PDM microphone with a 48kHz sampling rate]{Oscilloscope capture of the data line (yellow) and clock line (red) of the PDM microphone with a 48kHz sampling rate}
+    \caption[Oscilloscope capture of the PDM microphone's data line (yellow) and clock line (red) at a 48kHz sampling rate]{Oscilloscope capture of the PDM microphone's data line (yellow) and clock line (red) at a 48kHz sampling rate}
     \label{fig:pdm_48k}
 \end{figure}
 
-When analyzing the PCM data from these captures it becomes clear that the driver does not work as intended.
-Figure~\ref{fig:pdm_rust_16k} displays the signal with a sampling rate of \SI{16}{\kilo\hertz} and
-Figure~\ref{fig:pdm_rust_48k} displays the signal with a sampling rate of \SI{48}{\kilo\hertz}.
+When analyzing the PCM data from these captures it is clear that the driver is not working as intended.
+Figure~\ref{fig:pdm_rust_16k} shows the signal with a sampling rate of \SI{16}{\kilo\hertz} and
+Figure~\ref{fig:pdm_rust_48k} shows the signal with a sampling rate of \SI{48}{\kilo\hertz}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{figures/pdm/pdm_rust_16k.png}
-    \caption[Segment of the normalized audio data recorded by the PDM microphone using the Rust driver with sampling rate of 16kHz]{Segment of the normalized audio data recorded by the PDM microphone using the Rust driver with sampling rate of 16kHz}
+    \caption[Segment of the normalized audio data recorded by the PDM microphone using the Rust driver with a sampling rate of 16kHz]
+    {Segment of the normalized audio data recorded by the PDM microphone using the Rust driver with a sampling rate of 16kHz}
     \label{fig:pdm_rust_16k}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{figures/pdm/pdm_rust_48k.png}
-    \caption[Segment of the normalized audio data recorded by the PDM microphone using the Rust driver with sampling rate of 48kHz]{Segment of the normalized audio data recorded by the PDM microphone using the Rust driver with sampling rate of 48kHz}
+    \caption[Segment of the normalized audio data recorded by the PDM microphone using the Rust driver with a sampling rate of 48kHz]
+    {Segment of the normalized audio data recorded by the PDM microphone using the Rust driver with a sampling rate of 48kHz}
     \label{fig:pdm_rust_48k}
 \end{figure}
 
 Neither displays anything resembling a sine wave.
-Expected was something that looks like Figure~\ref{fig:pdm_c}, which has been recorded with the same microphone and same wiring using the C driver.
-It is not clear what causes the recording to be inaccurate.
-Presumably there still is at least one bug in the driver.
-The swings that can be observed in the Figures~\ref{fig:pdm_16k} and \ref{fig:pdm_48k} also seem very suspicious.
+What is expected is something that looks like Figure~\ref{fig:pdm_c}, which was recorded with the same microphone and wiring using the C driver.
+It is not clear what caused the recording to be inaccurate.
+Presumably, there still is at least one bug in the driver.
+The oscillations shown in Figures~\ref{fig:pdm_16k} and \ref{fig:pdm_48k} also seem very suspicious.
 They are especially dominant on the clock signal, but they are also present on the data signal.
 
 \begin{figure}[H]
