@@ -26,8 +26,8 @@ contains the desired keyword or not.
 One PDM and one $I^2S$ microphone have been selected, which exclusively use the $I^2S$ bus and were introduced
 in chapter \ref{cha:fundamentals}.
 To add support for the UltraTrail architecture and the microphones, the \lstinline{pulissimo_hal}
-and \lstinline{pulissimo_pac} crates have to be expanded with drivers and example/test programs.
-The PAC contains an SVD file that can be converted to Rust code to provide access to hardware registers
+and \lstinline{pulissimo_pac} crates need to be expanded with drivers and example/test programs.
+The PAC contains an SVD file that can be converted to Rust code to provide access to hardware registers,
 while the HAL crate provides the drivers and example programs for both UltraTrail and the microphones.
 Drivers for $I^2S$ and PDM, as well as some example programs have already been implemented,
 however neither have been tested nor run before.
