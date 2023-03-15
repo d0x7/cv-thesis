@@ -76,7 +76,7 @@ While C is the industry standard for writing software for embedded systems, alon
 advantages over those languages.\\\\
 The biggest downside of C is likely the lack of memory safety, which can not only cause software to be less reliable but
 can also make a system vulnerable to different attacks, such as buffer overflows, reading uninitialized variables, or use-after-free, which can compromise cybersecurity \cite{memory_safety}.\\
-C++ fixes some of those issues due to the availability of smart pointers, but those are fairly 'modern' C++ features, thus being only available if compilers support more recent
+C++ fixes some of those issues due to the availability of smart pointers, but those are fairly 'modern' C++ features, and are thus only available if compilers support more recent
 versions of C++ (with C++ 11 starting to introduce many new important concepts \cite{cpp11}).
 There is also no guarantee that those features have been used in any given program.
 The opposite is actually more likely due to the incorporation of older software (library code written using older C++ versions),
@@ -116,9 +116,9 @@ Finally, after the deletion, the garbage collector will 'compact' the memory to 
     \label{fig:gc_compact}
 \end{figure}
 
-Garbage collectors however have a few drawbacks, like unpredictable latency (the running program has to be stopped while the garbage collector is running) and a hit in performance.
-The runtime of the programming language, that contains the garbage collector, also needs to be installed on the target system and run alongside the program, using additional
-resources which can be problematic in a resource-scarce environment like small embedded devices.
+Garbage collectors however have a few drawbacks; like unpredictable latency (the running program has to be stopped while the garbage collector is running) and a hit in performance.
+The runtime of the programming language that contains the garbage collector also needs to be installed on the target system and run alongside the program
+causing additional resource usage, which can be problematic in a resource-scarce environment like small embedded devices.
 Therefore, garbage-collected languages are rarely used in embedded systems programming.
 Rust uses a different, and unique approach to guarantee memory safety without suffering from any of the aforementioned drawbacks.
 
@@ -144,7 +144,7 @@ let owner = 5;
 
 It doesn't matter that another 'owner' might have the same value. In the code depicted in \ref{code:two_owners}
 '\lstinline{owner}' and '\lstinline{owner2}' have the same value, but they are different variables, just like in any
-other programming language and have nothing to do with each other. They are different 'owners'.\\
+other programming language, and have nothing to do with each other. They are different 'owners'.\\
 
 \begin{minipage}{\textwidth}
 \begin{lstlisting}[style=colorEX,language=Rust,caption={Simple example of two owners},label={code:two_owners}]
@@ -227,7 +227,7 @@ When developing for a microcontroller (MCU) there usually is no OS that supervis
 and several ARM MCUs can and sometimes do run Linux. But that is not relevant to this thesis, since the MCU I'm working on doesn't have an OS running on it.}.
 Therefore, embedded Rust programs look a little different from those that would run on a Windows, Linux, or Mac computer.
 \\
-First, since there is no operating system to allocate memory, put the code into the right memory space and start the program.
+First, there is no operating system to allocate memory or put the code into the right memory space and start the program.
 So the developer has to take care of that when creating the executable, which is why 'special' instructions for the linker are necessary.
 For Rust programs, these instructions are written into a \emph{memory.x} file.
 This file contains information about the memory layout of the hardware that the program will be running on.
@@ -298,8 +298,8 @@ The programs reset interrupt handler will then initialize the system and configu
 like registers, external RAM, or the Memory Management Unit (MMU).
 After that the handler jumps to '\lstinline{_start}' (if present) \cite{before_main}.\\\\
 Due to the lack of an OS, there is no cleanup after the program ended either.
-As a matter of fact, since the program will be the only thing running on the hardware,
-the main function will never return, for our intents and purposes.
+Since the program will be the only thing running on the hardware,
+the main function will never return for our intents and purposes.
 The program also only really stops when the device is turned off or reset.
 \\
 \begin{minipage}{\textwidth}
@@ -317,8 +317,8 @@ fn main() -> ! {
 \end{minipage}
 
 Listing~\ref{code:embedded_main} displays a main function alike to the ones I've used in my programs.
-The '\lstinline{#![no_main]}' directive tells the compiler that I will not use the standard main function.
-Since this function will never return, the return type needs to specify exactly that.
+The '\lstinline{#![no_main]}' directive tells the compiler that the standard main function is not used.
+Since this function will never return the return type needs to specify exactly that.
 In Rust, return types are specified using the '\lstinline{->}', followed by the type \cite{rust_return}.
 Replacing the type with a '\lstinline{!}' indicates that the function doesn't return \cite{rust_never_type}.
 \\
@@ -326,9 +326,9 @@ The '\lstinline{#[entry]}' attribute, imported by the '\lstinline{use riscv_rt::
 The requirement for this attribute is that the function never returns, which is also why the loop at the end is necessary.
 \\\\
 This is close to a working program, but not exactly.
-Without the OS, the device is also not able to use the standard library.
-This is why the '\lstinline{#![no_std]}' directive is necessary, as it prevents Rust from loading the standard library \cite{rust_no_std}.
-However, the standard library provides a lot of useful features, like a dynamic memory allocator or a panic handler.
+Without the OS, the device also cannot use the standard library.
+For that reason the '\lstinline{#![no_std]}' directive is necessary, as it prevents Rust from loading the standard library \cite{rust_no_std}.
+However, the standard library provides many useful features, like a dynamic memory allocator or a panic handler.
 So these features need to be replaced by their own crates, if available.
 The crates that provide those features, in this case, are called the '\lstinline{pulpissimo_hal}' and '\lstinline{pulpissimo_pac}'.
 They act as an abstraction layer over and provide an interface to interact with the hardware.
@@ -398,10 +398,10 @@ and it being dependent on the word length.\\
 So when the word length of the system exceeds that of the transmitter, the LSBs are truncated
 for the transmission as demonstrated in Figure~\ref{fig:truncation}.
 If the receiver receives more bits than its word length, everything after the LSB
-of the receiver is ignored, and if the receiver gets fewer bits than its word length,
-the missing bits are set to 0.\\
+of the receiver is ignored.
+If the receiver gets fewer bits than its word length, the missing bits are set to 0.\\
 Furthermore, data sent by the transmitter can either be synchronized with a trailing or leading edge
-of the clock signal, however, received data must be latched onto the leading edge.
+of the clock signal. However, received data must be latched onto the leading edge.
 
 
 \begin{figure}[htb]
@@ -426,9 +426,9 @@ So the analog signal is encoded using only 1 bit at a high sampling rate.\\
 Therefore, a constant bit stream of 1s would represent that the amplitude of the analog signal is maxed out,
 while a constant bit stream of 0s would represent that the amplitude of the analog signal is at its lowest value.
 Alternating 1s and 0s represent an amplitude of exactly 0.\\\\
-While many digital audio systems use Pulse Code Modulation (PCM), which, in contrast to PDM, uses multiple bits to represent a signal,
-PDM is used a lot in mobile phones \cite{pdm_utexas} due to its simplicity and low cost.
-PDM is similar to '1-bit-PCM', however a one bit wide PCM encoded signal would be much too noisy to be useful.
+While many digital audio systems use Pulse Code Modulation (PCM),
+PDM is often used in mobile phones \cite{pdm_utexas} due to its simplicity and low cost. Unlike PDM, PCM uses multiple bits to represent a signal.
+PDM is similar to '1-bit-PCM', however, a one-bit wide PCM encoded signal would be much too noisy to be of use.
 So to counteract the noise increase of only using 1 bit the signal is 'over sampled', thereby increasing the bandwidth of the system.
 The new spectrum that is created by oversampling the signal has such a high frequency that it is out of the audible range of the human ear.
 'Noise Shaping' can then be used to 'push' noise into that new spectrum, thus removing it from the audible signal \cite{pdm_texas}.
