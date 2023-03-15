@@ -23,8 +23,8 @@ After these had been implemented PDM could be enabled.
 
 \subsection{Experiments}
 
-To test the functionality of the microphones I played a \SI{1}{\kilo\hertz} sine wave\footnote{Sine wave audio: \url{https://www.youtube.com/watch?v=3FBijeNg_Gs}},
-which I then recorded using the microphone.
+To test the functionality of the microphones a \SI{1}{\kilo\hertz} sine wave\footnote{Sine wave audio: \url{https://www.youtube.com/watch?v=3FBijeNg_Gs}}
+has been played, which is then recorded by the microphone.
 
 \subsubsection{I2S Microphone}
 
@@ -148,7 +148,7 @@ let conf = i2s::Config {
 \end{figure}
 
 After modifying the driver code to support PDM as described in the 'Implementation' section of this chapter,
-the program no longer outputs any data (only 0-byte values), and the oscilloscope output is shown in Figure~\ref{fig:pdm_no_config}.
+the program no longer outputs any data (only 0-byte values). The oscilloscope output is shown in Figure~\ref{fig:pdm_no_config}.
 It is immediately obvious that something is wrong.
 The reason for this behavior is that the board's PDM clock was disabled after causing problems because PDM was not enabled to begin with.
 After re-enabling the PDM clock the signal looks as depicted in Figure~\ref{fig:pdm_working}.
@@ -165,7 +165,7 @@ This changes the frequency of the $I^2S$ clock, so after adjusting the configura
 
 \begin{minipage}{\textwidth}
 The microphone has been tested with two different configurations displayed in Listing~\ref{code:pdm_config_ready} and Listing~\ref{code:pdm_config_high}.
-Both have the decimation factor increased to 8, and one uses a sampling rate of \SI{16}{\kilo\hertz} while the other uses a sampling rate of \SI{48}{\kilo\hertz}.
+Both have a decimation factor of 8, and one uses a sampling rate of \SI{16}{\kilo\hertz} while the other uses a sampling rate of \SI{48}{\kilo\hertz}.
 The data is written to a buffer that is linked to the \lstinline{.l2_data} section.
 The advantage of this over creating a buffer on the stack is that \lstinline{.l2_data} is located on flash, which allows the buffer to be larger.
 The captures taken during the tests contain 16000 unsigned 16-bit integers.
@@ -237,7 +237,7 @@ Neither displays anything resembling a sine wave.
 Expected was a (near) perfect sine wave, similar to Figure~\ref{fig:pdm_c},
 which was recorded with the same microphone and wiring using the C driver.
 The reason why the plotted data is so flat is that the recording is quieter.
-It is not clear what caused the recording to be inaccurate.
+It is not clear what caused the recording with the Rust driver to be inaccurate.
 Presumably, either the driver was not implemented correctly, or something is missing in the documentation, resulting in an incomplete driver.
 The oscillations shown in Figures~\ref{fig:pdm_16k} and \ref{fig:pdm_48k} also seem very suspicious.
 They are especially dominant on the clock signal, but they are also present on the data signal.
@@ -259,10 +259,10 @@ there are fairly large spikes until the signal stabilizes.
 To implement the driver for UltraTrail, it first has to be added to the SVD file in the PAC
 as a peripheral to generate the necessary Rust code to access hardware registers.
 Subsequently, the driver can be implemented in the HAL crate.
-Finally, I have ported a small program from C to Rust, that contains a set of pre-defined
-weights, bias and feature inputs, as well as expected results.
+Finally, a small test program containing a set of pre-defined
+weights, bias and feature inputs, as well as expected results has been ported from C to Rust.
 This program can be used to test the implementation of the driver, as it also
-performs different configurations by reading and writing the different registers.
+tests different configurations by reading and writing the different registers.
 \\\\
 However, there have been a few differences when it comes to the implementation details.
 Most importantly, the C drivers for the PULPissimo provide the \lstinline{__rt_periph_wait_event} function,
@@ -347,7 +347,7 @@ while !event {
 
 \subsection{Experiments}
 
-The expected results are stored in a vector containing 12 16bit integers, displayed in the Listing~\ref{code:acc_results}.
+The expected results are stored in a vector containing 12 16-bit integers, displayed in the Listing~\ref{code:acc_results}.
 
 \begin{minipage}{\textwidth}
 \begin{lstlisting}[style=colorEX,language=Rust,caption={The expected results from the driver test},label={code:acc_results}]

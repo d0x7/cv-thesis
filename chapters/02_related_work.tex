@@ -10,7 +10,7 @@
 
 The code in this thesis is built upon the foundations built by Raphael Vogelgsang in his thesis \emph{'Rust auf der RISCV Plattform PULPissimo – Entwicklung und
 Evaluation'} \cite{rust_pulp}.
-He built the PAC and HAL which I use and extend to add support for the UltraTrail architecture.
+He built the PAC and HAL which is used and extended to add support for the UltraTrail architecture.
 The PAC provides direct access to peripherals and has been generated using the '\lstinline{svd2rust}' tool \cite{svd2rust}.
 This tool uses a System View Description (SVD) file, which uses the XML format to describe certain properties like registers and peripherals, and are
 thereby unique for each microcontroller.
@@ -28,7 +28,7 @@ They serve as an orientation and comparison for the Rust libraries.
 UltraTrail is a 'configurable ultra-low power TC-ResNet AI accelerator for efficient keyword spotting' \cite{ultratrail}.
 It uses temporal convolutional networks (TCNs) combined with residual networks (TC-ResNet) for intelligent sensor signal processing.
 They show superior behavior compared to conventional convolutional neural networks (CNNs) and long short-term memory (LSTM) networks,
-which are a type of Recurrent Neural Network (RNN), and are commonly in used speech recognition applications like keyword spotting or text-to-speech engines.
+which are a type of Recurrent Neural Network (RNN), and are commonly in used speech recognition applications like keyword-spotting or text-to-speech engines.
 TCNs specifically not only appear to be more accurate but also more simple and clear compared to LSTMs and GRUs \cite[Ch I]{ultratrail}.\\
 UltraTrail uses a variety of units, arrays, and layers to provide efficient mapping of the TC-ResNet without sacrificing too much flexibility.
 It can execute networks with up to 16 convolutional layers that can be extended with batch normalization (also referred to as CONV-EXT layers)
@@ -70,11 +70,11 @@ can be described layer by layer \cite[Ch IV]{ultratrail}.
 \subsection{Voice Assistants}
 
 Keyword spotting is mainly used in voice assistants (VAs), like Siri, which is developed by Apple \cite{siri}, or Amazon's Alexa \cite{alexa}.
-The devices they run on (like the Amazon Echo Dot or the Apple iPhone) use keyword spotting to 'activate', after which they start
+The devices they run on (like the Amazon Echo Dot or the Apple iPhone) use keyword-spotting to 'activate', after which they start
 to 'actively listen' to perform your command.
 There are also open-source alternatives to the popular products by the aforementioned tech giants, like Mycroft by \lstinline{mycroft.ai} \cite{mycroft}.
 Snips.ai used to be another alternative VA to the products by Apple and Amazon, however, they have been acquired by Sonos in November 2019 \cite{sonos_snips}.
-Snips also used keyword spotting to 'activate' the VA that the user could then communicate with, however, they also advertised their focus
+Snips also used keyword-spotting to 'activate' the VA that the user could then communicate with, however, they also advertised their focus
 on privacy and offline, on-device speech processing.
 However, their product was not open source, so there is limited knowledge available about their system.
 They do advertise customizable 'wake words' and mentioned hardware requirements on a snapshot of their website \cite{snips_flow}.

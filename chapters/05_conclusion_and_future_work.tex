@@ -12,16 +12,17 @@ The goal of this thesis was to implement keyword-spotting on the PULPissimo and 
 First, the UltraTrail AI accelerator was added to the PAC and the drivers were implemented in the HAL crate.
 A test program for the driver implementation has also been ported to Rust for testing purposes.
 The PDM and $I^2S$ drivers were then tested, which revealed that the chosen $I^2S$
-microphone is not compatible with the PULPissimo SoC and the PDM drivers are not fully functional.
+microphone is not compatible with the PULPissimo SoC and that the PDM drivers are not fully functional.
 Time has been invested in completing the PDM driver, and some bugs have been fixed, but the driver still does not work properly.
 The UltraTrail driver on the other hand works as expected and passed the test program.
 
 \section{Future Work}
 
-Fixing the PDM driver has proven to be quite challenging, at least in part due to incomplete documentation.
 Since the $I^2S$ microphone turned out to be incompatible, there have been no tests to see if the $I^2S$
 driver suffers from the same problems as the PDM driver, so investigating this may also warrant future work.
 There are also newer iterations of the UltraTrail AI accelerator to which the driver could be ported
 that then could be tested as well.
+In addition, it might be interesting to find out how to use the PDM microphone's power-down mode and
+do performance, accuracy and power-consumption comparisons between different microphones.
 Finally, since the driver does not work, keyword-spotting could not be implemented,
-but if the PDM driver were to be fixed, the entire UltraTrail pipeline would be running on the development board for the first time.
+but if the PDM driver were fixed, the entire UltraTrail pipeline would be running on the development board for the first time.

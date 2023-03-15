@@ -22,9 +22,9 @@ In case of interpreted languages like Python, Java, or JavaScript, the source co
 Sometimes that code is first transformed into bytecode which serves as an intermediate representation of the source code
 that can be optimized.
 Java, for example, is first compiled into bytecode that can be distributed and executed by the Java Virtual Machine (JVM),
-whereas the python source code is often interpreted immediately line by line.
+whereas Python source code is often interpreted immediately line by line.
 \\
-An instruction set is, the set of instructions that a particular computer, or more specifically,
+An instruction set is the set of instructions that a particular computer, or more specifically,
 its Central Processing Unit (CPU) can understand.
 Which instructions are available depends on the hardware of a particular system.
 Instruction Set Architectures (ISA) abstractly describe the architecture of a computer.
@@ -118,17 +118,17 @@ Finally, after the deletion, the garbage collector will 'compact' the memory to 
 
 Garbage collectors however have a few drawbacks; like unpredictable latency (the running program has to be stopped while the garbage collector is running) and a hit in performance.
 The runtime of the programming language that contains the garbage collector also needs to be installed on the target system and run alongside the program
-causing additional resource usage, which can be problematic in a resource-scarce environment like small embedded devices.
+causing additional resource usage, which can be problematic in resource-scarce environments like small embedded devices.
 Therefore, garbage-collected languages are rarely used in embedded systems programming.
-Rust uses a different, and unique approach to guarantee memory safety without suffering from any of the aforementioned drawbacks.
+Rust uses a different, unique approach to guarantee memory safety without suffering from any of the aforementioned drawbacks.
 
 \subsubsection{Ownership in Rust}
 
-Rust uses an 'ownership' model \cite{rust_ownership} to make memory safety guarantees at compile time and without the need for a garbage collector,
-which is good for safety, and does not negatively impact performance or latency.
+Rust uses an 'ownership' model \cite{rust_ownership} to make memory safety guarantees without using a garbage collector. At compile time.
+This is good for safety and does not negatively impact performance or latency.
 This model consists of 3 simple rules:
 \begin{enumerate}
-    \item Each value has an owner
+    \item Every value has an owner
     \item Each value can only have one owner at a time
     \item When the owner goes out of scope, the value will be dropped
 \end{enumerate}
@@ -331,7 +331,7 @@ For that reason the '\lstinline{#![no_std]}' directive is necessary, as it preve
 However, the standard library provides many useful features, like a dynamic memory allocator or a panic handler.
 So these features need to be replaced by their own crates, if available.
 The crates that provide those features, in this case, are called the '\lstinline{pulpissimo_hal}' and '\lstinline{pulpissimo_pac}'.
-They act as an abstraction layer over and provide an interface to interact with the hardware.
+They act as an abstraction layer over the hardware and provide an interface to interact with it.
 The Peripheral Access Crate (PAC) provides a code abstraction over the hardware registers and peripherals.
 The Hardware Abstraction Layer (HAL) contains drivers that use the PAC to provide a software interface
 to interact with and control the hardware.
