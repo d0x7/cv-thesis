@@ -11,9 +11,7 @@ To use the CI/CD pipelines of GitLab do the following:
 
 After every push to GitLab the pdf files are compiled and can be downloaded when the compilation finished successfully. and can be downloaded from this link:
 
-[![pipeline status](https://atreus.informatik.uni-tuebingen.de/ties/templates/thesis-template/badges/main/pipeline.svg)](https://atreus.informatik.uni-tuebingen.de/ties/templates/thesis-template/-/commits/main) 
-
-[Download PDF](https://atreus.informatik.uni-tuebingen.de/ties/templates/thesis-template/-/jobs/artifacts/main/browse?job=build)
+[![Makefile CI](https://github.com/TomSchammo/Bachelorthesis/actions/workflows/makefile.yml/badge.svg)](https://github.com/TomSchammo/Bachelorthesis/actions/workflows/makefile.yml)
 
 ### Ubuntu
 
