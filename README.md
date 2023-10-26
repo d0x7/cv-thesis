@@ -29,7 +29,7 @@ cd thesis-template
 make
 ```
 
-The compiled pdf file is under: 
+The compiled pdf file is under:
 
 [output/thesis.pdf](output/thesis.pdf)
 
@@ -57,7 +57,7 @@ start texworks .\output\thesis.pdf
 * Press [Win]+[R]
 * Enter `sysdm.cpl`
 * Choose Tab _Advanced_
-* Click on _Environment Variables_ 
+* Click on _Environment Variables_
 * Select `Path`
 * Click _Edit_
 * Click _New_
@@ -89,8 +89,8 @@ make
 * Press _Recompile_
 
 ### VS Code
-* To use VS Code like other LaTeX dedicated editors (e.g. TeX Studio) you can use the extension [LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop). 
-* With the current settings in `.vscode/settings.json` the compile process will be initiated whenever a file is saved. 
+* To use VS Code like other LaTeX dedicated editors (e.g. TeX Studio) you can use the extension [LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop).
+* With the current settings in `.vscode/settings.json` the compile process will be initiated whenever a file is saved.
 * The default recipe (also specified in `setting.json`) will make sure that all files generated during compilation will end up in the `output` directory.
 * Sometimes the compile process hangs in the "Build Stage" (e.g. if there is a syntax error in the document). This can be seen on the left side in the status bar at the bottom of VS code. If this happens you can manually stop compilation:
   * Open the LaTeX Workshop extension menu
