@@ -16,4 +16,4 @@ Testing reveals that the microphone drivers do not work as expected and despite
 resolving some issues, it was not possible to get the microphones to work as desired,
 so keyword-spotting could not be implemented.
 However, the UltraTrail driver has been successfully implemented and tested so that
-future research can be conducted on the effectiveness of keyword-spotting on the UltraTrail.
+future research can be conducted on the effectiveness of keyword-spotting on UltraTrail.
