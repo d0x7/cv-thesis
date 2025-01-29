@@ -1,0 +1,42 @@
+name: Publish to GitHub Pages
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - run: mkdir -p output/
+
+    - name: Install dependencies
+      run: sudo apt-get update && sudo apt-get install texlive texlive-publishers texlive-science latexmk texlive-bibtex-extra biber texlive-lang-german texlive-pstricks
+    - name: Build document
+      run: make
+
+    - uses: actions/upload-pages-artifact@v3
+      with:
+          name: thesis
+          path: output/thesis.pdf
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+      pages: write
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
