@@ -23,8 +23,7 @@ jobs:
 
     - uses: actions/upload-pages-artifact@v3
       with:
-          name: thesis
-          path: output/thesis.pdf
+          path: output/
 
   deploy:
     environment:
