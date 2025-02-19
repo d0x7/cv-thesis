@@ -1,0 +1,34 @@
+name: Build LaTeX document
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '*.tex'
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source repository
+        uses: actions/checkout@v4
+      - name: Install TeX Live
+        uses: zauguin/install-texlive@v3
+        with:
+          packages: >
+            latex-base-dev collection-fontsrecommended collection-fontsextra collection-latexextra collection-publishers biblatex-science collection-bibtexextra biber collection-langgerman pstricks
+      - name: Compile All LaTeX Files
+        run: make
+      - name: Checkout destination repository
+        uses: actions/checkout@v4
+        with:
+          repository: d0x7/actions-deploy
+          token: ${{ secrets.TARGET_REPO_TOKEN }}
+          path: target-repo
+      - name: Push to deployment repository
+        run: |
+          cp output/thesis.pdf target-repo/
+          cd target-repo
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add *.pdf
+          git commit -m "Update LaTeX files"
+          git push
